@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redação Paraná - Painel do Usuário</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Redação Paraná - Home Estudante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis CSS para Cores e Fontes - Mais fácil de manter */
+        /* Variáveis CSS para Cores - Baseado na imagem */
         :root {
-            --cor-primaria: #007bff; /* Azul vibrante */
-            --cor-secundaria: #28a745; /* Verde do Paraná */
-            --cor-terciaria: #17a2b8; /* Azul claro para alguns detalhes */
-            --cor-fundo-claro: #f8f9fa; /* Fundo suave */
-            --cor-fundo-escuro: #343a40; /* Rodapé/elementos escuros */
-            --cor-texto-principal: #343a40;
-            --cor-texto-secundario: #6c757d;
-            --cor-borda: #dee2e6;
-            --cor-card-fundo: #ffffff;
-            --cor-sombra: rgba(0, 0, 0, 0.08);
-
-            --fonte-cabecalho: 'Open Sans', sans-serif;
-            --fonte-corpo: 'Roboto', sans-serif;
+            --cor-primaria-azul: #007bff; /* Azul vibrante do cabeçalho */
+            --cor-secundaria-verde: #28a745; /* Verde do logo e destaques */
+            --cor-fundo-sidebar: #343a40; /* Cinza escuro da sidebar */
+            --cor-fundo-claro: #f0f2f5; /* Fundo principal da página */
+            --cor-fundo-cards: #ffffff;
+            --cor-texto-escuro: #333;
+            --cor-texto-claro: #ffffff;
+            --cor-borda-cinza: #dee2e6;
+            --cor-hover-azul: #0056b3; /* Azul mais escuro para hover */
+            --cor-ativo-sidebar: #007bff; /* Azul do item ativo na sidebar */
+            --cor-sombra: rgba(0, 0, 0, 0.1);
+            --cor-sombra-card: rgba(0, 0, 0, 0.08);
         }
 
-        /* Reset e Estilos Base */
+        /* Reset Básico */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,395 +31,49 @@
         }
 
         body {
-            font-family: var(--fonte-corpo);
-            color: var(--cor-texto-principal);
+            font-family: 'Roboto', sans-serif;
+            color: var(--cor-texto-escuro);
             background-color: var(--cor-fundo-claro);
             line-height: 1.6;
-            min-height: 100vh; /* Garante que o rodapé fique no final */
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* Evita scroll horizontal indesejado */
         }
 
         a {
             text-decoration: none;
-            color: var(--cor-primaria);
+            color: var(--cor-primaria-azul);
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: var(--cor-secundaria);
+            color: var(--cor-secundaria-verde);
         }
 
-        /* Layout Principal */
-        .wrapper {
+        /* --- Cabeçalho Superior (Top Bar) --- */
+        .top-bar {
+            background-color: var(--cor-primaria-azul);
+            color: var(--cor-texto-claro);
+            padding: 10px 20px;
             display: flex;
-            flex: 1; /* Faz com que o conteúdo principal ocupe o espaço restante */
-        }
-
-        /* Cabeçalho Superior */
-        .main-header {
-            background-color: var(--cor-primaria);
-            color: var(--cor-card-fundo);
-            padding: 20px 30px;
-            box-shadow: 0 3px 6px var(--cor-sombra);
-            display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* Permite que os itens quebrem a linha */
-        }
-
-        .main-header .logo {
-            font-family: var(--fonte-cabecalho);
-            font-size: 1.8em;
-            font-weight: 700;
-            margin-right: 20px;
-        }
-
-        .main-header .user-info {
-            display: flex;
-            align-items: center;
-            font-size: 0.95em;
-        }
-
-        .main-header .user-info i {
-            margin-right: 8px;
-            font-size: 1.2em;
-        }
-
-        /* Navegação Lateral (Sidebar) */
-        .sidebar {
-            width: 250px;
-            background-color: var(--cor-fundo-escuro);
-            color: var(--cor-card-fundo);
-            padding: 20px 0;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            position: sticky; /* Fica fixo ao rolar */
+            box-shadow: 0 2px 5px var(--cor-sombra);
+            position: sticky;
             top: 0;
-            height: 100vh; /* Ocupa a altura total da viewport */
-            overflow-y: auto; /* Permite rolar se o conteúdo for grande */
+            z-index: 1000; /* Garante que fique acima de outros elementos */
         }
 
-        .sidebar nav ul {
-            list-style: none;
-        }
-
-        .sidebar nav ul li a {
-            display: block;
-            padding: 15px 25px;
-            color: var(--cor-card-fundo);
-            font-weight: 500;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .sidebar nav ul li a i {
-            margin-right: 10px;
-            font-size: 1.1em;
-        }
-
-        .sidebar nav ul li a:hover,
-        .sidebar nav ul li.active a {
-            background-color: var(--cor-primaria);
-            color: var(--cor-card-fundo);
-        }
-
-        /* Conteúdo Principal do Dashboard */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .dashboard-header {
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--cor-borda);
-            padding-bottom: 15px;
-        }
-
-        .dashboard-header h2 {
-            font-family: var(--fonte-cabecalho);
-            font-size: 2.2em;
-            color: var(--cor-texto-principal);
-            margin-bottom: 5px;
-        }
-
-        .dashboard-header p {
-            color: var(--cor-texto-secundario);
-            font-size: 1.1em;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background-color: var(--cor-card-fundo);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px var(--cor-sombra);
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .card h3 {
-            font-family: var(--fonte-cabecalho);
-            color: var(--cor-primaria);
-            font-size: 1.5em;
-            margin-bottom: 15px;
+        .top-bar .left-section {
             display: flex;
             align-items: center;
         }
 
-        .card h3 i {
-            margin-right: 10px;
-            color: var(--cor-secundaria);
-        }
-
-        .card p {
-            color: var(--cor-texto-secundario);
-            margin-bottom: 10px;
-        }
-
-        .card .highlight-number {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: var(--cor-secundaria);
-            margin-top: 10px;
-            margin-bottom: 5px;
-        }
-
-        .card .action-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 8px 15px;
-            background-color: var(--cor-terciaria);
-            color: var(--cor-card-fundo);
-            border-radius: 5px;
-            font-size: 0.9em;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .card .action-link:hover {
-            background-color: #138496; /* Tom mais escuro do terciário */
-        }
-
-        .recent-activities .activity-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--cor-borda);
-        }
-
-        .recent-activities .activity-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .recent-activities .activity-icon {
+        .top-bar .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--cor-texto-claro);
             font-size: 1.5em;
-            color: var(--cor-primaria);
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .recent-activities .activity-details {
-            flex-grow: 1;
-        }
-
-        .recent-activities .activity-details h4 {
-            margin: 0 0 5px 0;
-            font-size: 1.1em;
-            color: var(--cor-texto-principal);
-        }
-
-        .recent-activities .activity-details p {
-            margin: 0;
-            font-size: 0.9em;
-            color: var(--cor-texto-secundario);
-        }
-
-        .recent-activities .activity-details .date {
-            font-size: 0.8em;
-            color: #999;
-        }
-
-        /* Rodapé */
-        .main-footer {
-            background-color: var(--cor-fundo-escuro);
-            color: var(--cor-texto-secundario);
-            text-align: center;
-            padding: 20px;
-            font-size: 0.85em;
-            margin-top: auto; /* Empurra o rodapé para baixo */
-        }
-
-        /* Responsividade */
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 200px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-            .dashboard-header h2 {
-                font-size: 1.8em;
-            }
-            .card h3 {
-                font-size: 1.3em;
-            }
-            .card .highlight-number {
-                font-size: 2em;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .wrapper {
-                flex-direction: column; /* Coloca sidebar em cima */
-            }
-            .sidebar {
-                width: 100%;
-                height: auto; /* Altura automática */
-                position: relative;
-                box-shadow: none;
-            }
-            .sidebar nav ul {
-                display: flex; /* Transforma em menu horizontal */
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 10px 0;
-            }
-            .sidebar nav ul li {
-                margin: 5px 10px; /* Espaçamento horizontal */
-            }
-            .sidebar nav ul li a {
-                padding: 10px 15px;
-                text-align: center;
-                border-radius: 5px;
-            }
-            .sidebar nav ul li a i {
-                display: block; /* Ícone acima do texto */
-                margin-right: 0;
-                margin-bottom: 5px;
-            }
-            .main-header {
-                flex-direction: column;
-                padding: 15px 20px;
-            }
-            .main-header .user-info {
-                margin-top: 10px;
-            }
-            .main-content {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-header .logo {
-                font-size: 1.5em;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
-            }
-            .card {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="main-header">
-        <div class="logo">Redação Paraná</div>
-        <div class="user-info">
-            <i class="fas fa-user-circle"></i> Olá, [Nome do Usuário]!
-        </div>
-    </header>
-
-    <div class="wrapper">
-        <aside class="sidebar">
-            <nav>
-                <ul>
-                    <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> Minhas Redações</a></li>
-                    <li><a href="#"><i class="fas fa-edit"></i> Nova Redação</a></li>
-                    <li><a href="#"><i class="fas fa-book-open"></i> Recursos Educacionais</a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> Relatórios de Desempenho</a></li>
-                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Minhas Turmas</a></li>
-                    <li><a href="#"><i class="fas fa-plus-circle"></i> Criar Proposta</a></li>
-                    <li><a href="#"><i class="fas fa-check-double"></i> Redações para Corrigir</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <div class="dashboard-header">
-                <h2>Bem-vindo(a) ao seu Painel!</h2>
-                <p>Aqui você encontra um resumo rápido das suas atividades e acessos importantes.</p>
-            </div>
-
-            <section class="dashboard-grid">
-                <div class="card">
-                    <h3><i class="fas fa-clipboard-list"></i> Redações Pendentes</h3>
-                    <p>Você tem:</p>
-                    <div class="highlight-number">2</div>
-                    <p>propostas de redação para escrever.</p>
-                    <a href="#" class="action-link">Ver Propostas</a>
-                </div>
-
-                <div class="card">
-                    <h3><i class="fas fa-check-circle"></i> Últimas Correções</h3>
-                    <p>Sua última redação sobre "Importância da Água" foi corrigida:</p>
-                    <p>Nota IA: <strong style="color: var(--cor-secundaria);">8.5/10</strong></p>
-                    <p>Nota Professor: <strong style="color: var(--cor-primaria);">9.0/10</strong></p>
-                    <a href="#" class="action-link">Ver Detalhes</a>
-                </div>
-
-                <div class="card">
-                    <h3><i class="fas fa-book-reader"></i> Recursos Educacionais</h3>
-                    <p>Acesse nossa biblioteca de vídeos e materiais para aprimorar sua escrita.</p>
-                    <a href="#" class="action-link">Explorar Recursos</a>
-                </div>
-
-                <div class="card recent-activities">
-                    <h3><i class="fas fa-history"></i> Atividade Recente</h3>
-                    <div class="activity-item">
-                        <i class="activity-icon fas fa-upload"></i>
-                        <div class="activity-details">
-                            <h4>Redação "Desafios do Século XXI" Enviada</h4>
-                            <p>Sua redação foi enviada para correção da IA.</p>
-                            <span class="date">25 de Junho, 2025</span>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <i class="activity-icon fas fa-comments"></i>
-                        <div class="activity-details">
-                            <h4>Novo Feedback na Redação "Meio Ambiente"</h4>
-                            <p>O professor(a) Maria Silva adicionou comentários.</p>
-                            <span class="date">20 de Junho, 2025</span>
-                        </div>
-                    </div>
-                    <a href="#" class="action-link">Ver Todo Histórico</a>
-                </div>
-
-            </section>
-        </main>
-    </div>
-
-    <footer class="main-footer">
-        <p>&copy; 2025 Redação Paraná. Uma iniciativa do Governo do Estado do Paraná. Todos os direitos reservados.</p>
-    </footer>
-
-</body>
-</html>
+            cursor: pointer;
+            margin-right: 1
