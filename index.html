@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redação Paraná - Home Estudante</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Redação Paraná - Sua Nova Jornada de Escrita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis CSS para Cores - Baseado na imagem */
+        /* Variáveis CSS para um Design Atualizado */
         :root {
-            --cor-primaria-azul: #007bff; /* Azul vibrante do cabeçalho */
-            --cor-secundaria-verde: #28a745; /* Verde do logo e destaques */
-            --cor-fundo-sidebar: #343a40; /* Cinza escuro da sidebar */
-            --cor-fundo-claro: #f0f2f5; /* Fundo principal da página */
-            --cor-fundo-cards: #ffffff;
-            --cor-texto-escuro: #333;
-            --cor-texto-claro: #ffffff;
-            --cor-borda-cinza: #dee2e6;
-            --cor-hover-azul: #0056b3; /* Azul mais escuro para hover */
-            --cor-ativo-sidebar: #007bff; /* Azul do item ativo na sidebar */
-            --cor-sombra: rgba(0, 0, 0, 0.1);
-            --cor-sombra-card: rgba(0, 0, 0, 0.08);
+            --cor-primaria: #2E86DE; /* Azul vibrante e moderno */
+            --cor-secundaria: #34D399; /* Verde aquático fresco */
+            --cor-destaque-claro: #E0F2FE; /* Azul muito claro */
+            --cor-destaque-verde-claro: #D1FAE5; /* Verde muito claro */
+            --cor-fundo-claro: #F9FAFB; /* Fundo off-white */
+            --cor-fundo-escuro: #1F2937; /* Cinza escuro para sidebar/footer */
+            --cor-texto-principal: #374151; /* Cinza escuro para texto */
+            --cor-texto-secundario: #6B7280; /* Cinza médio para detalhes */
+            --cor-borda: #E5E7EB; /* Cinza claro para bordas */
+            --cor-card-bg: #FFFFFF;
+            --cor-sombra-suave: rgba(0, 0, 0, 0.05);
+            --cor-sombra-media: rgba(0, 0, 0, 0.1);
+            --cor-sombra-forte: rgba(0, 0, 0, 0.2);
+
+            --fonte-cabecalho: 'Poppins', sans-serif;
+            --fonte-corpo: 'Inter', sans-serif;
+
+            --radius-default: 8px; /* Arredondamento padrão */
+            --transicao-rapida: all 0.2s ease-in-out;
         }
 
-        /* Reset Básico */
+        /* Reset Básico e Estilos Globais */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -31,38 +38,53 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            color: var(--cor-texto-escuro);
+            font-family: var(--fonte-corpo);
+            color: var(--cor-texto-principal);
             background-color: var(--cor-fundo-claro);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            overflow-x: hidden; /* Evita scroll horizontal indesejado */
+            overflow-x: hidden;
         }
 
         a {
             text-decoration: none;
-            color: var(--cor-primaria-azul);
-            transition: color 0.3s ease;
+            color: var(--cor-primaria);
+            transition: var(--transicao-rapida);
         }
 
         a:hover {
-            color: var(--cor-secundaria-verde);
+            color: var(--cor-secundaria);
         }
 
-        /* --- Cabeçalho Superior (Top Bar) --- */
+        /* --- Utilidades --- */
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px var(--cor-sombra-suave), 0 2px 4px -1px var(--cor-sombra-suave);
+        }
+        .shadow-lg {
+            box-shadow: 0 10px 15px -3px var(--cor-sombra-media), 0 4px 6px -2px var(--cor-sombra-media);
+        }
+        .rounded-lg {
+            border-radius: var(--radius-default);
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Top Bar (Cabeçalho Superior) --- */
         .top-bar {
-            background-color: var(--cor-primaria-azul);
-            color: var(--cor-texto-claro);
-            padding: 10px 20px;
+            background-color: var(--cor-card-bg);
+            padding: 15px 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 5px var(--cor-sombra);
+            box-shadow: 0 2px 8px var(--cor-sombra-suave);
             position: sticky;
             top: 0;
-            z-index: 1000; /* Garante que fique acima de outros elementos */
+            z-index: 1000;
         }
 
         .top-bar .left-section {
@@ -73,21 +95,29 @@
         .top-bar .menu-toggle {
             background: none;
             border: none;
-            color: var(--cor-texto-claro);
-            font-size: 1.5em;
+            color: var(--cor-texto-principal);
+            font-size: 1.6em;
             cursor: pointer;
             margin-right: 15px;
-            display: none; /* Esconde em desktop, mostra em mobile */
+            display: none; /* Oculto em desktop, visível em mobile */
+            transition: var(--transicao-rapida);
+        }
+        .top-bar .menu-toggle:hover {
+            color: var(--cor-primaria);
         }
 
         .top-bar .logo-brand {
-            font-family: 'Open Sans', sans-serif;
+            font-family: var(--fonte-cabecalho);
             font-weight: 700;
-            font-size: 1.5em;
+            font-size: 1.6em;
+            color: var(--cor-primaria);
+        }
+        .top-bar .logo-brand span {
+            color: var(--cor-secundaria);
         }
 
         .top-bar .main-nav {
-            flex-grow: 1; /* Ocupa o espaço central */
+            flex-grow: 1;
             text-align: center;
         }
 
@@ -98,54 +128,86 @@
         }
 
         .top-bar .main-nav ul li {
-            margin: 0 15px;
+            margin: 0 20px;
         }
 
         .top-bar .main-nav ul li a {
-            color: var(--cor-texto-claro);
+            color: var(--cor-texto-secundario);
             font-weight: 500;
-            padding: 5px 0;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom 0.3s ease, color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transicao-rapida);
         }
-
+        .top-bar .main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--cor-primaria);
+            transition: width 0.3s ease-out;
+        }
         .top-bar .main-nav ul li a:hover {
-            border-bottom-color: var(--cor-secundaria-verde);
+            color: var(--cor-primaria);
+        }
+        .top-bar .main-nav ul li a:hover::after {
+            width: 100%;
         }
 
         .top-bar .user-profile {
             display: flex;
             align-items: center;
             font-size: 0.9em;
+            color: var(--cor-texto-principal);
         }
 
+        .top-bar .user-profile .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-claro);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-right: 8px;
+            cursor: pointer;
+            position: relative; /* Para o tooltip */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .top-bar .user-profile .avatar span {
+            line-height: 1;
+        }
+        .top-bar .user-profile .username {
+            font-weight: 600;
+            margin-right: 10px;
+        }
         .top-bar .user-profile .version {
             font-size: 0.75em;
-            opacity: 0.8;
-            margin-left: 10px;
+            color: var(--cor-texto-secundario);
         }
 
-        .top-bar .user-profile i {
-            margin-right: 5px;
-            font-size: 1.1em;
-        }
-
-        /* --- Layout Principal com Sidebar --- */
+        /* --- Page Wrapper (Container Principal) --- */
         .page-wrapper {
             display: flex;
-            flex: 1; /* Ocupa o restante do espaço vertical */
+            flex: 1;
+            padding-top: 20px; /* Espaçamento entre top-bar e conteúdo */
         }
 
-        /* Sidebar Lateral */
+        /* --- Sidebar Lateral --- */
         .sidebar {
-            width: 200px;
-            background-color: var(--cor-fundo-sidebar);
-            padding-top: 20px;
-            box-shadow: 2px 0 5px var(--cor-sombra);
+            width: 240px;
+            background-color: var(--cor-fundo-escuro);
+            padding: 20px 0;
+            box-shadow: 2px 0 10px var(--cor-sombra-suave);
             position: sticky;
-            top: 70px; /* Alinha abaixo da top-bar */
-            height: calc(100vh - 70px); /* Altura restante da viewport */
-            overflow-y: auto; /* Permite scroll se o menu for grande */
+            top: 85px; /* Ajusta-se abaixo da top-bar */
+            height: calc(100vh - 85px); /* Ocupa a altura restante */
+            overflow-y: auto;
+            transition: transform 0.3s ease-out;
+            transform: translateX(0); /* Padrão: visível */
         }
 
         .sidebar nav ul {
@@ -155,223 +217,323 @@
         .sidebar nav ul li a {
             display: flex;
             align-items: center;
-            padding: 12px 20px;
+            padding: 15px 25px;
             color: var(--cor-texto-claro);
-            font-weight: 400;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 500;
+            transition: var(--transicao-rapida);
+            position: relative;
+            overflow: hidden;
         }
-
         .sidebar nav ul li a i {
-            margin-right: 10px;
+            margin-right: 12px;
             font-size: 1.1em;
+        }
+        .sidebar nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
         }
 
         .sidebar nav ul li a:hover {
-            background-color: var(--cor-hover-azul);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--cor-secundaria);
         }
-
         .sidebar nav ul li.active a {
-            background-color: var(--cor-ativo-sidebar);
-            font-weight: 500;
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-claro);
+        }
+        .sidebar nav ul li.active a::before {
+            background-color: var(--cor-secundaria);
         }
 
-        /* --- Conteúdo Principal --- */
+        /* --- Main Content (Área Principal) --- */
         .main-content {
-            flex: 1; /* Ocupa todo o espaço restante horizontal */
+            flex: 1;
             padding: 30px;
-            overflow-y: auto; /* Permite scroll no conteúdo */
+            overflow-y: auto;
         }
 
-        .hero-section {
-            text-align: center;
-            margin-bottom: 40px;
+        .section-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--cor-borda);
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-
-        .hero-section h1 {
-            font-family: 'Open Sans', sans-serif;
+        .section-header h1 {
+            font-family: var(--fonte-cabecalho);
             font-size: 2.2em;
-            color: var(--cor-primaria-azul);
-            margin-bottom: 25px;
+            color: var(--cor-texto-principal);
+            font-weight: 700;
+        }
+        .section-header .breadcrumb {
+            font-size: 0.9em;
+            color: var(--cor-texto-secundario);
+        }
+        .section-header .breadcrumb span {
+            margin: 0 5px;
+        }
+        .section-header .breadcrumb a {
+            color: var(--cor-texto-secundario);
+        }
+        .section-header .breadcrumb a:hover {
+            color: var(--cor-primaria);
         }
 
-        .welcome-block {
-            background-color: var(--cor-fundo-cards);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--cor-sombra-card);
-            padding: 30px;
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--cor-destaque-claro) 0%, var(--cor-destaque-verde-claro) 100%);
+            padding: 40px;
+            border-radius: var(--radius-default);
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 30px;
-            flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+            flex-wrap: wrap;
             justify-content: center;
+            position: relative;
+            overflow: hidden; /* Para os elementos de fundo */
+        }
+        .hero-section::before { /* Elemento de fundo decorativo */
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+         .hero-section::after { /* Elemento de fundo decorativo */
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            filter: blur(60px);
         }
 
-        .welcome-block .logo-big {
-            flex-shrink: 0; /* Não encolhe */
-            width: 250px; /* Tamanho fixo do logo grande */
-            display: flex;
-            justify-content: center;
-        }
-
-        .welcome-block .logo-big img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .welcome-block .text-content {
-            flex: 1; /* Ocupa o restante do espaço */
-            min-width: 300px; /* Evita que o texto fique muito apertado */
+        .hero-content {
+            flex: 2; /* Ocupa mais espaço */
+            min-width: 300px;
             text-align: left;
         }
+        .hero-content h2 {
+            font-family: var(--fonte-cabecalho);
+            font-size: 2.5em;
+            color: var(--cor-primaria);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .hero-content h2 span {
+            color: var(--cor-secundaria);
+        }
+        .hero-content p {
+            font-size: 1.1em;
+            color: var(--cor-texto-principal);
+            margin-bottom: 25px;
+        }
+        .hero-content .action-button {
+            display: inline-block;
+            background-color: var(--cor-primaria);
+            color: var(--cor-texto-claro);
+            padding: 12px 25px;
+            border-radius: var(--radius-default);
+            font-weight: 600;
+            transition: var(--transicao-rapida);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .hero-content .action-button:hover {
+            background-color: var(--cor-secundaria);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
 
-        .welcome-block .text-content h2 {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.8em;
-            color: var(--cor-primaria-azul);
-            margin-bottom: 10px;
+        .hero-image {
+            flex: 1;
+            min-width: 200px;
             display: flex;
+            justify-content: center;
             align-items: center;
         }
-
-        .welcome-block .text-content h2 i {
-            margin-right: 10px;
-            color: var(--cor-secundaria-verde);
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-default);
+            box-shadow: 0 8px 20px var(--cor-sombra-media);
         }
 
-        .welcome-block .text-content p {
-            color: var(--cor-texto-escuro);
-            font-size: 1.05em;
-        }
-
-        /* --- Seção de Recursos --- */
-        .resources-section {
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .resources-section h2 {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 2em;
-            color: var(--cor-primaria-azul);
-            margin-bottom: 30px;
-        }
-
-        .resource-cards-grid {
+        /* Resources Grid */
+        .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            justify-content: center;
+            margin-top: 30px;
         }
 
         .resource-card {
-            background-color: var(--cor-fundo-cards);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--cor-sombra-card);
+            background-color: var(--cor-card-bg);
             padding: 25px;
+            border-radius: var(--radius-default);
+            box-shadow: 0 4px 12px var(--cor-sombra-suave);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: var(--transicao-rapida);
         }
-
         .resource-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 18px var(--cor-sombra-media);
+            border: 1px solid var(--cor-primaria); /* Adiciona borda no hover */
         }
 
         .resource-card .icon-wrapper {
-            font-size: 3em;
-            color: var(--cor-secundaria-verde);
+            font-size: 3.5em;
+            color: var(--cor-primaria);
             margin-bottom: 15px;
+            background-color: var(--cor-destaque-claro);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-         /* Estilo específico para o ícone do robô no card "Gemini" */
-        .resource-card .icon-wrapper.gemini-robot {
-            font-size: 3.5em; /* Ligeiramente maior para destacar */
-            color: #4285F4; /* Cor azul do Google/Gemini */
+        .resource-card .icon-wrapper.gemini-icon {
+            color: #4285F4; /* Cor do Google/Gemini */
+            background-color: #E6F3FF;
         }
+        .resource-card .icon-wrapper.trophy-icon {
+            color: var(--cor-secundaria);
+            background-color: var(--cor-destaque-verde-claro);
+        }
+        .resource-card .icon-wrapper.comments-icon {
+            color: var(--cor-terciaria, #6c5ce7); /* Uma terceira cor, exemplo roxo */
+            background-color: #EDE7F6;
+        }
+
         .resource-card h3 {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.3em;
-            color: var(--cor-primaria-azul);
+            font-family: var(--fonte-cabecalho);
+            font-size: 1.4em;
+            color: var(--cor-texto-principal);
             margin-bottom: 10px;
         }
 
         .resource-card p {
             font-size: 0.95em;
-            color: var(--cor-texto-escuro);
+            color: var(--cor-texto-secundario);
         }
 
-        /* Botão Flutuante de Ajuda */
+        /* Help Button (Botão de Ajuda Flutuante) */
         .help-button {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: var(--cor-secundaria-verde);
+            background-color: var(--cor-secundaria);
             color: var(--cor-texto-claro);
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8em;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.7em;
+            box-shadow: 0 6px 15px var(--cor-sombra-media);
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 999;
+            transition: var(--transicao-rapida);
+            z-index: 900;
         }
-
         .help-button:hover {
-            background-color: #1e7e34; /* Verde mais escuro no hover */
+            background-color: var(--cor-primaria);
+            transform: translateY(-3px);
         }
 
-        /* --- Rodapé --- */
+        /* --- Footer (Rodapé) --- */
         .main-footer {
-            background-color: var(--cor-fundo-sidebar); /* Mesmo fundo da sidebar */
-            color: var(--cor-texto-claro);
+            background-color: var(--cor-fundo-escuro);
+            color: var(--cor-texto-secundario);
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             font-size: 0.85em;
-            margin-top: auto; /* Empurra o rodapé para o final da página */
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: var(--cor-secundaria);
+            font-weight: 500;
+        }
+        .main-footer a:hover {
+            text-decoration: underline;
         }
 
         /* --- Responsividade --- */
         @media (max-width: 992px) {
             .top-bar .main-nav {
-                display: none; /* Esconde a navegação principal em telas menores */
+                display: none;
             }
             .top-bar .menu-toggle {
-                display: block; /* Mostra o botão de menu hamburger */
+                display: block;
+            }
+            .page-wrapper {
+                flex-direction: column;
+                padding-top: 0;
             }
             .sidebar {
-                position: fixed; /* Fixa a sidebar para ser um menu hamburguer */
-                left: -200px; /* Esconde a sidebar por padrão */
-                transition: left 0.3s ease;
-                z-index: 1001; /* Fica acima de tudo quando aberto */
+                position: fixed;
+                left: -240px; /* Esconde a sidebar */
+                top: 70px; /* Ajusta conforme altura da top-bar */
+                height: calc(100vh - 70px);
+                z-index: 1001; /* Fica acima do conteúdo */
+                background-color: var(--cor-fundo-escuro);
             }
             .sidebar.active {
-                left: 0; /* Mostra a sidebar quando ativa */
+                transform: translateX(240px); /* Move para a direita para aparecer */
+                box-shadow: 5px 0 15px var(--cor-sombra-forte);
             }
             .main-content {
                 padding: 20px;
+                margin-left: 0; /* Garante que não haja margin do sidebar oculto */
             }
-            .welcome-block {
-                flex-direction: column; /* Pilha os elementos */
+            .hero-section {
+                flex-direction: column;
                 text-align: center;
-                gap: 20px;
             }
-            .welcome-block .text-content {
-                min-width: unset; /* Remove min-width */
+            .hero-content {
+                order: 2; /* Move o texto para baixo da imagem em mobile */
             }
-            .welcome-block .text-content h2 {
-                justify-content: center; /* Centraliza o ícone e título */
+            .hero-image {
+                order: 1; /* Move a imagem para cima em mobile */
+                margin-bottom: 20px;
             }
-            .resource-cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajusta tamanho mínimo do card */
+            .hero-content h2 {
+                font-size: 2em;
             }
-            .hero-section h1 {
-                font-size: 1.8em;
+            .hero-content p {
+                font-size: 1em;
             }
-            .resources-section h2 {
-                font-size: 1.6em;
+            .resources-grid {
+                grid-template-columns: 1fr; /* Uma coluna em telas menores */
+            }
+            .resource-card {
+                padding: 20px;
+            }
+            .resource-card .icon-wrapper {
+                font-size: 3em;
+                width: 70px;
+                height: 70px;
+            }
+            .resource-card .icon-wrapper.gemini-icon {
+                font-size: 3.2em;
             }
         }
 
@@ -380,38 +542,30 @@
                 padding: 10px 15px;
             }
             .top-bar .logo-brand {
-                font-size: 1.2em;
+                font-size: 1.4em;
             }
-            .top-bar .user-profile {
-                font-size: 0.8em;
+            .top-bar .user-profile .username,
+            .top-bar .user-profile .version {
+                display: none; /* Oculta nome e versão para economizar espaço */
+            }
+            .top-bar .user-profile .avatar {
+                margin-right: 0;
             }
             .main-content {
                 padding: 15px;
             }
-            .hero-section h1 {
-                font-size: 1.5em;
+            .section-header h1 {
+                font-size: 1.8em;
             }
-            .welcome-block {
-                padding: 20px;
+            .section-header .breadcrumb {
+                display: none; /* Oculta breadcrumb em telas pequenas */
             }
-            .welcome-block .logo-big {
-                width: 200px;
-            }
-            .resource-card {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
             .help-button {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
                 font-size: 1.5em;
                 bottom: 20px;
                 right: 20px;
-            }
-            .top-bar .user-profile .version {
-                display: none; /* Oculta a versão em telas muito pequenas */
             }
         }
     </style>
@@ -421,65 +575,82 @@
     <header class="top-bar">
         <div class="left-section">
             <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-            <span class="logo-brand">REDAÇÃO PARANÁ</span>
+            <span class="logo-brand">REDAÇÃO <span>PARANÁ</span></span>
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a href="#">INÍCIO</a></li>
-                <li><a href="#">COMO FUNCIONA</a></li>
-                <li><a href="#">VANTAGENS</a></li>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Como Funciona</a></li>
+                <li><a href="#">Vantagens</a></li>
             </ul>
         </nav>
         <div class="user-profile">
-            <i class="fas fa-user-circle"></i> ANTHOMNY DHEG
-            <span class="version">WEB v.2.0.9</span>
+            <div class="avatar"><span>A</span></div>
+            <span class="username">Anthony D.</span>
+            <span class="version">v.2.0.9</span>
         </div>
     </header>
 
     <div class="page-wrapper">
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar shadow-md" id="sidebar">
             <nav>
                 <ul>
-                    <li class="active"><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> Instruções</a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> Propostas</a></li>
-                    </ul>
+                    <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Minhas Redações</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i> Nova Redação</a></li>
+                    <li><a href="#"><i class="fas fa-book-open"></i> Recursos Educacionais</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Desempenho</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Minhas Turmas</a></li>
+                    <li><a href="#"><i class="fas fa-plus-square"></i> Criar Proposta</a></li>
+                    <li><a href="#"><i class="fas fa-check-double"></i> Corrigir Redações</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                </ul>
             </nav>
         </aside>
 
         <main class="main-content">
-            <section class="hero-section">
-                <h1>Sua jornada de escrita começa aqui</h1>
-                <div class="welcome-block">
-                    <div class="logo-big">
-                        <img src="https://via.placeholder.com/250x150?text=Logo+Redacao+Parana" alt="Logo Redação Paraná">
-                        </div>
-                    <div class="text-content">
-                        <h2><i class="fas fa-lightbulb"></i> Descubra o Redação Paraná!</h2>
-                        <p>Ei, estudante! Que tal transformar a escrita em algo super legal? O Redação Paraná está disponível para criar textos incríveis e se preparar para o ENEM de forma inteligente e divertida!</p>
-                        <p>Aqui você encontra propostas de redação atualizadas, com temas que realmente importam. É sua chance de brilhar e mostrar suas ideias!</p>
-                    </div>
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <div class="breadcrumb">
+                    <span>Home</span> <i class="fas fa-chevron-right"></i> <span>Dashboard</span>
+                </div>
+            </div>
+
+            <section class="hero-section rounded-lg shadow-lg">
+                <div class="hero-content">
+                    <h2>Sua jornada de escrita <span>começa aqui</span>.</h2>
+                    <p>Transforme suas ideias em textos incríveis e prepare-se para o ENEM de forma inteligente e divertida com o Redação Paraná!</p>
+                    <a href="#" class="action-button">Comece a Escrever Agora <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://via.placeholder.com/350x250/2E86DE/E0F2FE?text=Criatividade" alt="Ilustração de criatividade e escrita">
                 </div>
             </section>
 
-            <section class="resources-section">
-                <h2>Recursos da Plataforma</h2>
-                <div class="resource-cards-grid">
-                    <div class="resource-card">
-                        <div class="icon-wrapper gemini-robot"><i class="fas fa-robot"></i></div>
-                        <h3>Correção Inteligente com Gemini</h3>
-                        <p>Sistema avançado de correção para redações do ENEM que combina a tecnologia Gemini.</p>
-                    </div>
-                    <div class="resource-card">
-                        <div class="icon-wrapper"><i class="fas fa-trophy"></i></div>
-                        <h3>Concursos de Redação</h3>
-                        <p>Participe de concursos de redação integrados à plataforma. Prepare-se para desafios de escrita.</p>
-                    </div>
-                    <div class="resource-card">
-                        <div class="icon-wrapper"><i class="fas fa-comments"></i></div>
-                        <h3>Comentários Interativos</h3>
-                        <p>Receba feedback contextual direto nos parágrafos e seções específicas da sua redação.</p>
-                    </div>
+            <div class="section-header">
+                <h1>Recursos da Plataforma</h1>
+            </div>
+            <section class="resources-grid">
+                <div class="resource-card rounded-lg">
+                    <div class="icon-wrapper gemini-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Correção Inteligente com IA</h3>
+                    <p>Sistema avançado de correção que combina tecnologia e insights para aprimorar suas redações.</p>
+                </div>
+                <div class="resource-card rounded-lg">
+                    <div class="icon-wrapper trophy-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Concursos e Desafios</h3>
+                    <p>Participe de concursos de redação e desafios temáticos para testar suas habilidades.</p>
+                </div>
+                <div class="resource-card rounded-lg">
+                    <div class="icon-wrapper comments-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Feedback Detalhado</h3>
+                    <p>Receba comentários e sugestões específicas para cada parágrafo da sua redação.</p>
+                </div>
+                <div class="resource-card rounded-lg">
+                    <div class="icon-wrapper"><i class="fas fa-book-reader"></i></div>
+                    <h3>Materiais de Apoio</h3>
+                    <p>Acesse uma vasta biblioteca de vídeos e guias sobre gêneros textuais e normas da língua portuguesa.</p>
                 </div>
             </section>
         </main>
@@ -490,7 +661,8 @@
     </div>
 
     <footer class="main-footer">
-        <p>&copy; 2025 Redação Paraná. Uma iniciativa do Governo do Estado do Paraná. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Redação Paraná. Uma iniciativa do Governo do Estado do Paraná.</p>
+        <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
     </footer>
 
     <script>
@@ -503,9 +675,9 @@
                     sidebar.classList.toggle('active');
                 });
 
-                // Fechar sidebar ao clicar fora (opcional, para uma UX melhor)
+                // Opcional: Fechar sidebar ao clicar fora em mobile
                 document.addEventListener('click', function(event) {
-                    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target) && sidebar.classList.contains('active')) {
+                    if (window.innerWidth <= 992 && !sidebar.contains(event.target) && !menuToggle.contains(event.target) && sidebar.classList.contains('active')) {
                         sidebar.classList.remove('active');
                     }
                 });
