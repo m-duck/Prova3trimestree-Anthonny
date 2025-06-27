@@ -1,417 +1,424 @@
-HTML
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redação Paraná - Aprimore Sua Escrita</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Redação Paraná - Painel do Usuário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilos Gerais */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5; /* Cinza claro de fundo */
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Cores da Identidade Visual do Paraná (tons de azul e verde) */
+        /* Variáveis CSS para Cores e Fontes - Mais fácil de manter */
         :root {
             --cor-primaria: #007bff; /* Azul vibrante */
-            --cor-secundaria: #28a745; /* Verde para destaque */
-            --cor-fundo-cabecalho: #0056b3; /* Azul escuro para cabeçalho */
-            --cor-texto-claro: #ffffff;
+            --cor-secundaria: #28a745; /* Verde do Paraná */
+            --cor-terciaria: #17a2b8; /* Azul claro para alguns detalhes */
+            --cor-fundo-claro: #f8f9fa; /* Fundo suave */
+            --cor-fundo-escuro: #343a40; /* Rodapé/elementos escuros */
+            --cor-texto-principal: #343a40;
+            --cor-texto-secundario: #6c757d;
             --cor-borda: #dee2e6;
-            --cor-erro: #dc3545; /* Vermelho para erros */
-            --cor-sugestao: #ffc107; /* Amarelo para sugestões */
+            --cor-card-fundo: #ffffff;
+            --cor-sombra: rgba(0, 0, 0, 0.08);
+
+            --fonte-cabecalho: 'Open Sans', sans-serif;
+            --fonte-corpo: 'Roboto', sans-serif;
         }
 
-        /* Cabeçalho */
-        header {
-            background-color: var(--cor-fundo-cabecalho);
-            color: var(--cor-texto-claro);
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        header p {
-            margin: 5px 0 0;
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        /* Navegação */
-        nav {
-            background-color: var(--cor-primaria);
-            padding: 10px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        nav ul {
-            list-style: none;
+        /* Reset e Estilos Base */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: var(--fonte-corpo);
+            color: var(--cor-texto-principal);
+            background-color: var(--cor-fundo-claro);
+            line-height: 1.6;
+            min-height: 100vh; /* Garante que o rodapé fique no final */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
         }
 
-        nav ul li {
-            margin: 0 20px;
-        }
-
-        nav ul li a {
-            color: var(--cor-texto-claro);
+        a {
             text-decoration: none;
-            font-weight: bold;
-            padding: 5px 0;
+            color: var(--cor-primaria);
             transition: color 0.3s ease;
         }
 
-        nav ul li a:hover {
-            color: #d1ecf1; /* Tom mais claro no hover */
+        a:hover {
+            color: var(--cor-secundaria);
         }
 
-        /* Conteúdo Principal */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+        /* Layout Principal */
+        .wrapper {
+            display: flex;
+            flex: 1; /* Faz com que o conteúdo principal ocupe o espaço restante */
         }
 
-        .section {
-            background-color: var(--cor-texto-claro);
-            padding: 30px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        /* Cabeçalho Superior */
+        .main-header {
+            background-color: var(--cor-primaria);
+            color: var(--cor-card-fundo);
+            padding: 20px 30px;
+            box-shadow: 0 3px 6px var(--cor-sombra);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Permite que os itens quebrem a linha */
         }
 
-        .section h2 {
-            color: var(--cor-primaria);
-            border-bottom: 2px solid var(--cor-borda);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 2em;
+        .main-header .logo {
+            font-family: var(--fonte-cabecalho);
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-right: 20px;
         }
 
-        .section ul {
+        .main-header .user-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+        }
+
+        .main-header .user-info i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        /* Navegação Lateral (Sidebar) */
+        .sidebar {
+            width: 250px;
+            background-color: var(--cor-fundo-escuro);
+            color: var(--cor-card-fundo);
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: sticky; /* Fica fixo ao rolar */
+            top: 0;
+            height: 100vh; /* Ocupa a altura total da viewport */
+            overflow-y: auto; /* Permite rolar se o conteúdo for grande */
+        }
+
+        .sidebar nav ul {
             list-style: none;
-            padding-left: 0;
         }
 
-        .section ul li {
+        .sidebar nav ul li a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--cor-card-fundo);
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar nav ul li a i {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .sidebar nav ul li a:hover,
+        .sidebar nav ul li.active a {
+            background-color: var(--cor-primaria);
+            color: var(--cor-card-fundo);
+        }
+
+        /* Conteúdo Principal do Dashboard */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--cor-borda);
+            padding-bottom: 15px;
+        }
+
+        .dashboard-header h2 {
+            font-family: var(--fonte-cabecalho);
+            font-size: 2.2em;
+            color: var(--cor-texto-principal);
+            margin-bottom: 5px;
+        }
+
+        .dashboard-header p {
+            color: var(--cor-texto-secundario);
+            font-size: 1.1em;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--cor-card-fundo);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--cor-sombra);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            font-family: var(--fonte-cabecalho);
+            color: var(--cor-primaria);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3 i {
+            margin-right: 10px;
+            color: var(--cor-secundaria);
+        }
+
+        .card p {
+            color: var(--cor-texto-secundario);
             margin-bottom: 10px;
         }
 
-        /* Destaque de Funcionalidades */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .feature-card {
-            background-color: #e9f7ef; /* Fundo mais claro para cards de funcionalidades */
-            border-left: 5px solid var(--cor-secundaria);
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .feature-card h3 {
-            color: var(--cor-primaria);
-            margin-top: 0;
-        }
-
-        /* Dashboard de Exemplo (simulando a aparência) */
-        .dashboard-example {
-            border: 1px solid var(--cor-borda);
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #fbfdff;
-            margin-top: 30px;
-        }
-
-        .dashboard-example h3 {
+        .card .highlight-number {
+            font-size: 2.5em;
+            font-weight: 700;
             color: var(--cor-secundaria);
-            margin-top: 0;
-            border-bottom: 1px solid var(--cor-borda);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
-        .dashboard-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .dashboard-card {
-            background-color: var(--cor-texto-claro);
-            border: 1px solid #ddd;
+        .card .action-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: var(--cor-terciaria);
+            color: var(--cor-card-fundo);
             border-radius: 5px;
-            padding: 15px;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .dashboard-card h4 {
-            margin-top: 0;
-            color: #555;
-        }
-
-        /* Editor de Texto Exemplo */
-        .text-editor-example {
-            border: 1px solid var(--cor-borda);
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #fbfdff;
-            margin-top: 30px;
-        }
-
-        .text-editor-example h3 {
-            color: var(--cor-secundaria);
-            margin-top: 0;
-            border-bottom: 1px solid var(--cor-borda);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .editor-area {
-            border: 1px solid #ccc;
-            padding: 15px;
-            min-height: 200px;
-            background-color: #fff;
-            line-height: 1.8;
-            font-size: 1em;
-            white-space: pre-wrap; /* Para simular o texto com quebras de linha */
-        }
-
-        .error-highlight {
-            background-color: var(--cor-erro);
-            color: var(--cor-texto-claro);
-            padding: 2px 4px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .suggestion-highlight {
-            background-color: var(--cor-sugestao);
-            color: #333;
-            padding: 2px 4px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .tooltip {
-            visibility: hidden;
-            background-color: #555;
-            color: #fff;
+            font-size: 0.9em;
             text-align: center;
-            border-radius: 6px;
-            padding: 5px 8px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Posição acima do elemento */
-            left: 50%;
-            margin-left: -60px; /* Metade da largura do tooltip */
-            opacity: 0;
-            transition: opacity 0.3s;
+            transition: background-color 0.3s ease;
         }
 
-        .error-highlight:hover .tooltip, .suggestion-highlight:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
+        .card .action-link:hover {
+            background-color: #138496; /* Tom mais escuro do terciário */
+        }
+
+        .recent-activities .activity-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--cor-borda);
+        }
+
+        .recent-activities .activity-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .recent-activities .activity-icon {
+            font-size: 1.5em;
+            color: var(--cor-primaria);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .recent-activities .activity-details {
+            flex-grow: 1;
+        }
+
+        .recent-activities .activity-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+            color: var(--cor-texto-principal);
+        }
+
+        .recent-activities .activity-details p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--cor-texto-secundario);
+        }
+
+        .recent-activities .activity-details .date {
+            font-size: 0.8em;
+            color: #999;
         }
 
         /* Rodapé */
-        footer {
-            background-color: #333;
-            color: var(--cor-texto-claro);
+        .main-footer {
+            background-color: var(--cor-fundo-escuro);
+            color: var(--cor-texto-secundario);
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            font-size: 0.9em;
+            padding: 20px;
+            font-size: 0.85em;
+            margin-top: auto; /* Empurra o rodapé para baixo */
         }
 
         /* Responsividade */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 200px;
             }
-
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav ul li {
-                margin: 5px 0;
-            }
-
-            .container {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
-
-            .section {
+            .main-content {
                 padding: 20px;
             }
+            .dashboard-header h2 {
+                font-size: 1.8em;
+            }
+            .card h3 {
+                font-size: 1.3em;
+            }
+            .card .highlight-number {
+                font-size: 2em;
+            }
+        }
 
-            .feature-grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column; /* Coloca sidebar em cima */
+            }
+            .sidebar {
+                width: 100%;
+                height: auto; /* Altura automática */
+                position: relative;
+                box-shadow: none;
+            }
+            .sidebar nav ul {
+                display: flex; /* Transforma em menu horizontal */
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 10px 0;
+            }
+            .sidebar nav ul li {
+                margin: 5px 10px; /* Espaçamento horizontal */
+            }
+            .sidebar nav ul li a {
+                padding: 10px 15px;
+                text-align: center;
+                border-radius: 5px;
+            }
+            .sidebar nav ul li a i {
+                display: block; /* Ícone acima do texto */
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            .main-header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            .main-header .user-info {
+                margin-top: 10px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header .logo {
+                font-size: 1.5em;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
+            }
+            .card {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Redação Paraná</h1>
-        <p>A plataforma do Governo do Estado do Paraná para aprimorar sua escrita.</p>
+    <header class="main-header">
+        <div class="logo">Redação Paraná</div>
+        <div class="user-info">
+            <i class="fas fa-user-circle"></i> Olá, [Nome do Usuário]!
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#funcionalidades">Funcionalidades</a></li>
-            <li><a href="#interface">Interface</a></li>
-            <li><a href="#contato">Contato</a></li>
-        </ul>
-    </nav>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Minhas Redações</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i> Nova Redação</a></li>
+                    <li><a href="#"><i class="fas fa-book-open"></i> Recursos Educacionais</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Relatórios de Desempenho</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Minhas Turmas</a></li>
+                    <li><a href="#"><i class="fas fa-plus-circle"></i> Criar Proposta</a></li>
+                    <li><a href="#"><i class="fas fa-check-double"></i> Redações para Corrigir</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <div class="container">
-        <div id="sobre" class="section">
-            <h2>Sobre o Redação Paraná</h2>
-            <p>O Redação Paraná é uma plataforma educacional desenvolvida pelo Governo do Estado do Paraná com o objetivo de **aprimorar as habilidades de escrita e leitura** de alunos da rede pública, oferecendo também um **suporte valioso aos professores de Língua Portuguesa**.</p>
-            <h3>Objetivo e Público-Alvo</h3>
-            <p>Nosso principal foco é **melhorar a produção textual dos estudantes**, atuando na recomposição da aprendizagem e otimizando o trabalho pedagógico dos educadores. A plataforma é destinada a:</p>
-            <ul>
-                <li><strong>Alunos</strong> do ensino fundamental e médio da rede pública estadual do Paraná.</li>
-                <li><strong>Professores</strong> de Língua Portuguesa dessas mesmas escolas.</li>
-            </ul>
-        </div>
-
-        <hr>
-
-        <div id="funcionalidades" class="section">
-            <h2>Funcionalidades Detalhadas</h2>
-            <p>O Redação Paraná oferece um conjunto de ferramentas integradas para todo o processo de escrita, desde a criação da proposta até a correção e o feedback.</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>Propostas de Redação</h3>
-                    <p>Professores podem criar e atribuir temas de redação com facilidade. As propostas incluem **textos de apoio** (imagens, gráficos, excertos) para contextualizar o tema e direcionar a produção. Há suporte para diversos **gêneros textuais** como artigo de opinião, carta aberta, resenha, entre outros.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Ambiente de Escrita para Alunos</h3>
-                    <p>Um editor de texto simples e funcional permite que os estudantes escrevam suas redações diretamente na plataforma. Para incentivar a produção original, a função de **"copiar e colar" é desabilitada**, prevenindo o plágio.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Correção Automatizada (Inteligência Artificial)</h3>
-                    <p>Após o envio, a redação é pré-analisada por um sistema de IA que identifica e destaca erros de:</p>
-                    <ul>
-                        <li><strong>Gramática</strong> (concordância, regência, crase)</li>
-                        <li><strong>Ortografia e Acentuação</strong></li>
-                        <li><strong>Pontuação</strong></li>
-                        <li><strong>Contração e Redundância</strong></li>
-                        <li><strong>Semântica</strong></li>
-                    </ul>
-                    <p>A IA fornece uma breve explicação para cada erro e gera uma pontuação inicial.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Correção por Professores</h3>
-                    <p>Complementando a IA, o professor tem acesso à redação para uma correção aprofundada, focando na estrutura do texto, coerência, coesão, argumentação e atendimento aos critérios do gênero. É possível inserir **comentários e feedbacks construtivos** personalizados.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Recursos Educacionais</h3>
-                    <p>Uma **biblioteca de vídeos curtos e materiais explicativos** está disponível, abordando características de gêneros textuais, dicas de escrita e normas da língua portuguesa. Essenciais para alunos e como apoio didático para professores.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Relatórios de Desempenho</h3>
-                    <p>Alunos e professores podem acessar relatórios detalhados, incluindo histórico de envios, pontuações (da IA e do professor) e um panorama das dificuldades mais comuns. Isso permite o **acompanhamento do progresso** ao longo do tempo.</p>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <div id="interface" class="section">
-            <h2>Aparência e Interface</h2>
-            <p>A interface do Redação Paraná foi projetada para ser **intuitiva e acessível**, seguindo um design funcional e moderno, alinhado com a identidade visual do Governo do Estado do Paraná.</p>
-
-            <h3>Esquema de Cores e Layout</h3>
-            <ul>
-                <li>Utiliza predominantemente tons de **azul, verde e branco**, transmitindo sobriedade e profissionalismo.</li>
-                <li>O layout é **limpo e despoluído**, com menus claros e botões bem identificados, facilitando a navegação.</li>
-            </ul>
-
-            <h3>Exemplo de Página Inicial (Dashboard)</h3>
-            <div class="dashboard-example">
-                <h3>Dashboard do Usuário</h3>
-                <div class="dashboard-content">
-                    <div class="dashboard-card">
-                        <h4>Olá, [Nome do Aluno/Professor]!</h4>
-                        <p>Bem-vindo(a) ao seu painel.</p>
-                    </div>
-                    <div class="dashboard-card">
-                        <h4>Redações Pendentes</h4>
-                        <p><strong>Aluno:</strong> 2 propostas para escrever</p>
-                        <p><strong>Professor:</strong> 15 redações para corrigir</p>
-                    </div>
-                    <div class="dashboard-card">
-                        <h4>Última Redação Corrigida</h4>
-                        <p><strong>Tema:</strong> "A importância da água para o planeta"</p>
-                        <p><strong>Nota IA:</strong> 8.5/10</p>
-                        <p><strong>Nota Professor:</strong> 9.0/10</p>
-                    </div>
-                    <div class="dashboard-card">
-                        <h4>Acesso Rápido</h4>
-                        <p><a href="#">Minhas Redações</a></p>
-                        <p><a href="#">Recursos Educacionais</a></p>
-                        <p><a href="#">Criar Nova Proposta (Prof.)</a></p>
-                    </div>
-                </div>
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h2>Bem-vindo(a) ao seu Painel!</h2>
+                <p>Aqui você encontra um resumo rápido das suas atividades e acessos importantes.</p>
             </div>
 
-            <h3>Exemplo de Editor de Texto com Correção da IA</h3>
-            <div class="text-editor-example">
-                <h3>Escreva sua Redação</h3>
-                <div class="editor-area">
-                    A importância da leitura <span class="error-highlight">são<span class="tooltip">Erro de concordância: "é" em vez de "são".</span></span> fundamental para o <span class="suggestion-highlight">desenvolvimento<span class="tooltip">Sugestão: Evitar repetições de ideias.</span></span> de um <span class="error-highlight">indivíduo.<span class="tooltip">Erro de pontuação: Faltou ponto final.</span></span> Ela nos permite viajar por mundos diferentes, adquirir conhecimento e expandir nossa visão de mundo. Ler <span class="error-highlight">faz<span class="tooltip">Erro de regência: "faz com que" ou "leva a".</span></span> com que a nossa mente se <span class="suggestion-highlight">expanda<span class="tooltip">Sugestão: Use sinônimos para variar o vocabulário.</span></span>. Além disso, a leitura <span class="error-highlight">contribui para o aprimoramento da escrita.<span class="tooltip">Redundância: Ideia já expressa anteriormente.</span></span>
+            <section class="dashboard-grid">
+                <div class="card">
+                    <h3><i class="fas fa-clipboard-list"></i> Redações Pendentes</h3>
+                    <p>Você tem:</p>
+                    <div class="highlight-number">2</div>
+                    <p>propostas de redação para escrever.</p>
+                    <a href="#" class="action-link">Ver Propostas</a>
                 </div>
-                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">* Passe o mouse sobre os trechos destacados para ver a explicação dos erros/sugestões.</p>
-            </div>
 
-            <h3>Navegação e Responsividade</h3>
-            <ul>
-                <li>Menus de navegação claros, geralmente laterais ou superiores, com opções como "Minhas Redações", "Propostas", "Recursos", "Meu Perfil" e "Turmas" (para professores).</li>
-                <li>A plataforma é totalmente **responsiva**, adaptando-se a computadores, tablets e smartphones para garantir uma excelente experiência em qualquer dispositivo.</li>
-            </ul>
-        </div>
+                <div class="card">
+                    <h3><i class="fas fa-check-circle"></i> Últimas Correções</h3>
+                    <p>Sua última redação sobre "Importância da Água" foi corrigida:</p>
+                    <p>Nota IA: <strong style="color: var(--cor-secundaria);">8.5/10</strong></p>
+                    <p>Nota Professor: <strong style="color: var(--cor-primaria);">9.0/10</strong></p>
+                    <a href="#" class="action-link">Ver Detalhes</a>
+                </div>
 
-        <hr>
+                <div class="card">
+                    <h3><i class="fas fa-book-reader"></i> Recursos Educacionais</h3>
+                    <p>Acesse nossa biblioteca de vídeos e materiais para aprimorar sua escrita.</p>
+                    <a href="#" class="action-link">Explorar Recursos</a>
+                </div>
 
-        <div id="contato" class="section">
-            <h2>Entre em Contato</h2>
-            <p>Se você tem dúvidas ou precisa de suporte, entre em contato conosco:</p>
-            <p><strong>Email:</strong> suporte@redacaoparana.pr.gov.br</p>
-            <p><strong>Telefone:</strong> (41) 3304-4500 (Secretaria de Estado da Educação)</p>
-            <p><strong>Endereço:</strong> Rua da Cidadania, s/n - Centro Cívico, Curitiba - PR</p>
-        </div>
+                <div class="card recent-activities">
+                    <h3><i class="fas fa-history"></i> Atividade Recente</h3>
+                    <div class="activity-item">
+                        <i class="activity-icon fas fa-upload"></i>
+                        <div class="activity-details">
+                            <h4>Redação "Desafios do Século XXI" Enviada</h4>
+                            <p>Sua redação foi enviada para correção da IA.</p>
+                            <span class="date">25 de Junho, 2025</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <i class="activity-icon fas fa-comments"></i>
+                        <div class="activity-details">
+                            <h4>Novo Feedback na Redação "Meio Ambiente"</h4>
+                            <p>O professor(a) Maria Silva adicionou comentários.</p>
+                            <span class="date">20 de Junho, 2025</span>
+                        </div>
+                    </div>
+                    <a href="#" class="action-link">Ver Todo Histórico</a>
+                </div>
+
+            </section>
+        </main>
     </div>
 
-    <footer>
+    <footer class="main-footer">
         <p>&copy; 2025 Redação Paraná. Uma iniciativa do Governo do Estado do Paraná. Todos os direitos reservados.</p>
     </footer>
 
