@@ -1,689 +1,374 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redação Paraná - Sua Nova Jornada de Escrita</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Jogo dos Peixes Cartilaginosos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Variáveis CSS para um Design Atualizado */
-        :root {
-            --cor-primaria: #2E86DE; /* Azul vibrante e moderno */
-            --cor-secundaria: #34D399; /* Verde aquático fresco */
-            --cor-destaque-claro: #E0F2FE; /* Azul muito claro */
-            --cor-destaque-verde-claro: #D1FAE5; /* Verde muito claro */
-            --cor-fundo-claro: #F9FAFB; /* Fundo off-white */
-            --cor-fundo-escuro: #1F2937; /* Cinza escuro para sidebar/footer */
-            --cor-texto-principal: #374151; /* Cinza escuro para texto */
-            --cor-texto-secundario: #6B7280; /* Cinza médio para detalhes */
-            --cor-borda: #E5E7EB; /* Cinza claro para bordas */
-            --cor-card-bg: #FFFFFF;
-            --cor-sombra-suave: rgba(0, 0, 0, 0.05);
-            --cor-sombra-media: rgba(0, 0, 0, 0.1);
-            --cor-sombra-forte: rgba(0, 0, 0, 0.2);
-
-            --fonte-cabecalho: 'Poppins', sans-serif;
-            --fonte-corpo: 'Inter', sans-serif;
-
-            --radius-default: 8px; /* Arredondamento padrão */
-            --transicao-rapida: all 0.2s ease-in-out;
-        }
-
-        /* Reset Básico e Estilos Globais */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* Custom styles for better aesthetics and responsiveness */
         body {
-            font-family: var(--fonte-corpo);
-            color: var(--cor-texto-principal);
-            background-color: var(--cor-fundo-claro);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background for ocean feel */
+            color: #e6edf3; /* Light text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .quiz-container {
+            background-color: #161b22; /* Slightly lighter dark background */
+            border-radius: 1.5rem; /* More rounded corners */
+            padding: 2.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            gap: 1.5rem;
         }
 
-        a {
-            text-decoration: none;
-            color: var(--cor-primaria);
-            transition: var(--transicao-rapida);
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #c9d1d9;
         }
 
-        a:hover {
-            color: var(--cor-secundaria);
-        }
-
-        /* --- Utilidades --- */
-        .shadow-md {
-            box-shadow: 0 4px 6px -1px var(--cor-sombra-suave), 0 2px 4px -1px var(--cor-sombra-suave);
-        }
-        .shadow-lg {
-            box-shadow: 0 10px 15px -3px var(--cor-sombra-media), 0 4px 6px -2px var(--cor-sombra-media);
-        }
-        .rounded-lg {
-            border-radius: var(--radius-default);
-        }
-        .flex-center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- Top Bar (Cabeçalho Superior) --- */
-        .top-bar {
-            background-color: var(--cor-card-bg);
-            padding: 15px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px var(--cor-sombra-suave);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .top-bar .left-section {
-            display: flex;
-            align-items: center;
-        }
-
-        .top-bar .menu-toggle {
-            background: none;
-            border: none;
-            color: var(--cor-texto-principal);
-            font-size: 1.6em;
+        .answer-button {
+            background-color: #21262d; /* Darker button background */
+            color: #e6edf3;
+            border: 2px solid #30363d; /* Subtle border */
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded button corners */
             cursor: pointer;
-            margin-right: 15px;
-            display: none; /* Oculto em desktop, visível em mobile */
-            transition: var(--transicao-rapida);
-        }
-        .top-bar .menu-toggle:hover {
-            color: var(--cor-primaria);
-        }
-
-        .top-bar .logo-brand {
-            font-family: var(--fonte-cabecalho);
-            font-weight: 700;
-            font-size: 1.6em;
-            color: var(--cor-primaria);
-        }
-        .top-bar .logo-brand span {
-            color: var(--cor-secundaria);
-        }
-
-        .top-bar .main-nav {
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .top-bar .main-nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-        }
-
-        .top-bar .main-nav ul li {
-            margin: 0 20px;
-        }
-
-        .top-bar .main-nav ul li a {
-            color: var(--cor-texto-secundario);
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: var(--transicao-rapida);
-        }
-        .top-bar .main-nav ul li a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--cor-primaria);
-            transition: width 0.3s ease-out;
-        }
-        .top-bar .main-nav ul li a:hover {
-            color: var(--cor-primaria);
-        }
-        .top-bar .main-nav ul li a:hover::after {
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            text-align: left;
             width: 100%;
-        }
-
-        .top-bar .user-profile {
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            font-size: 0.9em;
-            color: var(--cor-texto-principal);
+            gap: 0.75rem;
         }
 
-        .top-bar .user-profile .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-claro);
-            font-weight: 600;
-            font-size: 1.1em;
-            margin-right: 8px;
+        .answer-button:hover:not(.correct):not(.incorrect):not(.disabled) {
+            background-color: #30363d; /* Darker hover */
+            border-color: #444c56;
+        }
+
+        .answer-button.correct {
+            background-color: #238636; /* Green for correct */
+            border-color: #2ea043;
+            color: white;
+        }
+
+        .answer-button.incorrect {
+            background-color: #da3633; /* Red for incorrect */
+            border-color: #f85149;
+            color: white;
+        }
+
+        .answer-button.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .next-button {
+            background-color: #2ea043; /* Green for next button */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
             cursor: pointer;
-            position: relative; /* Para o tooltip */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .top-bar .user-profile .avatar span {
-            line-height: 1;
-        }
-        .top-bar .user-profile .username {
-            font-weight: 600;
-            margin-right: 10px;
-        }
-        .top-bar .user-profile .version {
-            font-size: 0.75em;
-            color: var(--cor-texto-secundario);
-        }
-
-        /* --- Page Wrapper (Container Principal) --- */
-        .page-wrapper {
-            display: flex;
-            flex: 1;
-            padding-top: 20px; /* Espaçamento entre top-bar e conteúdo */
-        }
-
-        /* --- Sidebar Lateral --- */
-        .sidebar {
-            width: 240px;
-            background-color: var(--cor-fundo-escuro);
-            padding: 20px 0;
-            box-shadow: 2px 0 10px var(--cor-sombra-suave);
-            position: sticky;
-            top: 85px; /* Ajusta-se abaixo da top-bar */
-            height: calc(100vh - 85px); /* Ocupa a altura restante */
-            overflow-y: auto;
-            transition: transform 0.3s ease-out;
-            transform: translateX(0); /* Padrão: visível */
-        }
-
-        .sidebar nav ul {
-            list-style: none;
-        }
-
-        .sidebar nav ul li a {
-            display: flex;
-            align-items: center;
-            padding: 15px 25px;
-            color: var(--cor-texto-claro);
-            font-weight: 500;
-            transition: var(--transicao-rapida);
-            position: relative;
-            overflow: hidden;
-        }
-        .sidebar nav ul li a i {
-            margin-right: 12px;
-            font-size: 1.1em;
-        }
-        .sidebar nav ul li a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background-color: transparent;
+            font-size: 1.2rem;
+            font-weight: bold;
             transition: background-color 0.3s ease;
+            margin-top: 1.5rem;
         }
 
-        .sidebar nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--cor-secundaria);
-        }
-        .sidebar nav ul li.active a {
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-claro);
-        }
-        .sidebar nav ul li.active a::before {
-            background-color: var(--cor-secundaria);
+        .next-button:hover {
+            background-color: #238636;
         }
 
-        /* --- Main Content (Área Principal) --- */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
+        .score-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #58a6ff; /* Blue for score */
+            margin-top: 1rem;
         }
 
-        .section-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--cor-borda);
-            padding-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .section-header h1 {
-            font-family: var(--fonte-cabecalho);
-            font-size: 2.2em;
-            color: var(--cor-texto-principal);
-            font-weight: 700;
-        }
-        .section-header .breadcrumb {
-            font-size: 0.9em;
-            color: var(--cor-texto-secundario);
-        }
-        .section-header .breadcrumb span {
-            margin: 0 5px;
-        }
-        .section-header .breadcrumb a {
-            color: var(--cor-texto-secundario);
-        }
-        .section-header .breadcrumb a:hover {
-            color: var(--cor-primaria);
+        .hint-text {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
 
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--cor-destaque-claro) 0%, var(--cor-destaque-verde-claro) 100%);
-            padding: 40px;
-            border-radius: var(--radius-default);
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            position: relative;
-            overflow: hidden; /* Para os elementos de fundo */
-        }
-        .hero-section::before { /* Elemento de fundo decorativo */
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 200px;
-            height: 200px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            filter: blur(50px);
-        }
-         .hero-section::after { /* Elemento de fundo decorativo */
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 250px;
-            height: 250px;
-            background-color: rgba(255,255,255,0.15);
-            border-radius: 50%;
-            filter: blur(60px);
-        }
-
-        .hero-content {
-            flex: 2; /* Ocupa mais espaço */
-            min-width: 300px;
+        .message-box {
+            background-color: #30363d;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #e6edf3;
+            font-size: 1rem;
+            display: none; /* Hidden by default */
             text-align: left;
         }
-        .hero-content h2 {
-            font-family: var(--fonte-cabecalho);
-            font-size: 2.5em;
-            color: var(--cor-primaria);
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-        .hero-content h2 span {
-            color: var(--cor-secundaria);
-        }
-        .hero-content p {
-            font-size: 1.1em;
-            color: var(--cor-texto-principal);
-            margin-bottom: 25px;
-        }
-        .hero-content .action-button {
-            display: inline-block;
-            background-color: var(--cor-primaria);
-            color: var(--cor-texto-claro);
-            padding: 12px 25px;
-            border-radius: var(--radius-default);
-            font-weight: 600;
-            transition: var(--transicao-rapida);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .hero-content .action-button:hover {
-            background-color: var(--cor-secundaria);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-        }
 
-        .hero-image {
-            flex: 1;
-            min-width: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--radius-default);
-            box-shadow: 0 8px 20px var(--cor-sombra-media);
-        }
-
-        /* Resources Grid */
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .resource-card {
-            background-color: var(--cor-card-bg);
-            padding: 25px;
-            border-radius: var(--radius-default);
-            box-shadow: 0 4px 12px var(--cor-sombra-suave);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: var(--transicao-rapida);
-        }
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 18px var(--cor-sombra-media);
-            border: 1px solid var(--cor-primaria); /* Adiciona borda no hover */
-        }
-
-        .resource-card .icon-wrapper {
-            font-size: 3.5em;
-            color: var(--cor-primaria);
-            margin-bottom: 15px;
-            background-color: var(--cor-destaque-claro);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .resource-card .icon-wrapper.gemini-icon {
-            color: #4285F4; /* Cor do Google/Gemini */
-            background-color: #E6F3FF;
-        }
-        .resource-card .icon-wrapper.trophy-icon {
-            color: var(--cor-secundaria);
-            background-color: var(--cor-destaque-verde-claro);
-        }
-        .resource-card .icon-wrapper.comments-icon {
-            color: var(--cor-terciaria, #6c5ce7); /* Uma terceira cor, exemplo roxo */
-            background-color: #EDE7F6;
-        }
-
-        .resource-card h3 {
-            font-family: var(--fonte-cabecalho);
-            font-size: 1.4em;
-            color: var(--cor-texto-principal);
-            margin-bottom: 10px;
-        }
-
-        .resource-card p {
-            font-size: 0.95em;
-            color: var(--cor-texto-secundario);
-        }
-
-        /* Help Button (Botão de Ajuda Flutuante) */
-        .help-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--cor-secundaria);
-            color: var(--cor-texto-claro);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7em;
-            box-shadow: 0 6px 15px var(--cor-sombra-media);
-            cursor: pointer;
-            transition: var(--transicao-rapida);
-            z-index: 900;
-        }
-        .help-button:hover {
-            background-color: var(--cor-primaria);
-            transform: translateY(-3px);
-        }
-
-        /* --- Footer (Rodapé) --- */
-        .main-footer {
-            background-color: var(--cor-fundo-escuro);
-            color: var(--cor-texto-secundario);
-            text-align: center;
-            padding: 25px;
-            font-size: 0.85em;
-            margin-top: auto;
-        }
-        .main-footer a {
-            color: var(--cor-secundaria);
-            font-weight: 500;
-        }
-        .main-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* --- Responsividade --- */
-        @media (max-width: 992px) {
-            .top-bar .main-nav {
-                display: none;
-            }
-            .top-bar .menu-toggle {
-                display: block;
-            }
-            .page-wrapper {
-                flex-direction: column;
-                padding-top: 0;
-            }
-            .sidebar {
-                position: fixed;
-                left: -240px; /* Esconde a sidebar */
-                top: 70px; /* Ajusta conforme altura da top-bar */
-                height: calc(100vh - 70px);
-                z-index: 1001; /* Fica acima do conteúdo */
-                background-color: var(--cor-fundo-escuro);
-            }
-            .sidebar.active {
-                transform: translateX(240px); /* Move para a direita para aparecer */
-                box-shadow: 5px 0 15px var(--cor-sombra-forte);
-            }
-            .main-content {
-                padding: 20px;
-                margin-left: 0; /* Garante que não haja margin do sidebar oculto */
-            }
-            .hero-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero-content {
-                order: 2; /* Move o texto para baixo da imagem em mobile */
-            }
-            .hero-image {
-                order: 1; /* Move a imagem para cima em mobile */
-                margin-bottom: 20px;
-            }
-            .hero-content h2 {
-                font-size: 2em;
-            }
-            .hero-content p {
-                font-size: 1em;
-            }
-            .resources-grid {
-                grid-template-columns: 1fr; /* Uma coluna em telas menores */
-            }
-            .resource-card {
-                padding: 20px;
-            }
-            .resource-card .icon-wrapper {
-                font-size: 3em;
-                width: 70px;
-                height: 70px;
-            }
-            .resource-card .icon-wrapper.gemini-icon {
-                font-size: 3.2em;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .top-bar {
-                padding: 10px 15px;
-            }
-            .top-bar .logo-brand {
-                font-size: 1.4em;
-            }
-            .top-bar .user-profile .username,
-            .top-bar .user-profile .version {
-                display: none; /* Oculta nome e versão para economizar espaço */
-            }
-            .top-bar .user-profile .avatar {
-                margin-right: 0;
-            }
-            .main-content {
-                padding: 15px;
-            }
-            .section-header h1 {
-                font-size: 1.8em;
-            }
-            .section-header .breadcrumb {
-                display: none; /* Oculta breadcrumb em telas pequenas */
-            }
-            .help-button {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5em;
-                bottom: 20px;
-                right: 20px;
-            }
+        .message-box.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-
-    <header class="top-bar">
-        <div class="left-section">
-            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-            <span class="logo-brand">REDAÇÃO <span>PARANÁ</span></span>
+    <div class="quiz-container">
+        <h1 class="text-3xl font-extrabold text-white mb-4">Jogo dos Peixes Cartilaginosos</h1>
+        <div id="question-display" class="question-text"></div>
+        <div id="answer-buttons" class="grid grid-cols-1 gap-3">
+            <!-- Answer buttons will be inserted here by JavaScript -->
         </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Como Funciona</a></li>
-                <li><a href="#">Vantagens</a></li>
-            </ul>
-        </nav>
-        <div class="user-profile">
-            <div class="avatar"><span>A</span></div>
-            <span class="username">Anthony D.</span>
-            <span class="version">v.2.0.9</span>
-        </div>
-    </header>
-
-    <div class="page-wrapper">
-        <aside class="sidebar shadow-md" id="sidebar">
-            <nav>
-                <ul>
-                    <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> Minhas Redações</a></li>
-                    <li><a href="#"><i class="fas fa-edit"></i> Nova Redação</a></li>
-                    <li><a href="#"><i class="fas fa-book-open"></i> Recursos Educacionais</a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> Desempenho</a></li>
-                    <li><a href="#"><i class="fas fa-users"></i> Minhas Turmas</a></li>
-                    <li><a href="#"><i class="fas fa-plus-square"></i> Criar Proposta</a></li>
-                    <li><a href="#"><i class="fas fa-check-double"></i> Corrigir Redações</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <div class="section-header">
-                <h1>Dashboard</h1>
-                <div class="breadcrumb">
-                    <span>Home</span> <i class="fas fa-chevron-right"></i> <span>Dashboard</span>
-                </div>
-            </div>
-
-            <section class="hero-section rounded-lg shadow-lg">
-                <div class="hero-content">
-                    <h2>Sua jornada de escrita <span>começa aqui</span>.</h2>
-                    <p>Transforme suas ideias em textos incríveis e prepare-se para o ENEM de forma inteligente e divertida com o Redação Paraná!</p>
-                    <a href="#" class="action-button">Comece a Escrever Agora <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="hero-image">
-                    <img src="https://via.placeholder.com/350x250/2E86DE/E0F2FE?text=Criatividade" alt="Ilustração de criatividade e escrita">
-                </div>
-            </section>
-
-            <div class="section-header">
-                <h1>Recursos da Plataforma</h1>
-            </div>
-            <section class="resources-grid">
-                <div class="resource-card rounded-lg">
-                    <div class="icon-wrapper gemini-icon"><i class="fas fa-robot"></i></div>
-                    <h3>Correção Inteligente com IA</h3>
-                    <p>Sistema avançado de correção que combina tecnologia e insights para aprimorar suas redações.</p>
-                </div>
-                <div class="resource-card rounded-lg">
-                    <div class="icon-wrapper trophy-icon"><i class="fas fa-trophy"></i></div>
-                    <h3>Concursos e Desafios</h3>
-                    <p>Participe de concursos de redação e desafios temáticos para testar suas habilidades.</p>
-                </div>
-                <div class="resource-card rounded-lg">
-                    <div class="icon-wrapper comments-icon"><i class="fas fa-comments"></i></div>
-                    <h3>Feedback Detalhado</h3>
-                    <p>Receba comentários e sugestões específicas para cada parágrafo da sua redação.</p>
-                </div>
-                <div class="resource-card rounded-lg">
-                    <div class="icon-wrapper"><i class="fas fa-book-reader"></i></div>
-                    <h3>Materiais de Apoio</h3>
-                    <p>Acesse uma vasta biblioteca de vídeos e guias sobre gêneros textuais e normas da língua portuguesa.</p>
-                </div>
-            </section>
-        </main>
+        <div id="message-box" class="message-box"></div>
+        <div id="hint-display" class="hint-text"></div>
+        <button id="next-button" class="next-button hidden">Próxima Pergunta</button>
+        <div id="score-display" class="score-display">Pontuação: 0</div>
     </div>
-
-    <div class="help-button">
-        <i class="fas fa-question"></i>
-    </div>
-
-    <footer class="main-footer">
-        <p>&copy; 2025 Redação Paraná. Uma iniciativa do Governo do Estado do Paraná.</p>
-        <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menuToggle');
-            const sidebar = document.getElementById('sidebar');
+        // Array de objetos de perguntas
+        const questions = [
+            {
+                question: 'Qual é a principal característica que distingue os peixes cartilaginosos (Chondrichthyes) de outros grupos de peixes?',
+                options: [
+                    { text: 'Têm esqueleto ósseo e guelras visíveis.', correct: false, rationale: 'Esta opção descreve peixes ósseos, não cartilaginosos, que se distinguem pelo seu esqueleto feito de cartilagem e fendas branquiais expostas.' },
+                    { text: 'Têm esqueleto cartilaginoso e fendas branquiais expostas.', correct: true, rationale: 'Esta é a característica distintiva dos peixes cartilaginosos, como tubarões e raias, que possuem um esqueleto flexível de cartilagem e não têm opérculo cobrindo as guelras.' },
+                    { text: 'Têm esqueleto ósseo e respiram por pulmões.', correct: false, rationale: 'Esta opção descreve mamíferos aquáticos ou outros vertebrados, não peixes cartilaginosos.' },
+                    { text: 'Têm esqueleto cartilaginoso e escamas ganoides.', correct: false, rationale: 'Embora tenham esqueleto cartilaginoso, as escamas ganoides são características de alguns peixes ósseos primitivos, não de cartilaginosos, que geralmente possuem escamas placoides.' }
+                ],
+                hint: 'Pense no material principal que compõe o esqueleto desses animais.'
+            },
+            {
+                question: 'Que tipo de escamas é comum em peixes cartilaginosos?',
+                options: [
+                    { text: 'Escamas cicloides', correct: false, rationale: 'Escamas cicloides são características de muitos peixes ósseos, não de peixes cartilaginosos.' },
+                    { text: 'Escamas ctenoides', correct: false, rationale: 'Escamas ctenoides também são encontradas em peixes ósseos, não sendo uma característica dos peixes cartilaginosos.' },
+                    { text: 'Escamas placoides (dentículos dérmicos)', correct: true, rationale: 'As escamas placoides, que são estruturalmente semelhantes a dentes, são a cobertura cutânea típica dos peixes cartilaginosos.' },
+                    { text: 'Não possuem escamas', correct: false, rationale: 'Embora algumas espécies possam parecer lisas, a maioria dos peixes cartilaginosos possui algum tipo de cobertura protetora.' }
+                ],
+                hint: 'Considere a textura da pele dos tubarões e raias.'
+            },
+            {
+                question: 'Como os peixes cartilaginosos, como os tubarões, controlam a sua flutuabilidade na água?',
+                options: [
+                    { text: 'Possuem bexiga natatória para flutuabilidade.', correct: false, rationale: 'A bexiga natatória é uma característica dos peixes ósseos. Peixes cartilaginosos dependem de outros mecanismos para flutuabilidade.' },
+                    { text: 'Possuem cauda heterocercal e um fígado grande e oleoso.', correct: true, rationale: 'A cauda heterocercal, que proporciona sustentação, e um fígado rico em óleo, que reduz a densidade, são adaptações chave para a flutuabilidade em peixes cartilaginosos.' },
+                    { text: 'Movimentam-se apenas no fundo do oceano.', correct: false, rationale: 'Embora algumas espécies vivam no fundo, muitas, como os tubarões, são nadadores pelágicos e precisam de controle de flutuabilidade.' },
+                    { text: 'Absorvem oxigénio através da pele.', correct: false, rationale: 'A respiração cutânea não é o principal método de obtenção de oxigénio para a flutuabilidade em peixes cartilaginosos; eles usam guelras.' }
+                ],
+                hint: 'Pense em duas adaptações físicas que os ajudam a não afundar.'
+            },
+            {
+                question: 'Qual das seguintes opções descreve a variedade de estratégias reprodutivas encontradas em peixes cartilaginosos?',
+                options: [
+                    { text: 'Somente reprodução ovípara (ovos depositados externamente).', correct: false, rationale: 'Enquanto a reprodução ovípara ocorre, não é o único método. Existem diversas estratégias reprodutivas nesse grupo.' },
+                    { text: 'Somente reprodução vivípara (nascimento de filhotes vivos).', correct: false, rationale: 'Similarmente, a viviparidade ocorre, mas não é a única forma. Peixes cartilaginosos exibem uma variedade de modos reprodutivos.' },
+                    { text: 'Reprodução ovípara, ovovivípara e vivípara.', correct: true, rationale: 'Os peixes cartilaginosos demonstram uma notável diversidade reprodutiva, incluindo a deposição de ovos (ovípara), a incubação interna de ovos com nascimento de filhotes vivos (ovovivípara) e o desenvolvimento completo do embrião dentro da mãe com nutrição direta (vivípara).' },
+                    { text: 'Reprodução assexuada por fissão.', correct: false, rationale: 'A reprodução assexuada por fissão não é um método conhecido de reprodução para peixes cartilaginosos.' }
+                ],
+                hint: 'Lembre-se de que este grupo exibe uma grande flexibilidade em como seus filhotes se desenvolvem.'
+            },
+            {
+                question: 'Qual estrutura respiratória é característica dos peixes cartilaginosos?',
+                options: [
+                    { text: 'Opérculo', correct: false, rationale: 'O opérculo é uma característica dos peixes ósseos; peixes cartilaginosos não o possuem.' },
+                    { text: 'Fendas branquiais expostas', correct: true, rationale: 'As fendas branquiais expostas, sem cobertura óssea, são uma característica definidora dos peixes cartilaginosos.' },
+                    { text: 'Pulmões', correct: false, rationale: 'Peixes, incluindo os cartilaginosos, respiram por guelras, não por pulmões.' },
+                    { text: 'Pele com muco', correct: false, rationale: 'Embora a pele com muco seja comum em peixes, não é uma estrutura distintiva da respiração em peixes cartilaginosos.' }
+                ],
+                hint: 'Pense em como as guelras dos tubarões e raias são visíveis.'
+            },
+            {
+                question: 'O tubarão-baleia é o maior peixe cartilaginoso do mundo. Qual é a sua principal característica alimentar?',
+                options: [
+                    { text: 'Massa corporal maior que 500 kg.', correct: false, rationale: 'Embora o tubarão-baleia seja grande, não é o único critério para ser considerado o maior. A alimentação é o fator chave.' },
+                    { text: 'Alimentação por filtração.', correct: true, rationale: 'O tubarão-baleia, sendo um filtrador que se alimenta de plâncton e pequenos peixes, é o maior peixe cartilaginoso e o maior peixe do mundo.' },
+                    { text: 'Viver em águas profundas.', correct: false, rationale: 'O tubarão-baleia vive em águas tropicais e quentes, muitas vezes perto da superfície.' },
+                    { text: 'Ser um predador de topo.', correct: false, rationale: 'O tubarão-baleia não é um predador de topo; sua dieta é composta principalmente por plâncton.' }
+                ],
+                hint: 'Pense no tipo de alimento que um animal tão grande pode consumir eficientemente na coluna d\'água.'
+            },
+            {
+                question: 'Quais são os três principais grupos de peixes cartilaginosos (Chondrichthyes)?',
+                options: [
+                    { text: 'Tubarões, arraias e quimeras.', correct: true, rationale: 'Esses três grupos formam as principais subclasses dentro dos Chondrichthyes, representando a diversidade dos peixes cartilaginosos.' },
+                    { text: 'Salmões, atuns e bacalhaus.', correct: false, rationale: 'Esses são exemplos de peixes ósseos, não cartilaginosos.' },
+                    { text: 'Golfinhos, baleias e focas.', correct: false, rationale: 'Esses são mamíferos marinhos, não peixes.' },
+                    { text: 'Lampreias e mixinas.', correct: false, rationale: 'Estes são peixes sem mandíbulas (Agnatha), um grupo distinto dos peixes cartilaginosos.' }
+                ],
+                hint: 'Um grupo é bem conhecido por sua forma alongada e predatória, outro por sua forma achatada, e o terceiro por sua aparência mais enigmática e profunda.'
+            },
+            {
+                question: 'Em relação ao sistema respiratório, o que diferencia os peixes cartilaginosos dos peixes ósseos?',
+                options: [
+                    { text: 'Possuem opérculo para proteção das guelras.', correct: false, rationale: 'O opérculo é uma estrutura óssea presente em peixes ósseos, ausente em peixes cartilaginosos.' },
+                    { text: 'Apresentam uma única abertura branquial.', correct: false, rationale: 'Peixes cartilaginosos têm múltiplas fendas branquiais expostas, não uma única abertura.' },
+                    { text: 'Suas guelras estão cobertas por uma bolsa.', correct: false, rationale: 'Esta descrição não corresponde à estrutura branquial dos peixes cartilaginosos.' },
+                    { text: 'Não possuem opérculo e as fendas branquiais são visíveis externamente.', correct: true, rationale: 'A ausência de opérculo e a visibilidade das fendas branquiais são características distintivas dos peixes cartilaginosos.' }
+                ],
+                hint: 'Considere a cobertura das guelras e a forma como o oxigénio é obtido.'
+            },
+            {
+                question: 'Qual é a estrutura comum para eliminação de resíduos e reprodução na maioria dos peixes cartilaginosos?',
+                options: [
+                    { text: 'Apresentam uma cloaca para a eliminação de resíduos.', correct: true, rationale: 'A cloaca, uma única abertura para sistemas digestório, urinário e reprodutor, é uma característica comum nos peixes cartilaginosos.' },
+                    { text: 'Possuem ânus e aberturas urogenitais separadas.', correct: false, rationale: 'Essa característica é mais típica de peixes ósseos e mamíferos.' },
+                    { text: 'Eliminam resíduos apenas através das guelras.', correct: false, rationale: 'As guelras são primariamente para respiração, não para eliminação de todos os tipos de resíduos.' },
+                    { text: 'Não possuem sistema excretor desenvolvido.', correct: false, rationale: 'Todos os vertebrados possuem sistemas excretores, e o dos peixes cartilaginosos é bem desenvolvido e funcional.' }
+                ],
+                hint: 'Pense na abertura combinada para diversas funções fisiológicas.'
+            },
+            {
+                question: 'Em que tipo de ambiente aquático os peixes cartilaginosos são encontrados?',
+                options: [
+                    { text: 'Apenas vivem em águas salgadas.', correct: false, rationale: 'Embora a maioria seja marinha, algumas espécies, como o tubarão-touro, são conhecidas por entrar em água doce.' },
+                    { text: 'Apenas vivem em águas doces.', correct: false, rationale: 'A grande maioria dos peixes cartilaginosos habita ambientes marinhos.' },
+                    { text: 'Podem ser encontrados tanto em águas salgadas quanto em águas doces, embora a maioria seja marinha.', correct: true, rationale: 'A maioria das espécies é marinha, mas há exemplos notáveis de adaptação a rios e estuários, como o tubarão-touro.' },
+                    { text: 'Vivem exclusivamente em fontes termais submarinas.', correct: false, rationale: 'Este habitat é muito específico e não representa a distribuição geral dos peixes cartilaginosos.' }
+                ],
+                hint: 'Pense nos habitats mais comuns dos tubarões, mas lembre-se de que há exceções.'
+            }
+        ];
 
-            if (menuToggle && sidebar) {
-                menuToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizCompleted = false; // Flag to indicate if the quiz is completed
+
+        const questionDisplay = document.getElementById('question-display');
+        const answerButtonsContainer = document.getElementById('answer-buttons');
+        const nextButton = document.getElementById('next-button');
+        const scoreDisplay = document.getElementById('score-display');
+        const hintDisplay = document.getElementById('hint-display');
+        const messageBox = document.getElementById('message-box');
+
+        // Function to load a question
+        function loadQuestion() {
+            // Reset UI for new question
+            answerButtonsContainer.innerHTML = '';
+            nextButton.classList.add('hidden');
+            messageBox.classList.remove('show');
+            hintDisplay.textContent = '';
+            quizCompleted = false;
+
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                questionDisplay.textContent = currentQuestion.question;
+                hintDisplay.textContent = `Dica: ${currentQuestion.hint}`;
+
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option.text;
+                    button.classList.add('answer-button');
+                    button.dataset.correct = option.correct;
+                    button.dataset.rationale = option.rationale;
+                    button.addEventListener('click', selectAnswer);
+                    answerButtonsContainer.appendChild(button);
                 });
+            } else {
+                // Quiz completed
+                endQuiz();
+            }
+        }
 
-                // Opcional: Fechar sidebar ao clicar fora em mobile
-                document.addEventListener('click', function(event) {
-                    if (window.innerWidth <= 992 && !sidebar.contains(event.target) && !menuToggle.contains(event.target) && sidebar.classList.contains('active')) {
-                        sidebar.classList.remove('active');
+        // Function to handle answer selection
+        function selectAnswer(e) {
+            if (quizCompleted) return; // Prevent multiple clicks after quiz is done
+
+            const selectedButton = e.target;
+            const isCorrect = selectedButton.dataset.correct === 'true';
+            const rationale = selectedButton.dataset.rationale;
+
+            // Disable all answer buttons after selection
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.classList.add('disabled');
+                button.removeEventListener('click', selectAnswer);
+            });
+
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                score++;
+                scoreDisplay.textContent = `Pontuação: ${score}`;
+                showMessage('Correto! ' + rationale, 'success');
+            } else {
+                selectedButton.classList.add('incorrect');
+                showMessage('Incorreto. ' + rationale, 'error');
+                // Highlight the correct answer
+                Array.from(answerButtonsContainer.children).forEach(button => {
+                    if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
                     }
                 });
             }
-        });
-    </script>
+            nextButton.classList.remove('hidden'); // Show next button
+        }
 
+        // Function to show messages
+        function showMessage(msg, type) {
+            messageBox.textContent = msg;
+            messageBox.classList.add('show');
+            // You can add different classes for 'success' or 'error' if you want different styles
+            if (type === 'success') {
+                messageBox.style.backgroundColor = '#238636';
+            } else if (type === 'error') {
+                messageBox.style.backgroundColor = '#da3633';
+            } else {
+                messageBox.style.backgroundColor = '#30363d';
+            }
+        }
+
+        // Function to move to the next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        // Function to end the quiz
+        function endQuiz() {
+            quizCompleted = true;
+            questionDisplay.textContent = 'Quiz Concluído!';
+            answerButtonsContainer.innerHTML = '';
+            hintDisplay.textContent = '';
+            messageBox.classList.remove('show');
+            scoreDisplay.textContent = `A sua pontuação final é: ${score} de ${questions.length}`;
+            nextButton.textContent = 'Jogar Novamente';
+            nextButton.classList.remove('hidden');
+            nextButton.removeEventListener('click', nextQuestion);
+            nextButton.addEventListener('click', resetQuiz);
+        }
+
+        // Function to reset the quiz
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreDisplay.textContent = `Pontuação: 0`;
+            nextButton.textContent = 'Próxima Pergunta';
+            nextButton.removeEventListener('click', resetQuiz);
+            nextButton.addEventListener('click', nextQuestion);
+            loadQuestion();
+        }
+
+        // Event listener for the next button
+        nextButton.addEventListener('click', nextQuestion);
+
+        // Initial load of the first question when the window loads
+        window.onload = loadQuestion;
+    </script>
 </body>
 </html>
