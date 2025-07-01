@@ -1,108 +1,965 @@
-Não foi possível criar o jogo diretamente usando as ferramentas disponíveis, mas posso fornecer o código JavaScript com as novas perguntas sobre peixes cartilaginosos que você pode integrar ao seu arquivo HTML. Basta substituir o array `questions` existente no seu código pelo array abaixo.
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura Point-and-Click: Peixes Cartilaginosos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos base */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0d1117;
+            color: #e6edf3;
+            position: relative;
+        }
 
-Este novo conjunto de perguntas abrange os tópicos de características da classe, classificação, revestimento do corpo e esqueleto, digestão, respiração, circulação, sistema nervoso e reprodução, conforme solicitado.
+        /* Estilos do Menu Principal */
+        .menu-container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            align-items: center;
+            /* Fundo do menu inspirado na imagem fornecida */
+            background-color: #1a1a1a; /* Cor base escura */
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px; /* Padrão de grade sutil */
+            z-index: 20;
+        }
 
-```javascript
-const questions = [
-    {
-        question: 'Qual é a principal característica que distingue os peixes cartilaginosos (Chondrichthyes) de outros grupos de peixes?',
-        options: [
-            { text: 'Têm esqueleto ósseo e guelras visíveis.', correct: false, rationale: 'Esta opção descreve peixes ósseos, não cartilaginosos, que se distinguem pelo seu esqueleto feito de cartilagem e fendas branquiais expostas.' },
-            { text: 'Têm esqueleto cartilaginoso e fendas branquiais expostas.', correct: true, rationale: 'Esta é a característica distintiva dos peixes cartilaginosos, como tubarões e raias, que possuem um esqueleto flexível de cartilagem e não têm opérculo cobrindo as guelras.' },
-            { text: 'Têm esqueleto ósseo e respiram por pulmões.', correct: false, rationale: 'Esta opção descreve mamíferos aquáticos ou outros vertebrados, não peixes cartilaginosos.' },
-            { text: 'Têm esqueleto cartilaginoso e escamas ganoides.', correct: false, rationale: 'Embora tenham esqueleto cartilaginoso, as escamas ganoides são características de alguns peixes ósseos primitivos, não de cartilaginosos, que geralmente possuem escamas placoides.' }
-        ],
-        hint: 'Pense no material principal que compõe o esqueleto desses animais.'
-    },
-    {
-        question: 'Que tipo de escamas é comum em peixes cartilaginosos?',
-        options: [
-            { text: 'Escamas cicloides', correct: false, rationale: 'Escamas cicloides são características de muitos peixes ósseos, não de peixes cartilaginosos.' },
-            { text: 'Escamas ctenoides', correct: false, rationale: 'Escamas ctenoides também são encontradas em peixes ósseos, não sendo uma característica dos peixes cartilaginosos.' },
-            { text: 'Escamas placoides (dentículos dérmicos)', correct: true, rationale: 'As escamas placoides, que são estruturalmente semelhantes a dentes, são a cobertura cutânea típica dos peixes cartilaginosos.' },
-            { text: 'Não possuem escamas', correct: false, rationale: 'Embora algumas espécies possam parecer lisas, a maioria dos peixes cartilaginosos possui algum tipo de cobertura protetora.' }
-        ],
-        hint: 'Considere a textura da pele dos tubarões e raias.'
-    },
-    {
-        question: 'Como é o sistema circulatório dos peixes cartilaginosos?',
-        options: [
-            { text: 'Dupla circulação completa com coração de quatro câmaras.', correct: false, rationale: 'Este tipo de circulação é encontrado em aves e mamíferos, não em peixes cartilaginosos.' },
-            { text: 'Simples circulação com coração de duas câmaras.', correct: true, rationale: 'Os peixes cartilaginosos possuem um sistema de circulação simples, onde o sangue passa pelo coração apenas uma vez por ciclo completo, e o coração tem duas câmaras: um átrio e um ventrículo.' },
-            { text: 'Circulação dupla incompleta com coração de três câmaras.', correct: false, rationale: 'Esta é a descrição do sistema circulatório de anfíbios e a maioria dos répteis, não de peixes.' },
-            { text: 'Não possuem sistema circulatório fechado.', correct: false, rationale: 'Peixes cartilaginosos, como todos os vertebrados, possuem um sistema circulatório fechado e bem desenvolvido.' }
-        ],
-        hint: 'Pense em quantas vezes o sangue passa pelo coração em um ciclo completo e quantas câmaras o coração possui.'
-    },
-    {
-        question: 'Qual das seguintes opções descreve a variedade de estratégias reprodutivas encontradas em peixes cartilaginosos?',
-        options: [
-            { text: 'Somente reprodução ovípara (ovos depositados externamente).', correct: false, rationale: 'Enquanto a reprodução ovípara ocorre, não é o único método. Existem diversas estratégias reprodutivas nesse grupo.' },
-            { text: 'Somente reprodução vivípara (nascimento de filhotes vivos).', correct: false, rationale: 'Similarmente, a viviparidade ocorre, mas não é a única forma. Peixes cartilaginosos exibem uma variedade de modos reprodutivos.' },
-            { text: 'Reprodução ovípara, ovovivípara e vivípara.', correct: true, rationale: 'Os peixes cartilaginosos demonstram uma notável diversidade reprodutiva, incluindo a deposição de ovos (ovípara), a incubação interna de ovos com nascimento de filhotes vivos (ovovivípara) e o desenvolvimento completo do embrião dentro da mãe com nutrição direta (vivípara).' },
-            { text: 'Reprodução assexuada por fissão.', correct: false, rationale: 'A reprodução assexuada por fissão não é um método conhecido de reprodução para peixes cartilaginosos.' }
-        ],
-        hint: 'Lembre-se de que este grupo exibe uma grande flexibilidade em como seus filhotes se desenvolvem.'
-    },
-    {
-        question: 'Qual estrutura respiratória é característica dos peixes cartilaginosos?',
-        options: [
-            { text: 'Opérculo', correct: false, rationale: 'O opérculo é uma característica dos peixes ósseos; peixes cartilaginosos não o possuem.' },
-            { text: 'Fendas branquiais expostas', correct: true, rationale: 'As fendas branquiais expostas, sem cobertura óssea, são uma característica definidora dos peixes cartilaginosos.' },
-            { text: 'Pulmões', correct: false, rationale: 'Peixes, incluindo os cartilaginosos, respiram por guelras, não por pulmões.' },
-            { text: 'Pele com muco', correct: false, rationale: 'Embora a pele com muco seja comum em peixes, não é uma estrutura distintiva da respiração em peixes cartilaginosos.' }
-        ],
-        hint: 'Pense em como as guelras dos tubarões e raias são visíveis.'
-    },
-    {
-        question: 'Qual órgão sensorial altamente desenvolvido permite que tubarões detectem campos elétricos, como os gerados por presas em potencial?',
-        options: [
-            { text: 'Linha lateral', correct: false, rationale: 'A linha lateral detecta vibrações e mudanças de pressão na água, mas não campos elétricos.' },
-            { text: 'Olhos com visão noturna aguçada', correct: false, rationale: 'Embora a visão seja importante, não é o órgão primário para a detecção de campos elétricos.' },
-            { text: 'Ampolas de Lorenzini', correct: true, rationale: 'As ampolas de Lorenzini são receptores eletrossensoriais que permitem aos tubarões detectar os fracos campos elétricos gerados pelas contrações musculares de suas presas.' },
-            { text: 'Narinas com olfato extremamente apurado', correct: false, rationale: 'O olfato é muito importante para tubarões na detecção de odores na água, mas não para campos elétricos.' }
-        ],
-        hint: 'Este órgão é composto por pequenos poros na pele, especialmente na cabeça, que se conectam a eletrorreceptores.'
-    },
-    {
-        question: 'Quais são os três principais grupos de peixes cartilaginosos (Chondrichthyes)?',
-        options: [
-            { text: 'Tubarões, arraias e quimeras.', correct: true, rationale: 'Esses três grupos formam as principais subclasses dentro dos Chondrichthyes, representando a diversidade dos peixes cartilaginosos.' },
-            { text: 'Salmões, atuns e bacalhaus.', correct: false, rationale: 'Esses são exemplos de peixes ósseos, não cartilaginosos.' },
-            { text: 'Golfinhos, baleias e focas.', correct: false, rationale: 'Esses são mamíferos marinhos, não peixes.' },
-            { text: 'Lampreias e mixinas.', correct: false, rationale: 'Estes são peixes sem mandíbulas (Agnatha), um grupo distinto dos peixes cartilaginosos.' }
-        ],
-        hint: 'Um grupo é bem conhecido por sua forma alongada e predatória, outro por sua forma achatada, e o terceiro por sua aparência mais enigmática e profunda.'
-    },
-    {
-        question: 'Em relação ao sistema respiratório, o que diferencia os peixes cartilaginosos dos peixes ósseos?',
-        options: [
-            { text: 'Possuem opérculo para proteção das guelras.', correct: false, rationale: 'O opérculo é uma estrutura óssea presente em peixes ósseos, ausente em peixes cartilaginosos.' },
-            { text: 'Apresentam uma única abertura branquial.', correct: false, rationale: 'Peixes cartilaginosos têm múltiplas fendas branquiais expostas, não uma única abertura.' },
-            { text: 'Suas guelras estão cobertas por uma bolsa.', correct: false, rationale: 'Esta descrição não corresponde à estrutura branquial dos peixes cartilaginosos.' },
-            { text: 'Não possuem opérculo e as fendas branquiais são visíveis externamente.', correct: true, rationale: 'A ausência de opérculo e a visibilidade das fendas branquiais são características distintivas dos peixes cartilaginosos.' }
-        ],
-        hint: 'Considere a cobertura das guelras e a forma como o oxigénio é obtido.'
-    },
-    {
-        question: 'Qual é a estrutura comum para eliminação de resíduos e reprodução na maioria dos peixes cartilaginosos?',
-        options: [
-            { text: 'Apresentam uma cloaca para a eliminação de resíduos.', correct: true, rationale: 'A cloaca, uma única abertura para sistemas digestório, urinário e reprodutor, é uma característica comum nos peixes cartilaginosos.' },
-            { text: 'Possuem ânus e aberturas urogenitais separadas.', correct: false, rationale: 'Essa característica é mais típica de peixes ósseos e mamíferos.' },
-            { text: 'Eliminam resíduos apenas através das guelras.', correct: false, rationale: 'As guelras são primariamente para respiração, não para eliminação de todos os tipos de resíduos.' },
-            { text: 'Não possuem sistema excretor desenvolvido.', correct: false, rationale: 'Todos os vertebrados possuem sistemas excretores, e o dos peixes cartilaginosos é bem desenvolvido e funcional.' }
-        ],
-        hint: 'Pense na abertura combinada para diversas funções fisiológicas.'
-    },
-    {
-        question: 'Em que tipo de ambiente aquático os peixes cartilaginosos são encontrados?',
-        options: [
-            { text: 'Apenas vivem em águas salgadas.', correct: false, rationale: 'Embora a maioria seja marinha, algumas espécies, como o tubarão-touro, são conhecidas por entrar em água doce.' },
-            { text: 'Apenas vivem em águas doces.', correct: false, rationale: 'A grande maioria dos peixes cartilaginosos habita ambientes marinhos.' },
-            { text: 'Podem ser encontrados tanto em águas salgadas quanto em águas doces, embora a maioria seja marinha.', correct: true, rationale: 'A maioria das espécies é marinha, mas há exemplos notáveis de adaptação a rios e estuários, como o tubarão-touro.' },
-            { text: 'Vivem exclusivamente em fontes termais submarinas.', correct: false, rationale: 'Este habitat é muito específico e não representa a distribuição geral dos peixes cartilaginosos.' }
-        ],
-        hint: 'Pense nos habitats mais comuns dos tubarões, mas lembre-se de que há exceções.'
-    }
-];
-```
+        .menu-header {
+            position: absolute;
+            top: 2rem;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 2rem;
+            z-index: 1;
+        }
+
+        /* Estilo do botão "BACK" para o menu */
+        .menu-back-button {
+            background-color: transparent;
+            border: none;
+            color: #ffffff; /* Texto branco */
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .menu-back-button:hover {
+            color: #aaaaaa; /* Mais claro no hover */
+        }
+
+        .main-title-area {
+            flex-grow: 0; /* Não ocupa mais todo o espaço vertical */
+            margin-bottom: 2rem; /* Espaço abaixo do título */
+            z-index: 1;
+        }
+
+        .main-title {
+            font-size: 3rem; /* Tamanho ajustado para o novo estilo de menu */
+            font-weight: 900;
+            color: #ffffff; /* Cor branca */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Sombra simples */
+            transform: none; /* Sem rotação */
+            letter-spacing: 0.05em; /* Espaçamento entre letras reduzido */
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .main-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 0; /* Sem margem na parte inferior */
+            z-index: 1;
+        }
+
+        /* Estilo do botão de menu para o novo menu */
+        .menu-button {
+            background-color: transparent;
+            border: 2px solid #ffffff; /* Borda branca */
+            border-radius: 0.75rem;
+            padding: 1rem 3rem; /* Padding ajustado */
+            color: #ffffff; /* Texto branco */
+            font-size: 2rem; /* Tamanho da fonte ajustado */
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            text-shadow: none; /* Sem sombra de texto */
+            box-shadow: none; /* Sem sombra de caixa */
+        }
+
+        .menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
+            border-color: #cccccc; /* Borda mais clara no hover */
+            color: #cccccc; /* Texto mais claro no hover */
+            transform: none; /* Sem transformação */
+            box-shadow: none; /* Sem sombra de caixa */
+        }
+
+        /* Estilos do Jogo Point-and-Click (container principal das salas) */
+        .point-click-game {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            display: none; /* Escondido por padrão */
+            z-index: 10; /* Abaixo do menu */
+        }
+
+        /* Estilos para as "salas" individuais */
+        .game-room {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            display: none; /* Escondido por padrão */
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            /* Fundo igual ao do menu */
+            background-color: #1a1a1a;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .game-room.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Elementos interativos dentro das salas (peixes) */
+        .fish-character {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s ease-out, filter 0.3s ease-out;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+            z-index: 5;
+            pointer-events: auto;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .fish-character:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px rgba(255,255,0,0.7));
+        }
+
+        /* Animação de flutuação */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Posições e tamanhos dos peixes em suas respectivas salas */
+        #shark-room #shark-char {
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0px);
+            animation-delay: 0s;
+            width: 200px; /* Ajuste o tamanho conforme necessário */
+            height: auto;
+        }
+
+        #ray-room #ray-char {
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0px);
+            width: 250px; /* Ajuste o tamanho da imagem da raia */
+            height: auto;
+            animation-delay: 1s;
+        }
+
+        #chimera-room #chimera-char {
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0px);
+            width: 200px; /* Ajuste o tamanho da imagem da quimera */
+            height: auto;
+            animation-delay: 2s;
+        }
+
+        /* Botões de navegação entre salas */
+        .nav-button {
+            position: absolute;
+            background-color: rgba(26, 26, 26, 0.6); /* Cor de fundo do menu */
+            border: 2px solid rgba(255, 255, 255, 0.4); /* Borda branca sutil */
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            color: #ffffff; /* Texto branco */
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            z-index: 15;
+            pointer-events: auto;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
+            border-color: #cccccc; /* Borda mais clara no hover */
+            transform: scale(1.05);
+        }
+
+        .nav-left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav-up {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-down {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Overlays e painéis */
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1rem;
+            pointer-events: none;
+        }
+
+        .info-panel {
+            background-color: rgba(26, 26, 26, 0.95); /* Cor de fundo do menu, mais opaca */
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra mais suave */
+            max-width: 700px;
+            width: 100%;
+            text-align: left;
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            pointer-events: auto;
+            margin-top: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Borda branca sutil */
+            color: #e6edf3; /* Cor do texto */
+        }
+
+        .info-panel.show {
+            display: flex;
+        }
+
+        .challenge-section {
+            background-color: rgba(26, 26, 26, 0.8); /* Cor de fundo do menu, mais transparente */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda ainda mais sutil */
+        }
+
+        .challenge-question {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e6edf3;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-options button {
+            background-color: transparent; /* Fundo transparente */
+            color: #e6edf3; /* Texto claro */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-options button:hover:not(.disabled) {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
+            border-color: #cccccc; /* Borda mais clara no hover */
+        }
+
+        .challenge-options button.correct {
+            background-color: rgba(46, 160, 67, 0.3); /* Verde sutil */
+            border-color: #2ea043;
+            color: white;
+        }
+
+        .challenge-options button.incorrect {
+            background-color: rgba(218, 54, 51, 0.3); /* Vermelho sutil */
+            border-color: #f85149;
+            color: white;
+        }
+
+        .challenge-options button.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .challenge-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .close-button {
+            background-color: transparent; /* Fundo transparente */
+            color: #f85149; /* Texto vermelho */
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            margin-top: 1.5rem;
+            align-self: flex-end;
+            border: 2px solid #f85149; /* Borda vermelha */
+        }
+
+        .close-button:hover {
+            background-color: rgba(248, 81, 73, 0.1); /* Fundo sutil no hover */
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .progress-display {
+            background-color: rgba(26, 26, 26, 0.8); /* Cor de fundo do menu, mais transparente */
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #e6edf3; /* Texto claro */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave */
+            pointer-events: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+        }
+
+        /* Estilos do painel de conclusão */
+        .completion-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            align-items: center;
+            /* Fundo igual ao do menu */
+            background-color: #1a1a1a;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 20;
+            overflow: hidden;
+            padding-bottom: 0; /* Remove padding bottom, pois o botão será centralizado */
+            gap: 1.5rem; /* Espaçamento entre os elementos */
+        }
+
+        .completion-panel.show {
+            display: flex;
+        }
+
+        /* Oculta a imagem de conclusão */
+        .completion-panel .completion-image {
+            display: none;
+        }
+
+        /* Estilos para o texto de conclusão */
+        .completion-panel h2 {
+            display: block; /* Mostra o título */
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff; /* Texto branco */
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .completion-panel p {
+            display: block; /* Mostra o parágrafo */
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e6edf3; /* Texto claro */
+            text-align: center;
+            max-width: 80%; /* Limita a largura do texto */
+        }
+
+        /* Estilo do botão de reiniciar para o painel de conclusão */
+        .restart-button {
+            background-color: transparent; /* Fundo transparente */
+            color: #ffffff; /* Texto branco */
+            padding: 1.2rem 3rem; /* Padding maior */
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1.5rem; /* Tamanho da fonte maior */
+            font-weight: bold;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            border: 2px solid #ffffff; /* Borda branca */
+            z-index: 2;
+            position: relative;
+            box-shadow: none; /* Sem sombra */
+            margin-top: 2rem; /* Espaço acima do botão */
+        }
+
+        .restart-button:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
+            border-color: #cccccc; /* Borda mais clara no hover */
+            color: #cccccc; /* Texto mais claro no hover */
+            transform: none; /* Sem efeito de levantamento */
+            box-shadow: none;
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            .menu-button {
+                font-size: 1.5rem;
+                padding: 1rem 2.5rem;
+            }
+            .menu-back-button {
+                font-size: 1.2rem;
+            }
+            .fish-character {
+                width: 150px;
+                height: auto;
+            }
+            #ray-char {
+                width: 200px;
+                height: auto;
+            }
+            #chimera-char {
+                width: 150px;
+                height: auto;
+            }
+            .restart-button {
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+            }
+            .completion-panel h2 {
+                font-size: 1.8rem;
+            }
+            .completion-panel p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Menu -->
+    <div id="main-menu" class="menu-container">
+        <!-- Cabeçalho do Menu com botão "BACK" -->
+        <div class="menu-header">
+            <button class="menu-back-button" id="menu-back-button">BACK</button>
+        </div>
+
+        <!-- Área do Título Principal -->
+        <div class="main-title-area">
+            <h1 class="main-title">PEIXES CARTILAGINOSOS</h1>
+        </div>
+
+        <!-- Botões Principais do Menu -->
+        <div class="main-buttons">
+            <button id="play-game-button" class="menu-button">PLAY</button>
+        </div>
+    </div>
+
+    <!-- Jogo Point-and-Click (container principal das salas) -->
+    <div id="point-click-game" class="point-click-game">
+        <!-- Sala do Tubarão -->
+        <div id="shark-room" class="game-room">
+            <!-- Usando o link direto da imagem para o tubarão -->
+            <img id="shark-char" class="fish-character"
+                 src="https://images.cults3d.com/VSyY3jKKi3zAG_246OpS54J3_8s=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/26588735/illustration-file/49a806c1-a349-4051-90db-a2e1a6e80bf9/Tralalero-Tralala.png"
+                 alt="Tubarão" data-fish-id="shark">
+            <!-- Navegação da sala do tubarão -->
+            <button class="nav-button nav-right" data-target-room="ray-room">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="nav-button nav-left" data-target-room="chimera-room">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <!-- Sala da Raia -->
+        <div id="ray-room" class="game-room">
+            <!-- Usando a imagem anterior para a raia -->
+            <img id="ray-char" class="fish-character"
+                 src="https://static.vecteezy.com/system/resources/previews/023/839/433/non_2x/mobula-rays-fish-isolated-on-a-transparent-background-free-png.png"
+                 alt="Raia" data-fish-id="ray">
+            <!-- Navegação da sala da raia -->
+            <button class="nav-button nav-right" data-target-room="chimera-room">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="nav-button nav-left" data-target-room="shark-room">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <!-- Sala da Quimera -->
+        <div id="chimera-room" class="game-room">
+            <!-- Usando a imagem para a quimera -->
+            <img id="chimera-char" class="fish-character"
+                 src="https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-vintage-engraving-of-a-chimaera-monstrosa-also-known-as-a-rabbit-fish-or-rat-fish-vector-png-image_4159944.png"
+                 alt="Quimera" data-fish-id="chimera">
+            <!-- Navegação da sala da quimera -->
+            <button class="nav-button nav-right" data-target-room="shark-room">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="nav-button nav-left" data-target-room="ray-room">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlays e Painéis (info, progresso, conclusão) -->
+    <div class="game-overlay">
+        <!-- O painel de instruções foi removido e não será exibido -->
+        <div id="instructions-panel" class="instructions-panel" style="display: none;">
+            <h2>Bem-vindo ao Mergulho Profundo!</h2>
+            <p>Embarque numa expedição virtual para explorar o fascinante mundo dos peixes cartilaginosos.</p>
+            <p><strong>Instruções:</strong></p>
+            <p>Clique nas setas para navegar entre as diferentes áreas do oceano. Em cada área, clique no peixe para aprender sobre ele e responder a pequenos desafios de conhecimento.</p>
+            <button id="start-game-button" class="start-button">Começar a Explorar</button>
+        </div>
+
+        <div id="info-panel" class="info-panel">
+            <h2 id="info-title"></h2>
+            <div id="info-content"></div>
+            <div id="challenge-section" class="challenge-section hidden">
+                <div id="challenge-question" class="challenge-question"></div>
+                <div id="challenge-options" class="challenge-options"></div>
+                <div id="challenge-feedback" class="challenge-feedback"></div>
+            </div>
+            <button id="close-info-button" class="close-button">Fechar</button>
+        </div>
+
+        <div id="progress-display" class="progress-display hidden">
+            Descobertas: <span id="discovered-count">0</span> / <span id="total-discoveries">0</span>
+        </div>
+
+        <div id="completion-panel" class="completion-panel">
+            <h2 class="completion-title">Missão Concluída!</h2>
+            <p class="completion-message">Parabéns, explorador! Concluiu a sua missão e documentou com sucesso todos os peixes cartilaginosos.</p>
+            <p class="completion-message">Obrigado por aprender sobre estas criaturas incríveis!</p>
+            <button id="restart-game-button" class="restart-button">Reiniciar Exploração</button>
+        </div>
+    </div>
+
+    <script>
+        console.log('Script started.'); // Debug log at the very beginning
+
+        // --- Variáveis do Jogo ---
+        let discoveredCount = 0;
+        const discoveryData = {}; // Para rastrear o que foi descoberto
+        let currentRoomId = 'shark-room'; // Sala inicial padrão
+
+        // --- Referências de Elementos HTML ---
+        const mainMenu = document.getElementById('main-menu');
+        console.log('mainMenu element:', mainMenu); // Debug log
+
+        const pointClickGame = document.getElementById('point-click-game');
+        console.log('pointClickGame element:', pointClickGame); // Debug log
+
+        const playGameButton = document.getElementById('play-game-button');
+        console.log('playGameButton element:', playGameButton); // Debug log
+
+        const menuBackButton = document.getElementById('menu-back-button');
+        console.log('menuBackButton element:', menuBackButton); // Debug log
+
+        const gameRooms = document.querySelectorAll('.game-room');
+        console.log('gameRooms elements (NodeList):', gameRooms); // Debug log
+
+        const navButtons = document.querySelectorAll('.nav-button');
+        console.log('navButtons elements (NodeList):', navButtons); // Debug log
+
+        const instructionsPanel = document.getElementById('instructions-panel');
+        console.log('instructionsPanel element:', instructionsPanel); // Debug log
+
+        const infoPanel = document.getElementById('info-panel');
+        console.log('infoPanel element:', infoPanel); // Debug log
+
+        const infoTitle = document.getElementById('info-title');
+        console.log('infoTitle element:', infoTitle); // Debug log
+
+        const infoContent = document.getElementById('info-content');
+        console.log('infoContent element:', infoContent); // Debug log
+
+        const challengeSection = document.getElementById('challenge-section');
+        console.log('challengeSection element:', challengeSection); // Debug log
+
+        const challengeQuestion = document.getElementById('challenge-question');
+        console.log('challengeQuestion element:', challengeQuestion); // Debug log
+
+        const challengeOptions = document.getElementById('challenge-options');
+        console.log('challengeOptions element:', challengeOptions); // Debug log
+
+        const challengeFeedback = document.getElementById('challenge-feedback');
+        console.log('challengeFeedback element:', challengeFeedback); // Debug log
+
+        const closeInfoButton = document.getElementById('close-info-button');
+        console.log('closeInfoButton element:', closeInfoButton); // Debug log
+
+        const progressDisplay = document.getElementById('progress-display');
+        console.log('progressDisplay element:', progressDisplay); // Debug log
+
+        const discoveredCountSpan = document.getElementById('discovered-count');
+        console.log('discoveredCountSpan element:', discoveredCountSpan); // Debug log
+
+        const totalDiscoveriesSpan = document.getElementById('total-discoveries');
+        console.log('totalDiscoveriesSpan element:', totalDiscoveriesSpan); // Debug log
+
+        const fishCharacters = document.querySelectorAll('.fish-character');
+        console.log('fishCharacters elements (NodeList):', fishCharacters); // Debug log
+
+        const completionPanel = document.getElementById('completion-panel');
+        console.log('completionPanel element:', completionPanel); // Debug log
+
+        const restartGameButton = document.getElementById('restart-game-button'); // Botão RESTART dentro do jogo
+        console.log('restartGameButton element:', restartGameButton); // Debug log
+
+        // --- Dados dos Peixes e Conteúdo Educacional ---
+        const fishInfo = [
+            {
+                id: 'shark',
+                name: 'Tubarão',
+                info: `
+                    <p>Os tubarões são peixes cartilaginosos predadores, conhecidos pela sua forma hidrodinâmica e dentes afiados. Pertencem à subclasse Elasmobranchii.</p>
+                    <p><strong>Características Definitórias:</strong> Esqueleto feito de cartilagem, não de osso. Não possuem bexiga natatória, dependendo de um fígado grande e oleoso para flutuabilidade e de natação constante para respirar (respiração ram-ventilada em muitas espécies).</p>
+                    <p><strong>Revestimento do Corpo:</strong> A pele dos tubarões é coberta por minúsculas escamas placoides, também conhecidas como dentículos dérmicos, que reduzem o arrasto e proporcionam proteção.</p>
+                    <p><strong>Sistema Nervoso e Órgãos Sensoriais:</strong> Possuem um sistema sensorial altamente desenvolvido, incluindo as Ampolas de Lorenzini (recetores de campo elétrico) e uma linha lateral para detetar vibrações na água.</p>
+                `,
+                challenge: {
+                    question: 'Qual órgão sensorial permite aos tubarões detetar campos elétricos fracos gerados por presas?',
+                    options: [
+                        { text: 'Linha lateral', correct: false, rationale: 'A linha lateral deteta vibrações e mudanças de pressão na água.' },
+                        { text: 'Ampolas de Lorenzini', correct: true, rationale: 'As Ampolas de Lorenzini são recetores especializados que detetam campos elétricos.' },
+                        { text: 'Olhos', correct: false, rationale: 'Os olhos são para visão, não para campos elétricos.' },
+                        { text: 'Narinas', correct: false, rationale: 'As narinas são para o olfato.' }
+                    ]
+                }
+            },
+            {
+                id: 'ray',
+                name: 'Raia',
+                info: `
+                    <p>As raias são peixes cartilaginosos achatados, também pertencentes aos Elasmobranchii. Adaptaram-se a viver no fundo do oceano, com barbatanas peitorais alargadas que se assemelham a asas.</p>
+                    <p><strong>Respiração:</strong> Ao contrário de muitos tubarões, as raias respiram principalmente puxando água através de espiráculos localizados na parte superior da cabeça, o que evita a entrada de areia nas guelras enquanto estão no fundo.</p>
+                    <p><strong>Reprodução:</strong> Muitas raias são ovovivíparas, o que significa que os ovos eclodem dentro da mãe, e os filhotes nascem vivos. Algumas são ovíparas, pondo ovos em cápsulas protetoras.</p>
+                    <p><strong>Digestão:</strong> O trato digestivo das raias, como o dos tubarões, inclui um intestino em espiral, que aumenta a área de superfície para absorção de nutrientes.</p>
+                `,
+                challenge: {
+                    question: 'Como as raias, que vivem no fundo, respiram para evitar a ingestão de areia?',
+                    options: [
+                        { text: 'Através da boca', correct: false, rationale: 'A boca seria preenchida com areia no fundo.' },
+                        { text: 'Através de espiráculos na parte superior da cabeça', correct: true, rationale: 'Os espiráculos permitem a entrada de água limpa para as guelras.' },
+                        { text: 'Pela pele', correct: false, rationale: 'Não é o principal método de respiração.' },
+                        { text: 'Usando pulmões', correct: false, rationale: 'Peixes respiram por guelras.' }
+                    ]
+                }
+            },
+            {
+                id: 'chimera',
+                name: 'Quimera',
+                info: `
+                    <p>As quimeras, também conhecidas como peixes-rato ou tubarões-fantasma, formam a subclasse Holocephali. São peixes cartilaginosos de águas profundas, com uma aparência distinta e uma única abertura branquial coberta por um opérculo de pele.</p>
+                    <p><strong>Classificação:</strong> As quimeras são o grupo mais antigo e divergente de peixes cartilaginosos vivos, tendo evoluído separadamente dos tubarões e raias por milhões de anos.</p>
+                    <p><strong>Esqueleto:</strong> Embora cartilaginoso, o esqueleto das quimeras é mais calcificado do que o dos elasmobrânquios, tornando-o mais rígido.</p>
+                    <p><strong>Reprodução:</strong> Todas as quimeras são ovíparas, pondo ovos encapsulados no fundo do oceano. As cápsulas de ovos são muitas vezes em forma de fuso ou espiral.</p>
+                `,
+                challenge: {
+                    question: 'Qual é uma característica distintiva das quimeras em relação à sua abertura branquial?',
+                    options: [
+                        { text: 'Múltiplas fendas branquiais expostas', correct: false, rationale: 'Esta é a característica de tubarões e raias.' },
+                        { text: 'Uma única abertura branquial coberta por um opérculo de pele', correct: true, rationale: 'É uma característica única das quimeras entre os peixes cartilaginosos.' },
+                        { text: 'Ausência de guelras', correct: false, rationale: 'Todas as quimeras possuem guelras.' },
+                        { text: 'Guelras localizadas na parte superior da cabeça', correct: false, rationale: 'Isto é mais comum em raias.' }
+                    ]
+                }
+            }
+        ];
+
+        // --- Lógica do Jogo ---
+        let currentChallenge = null;
+
+        // Função para mostrar uma sala específica
+        function showRoom(roomId) {
+            console.log('Changing room to:', roomId);
+            gameRooms.forEach(room => {
+                room.classList.remove('active');
+            });
+            const targetRoomElement = document.getElementById(roomId);
+            if (targetRoomElement) {
+                targetRoomElement.classList.add('active');
+                currentRoomId = roomId;
+                infoPanel.classList.remove('show');
+                console.log('Info panel closed on room change.');
+            } else {
+                console.error('Error: Target room element not found for ID:', roomId);
+            }
+        }
+
+        // Função para mostrar o painel de informações de um peixe
+        function showInfoPanel(fishId) {
+            console.log('Showing info panel for:', fishId);
+            const info = fishInfo.find(f => f.id === fishId);
+
+            if (info && infoPanel && infoTitle && infoContent && challengeSection && challengeQuestion && challengeOptions && challengeFeedback) {
+                infoTitle.textContent = info.name;
+                infoContent.innerHTML = info.info;
+
+                // Reinicia e esconde a seção de desafio inicialmente
+                challengeSection.classList.add('hidden');
+                challengeFeedback.textContent = '';
+                challengeOptions.innerHTML = '';
+                currentChallenge = null;
+
+                // Se houver um desafio para este peixe, exibe-o
+                if (info.challenge) {
+                    challengeSection.classList.remove('hidden');
+                    challengeQuestion.textContent = info.challenge.question;
+                    currentChallenge = info.challenge;
+
+                    info.challenge.options.forEach((option, index) => {
+                        const button = document.createElement('button');
+                        button.textContent = option.text;
+                        button.dataset.index = index;
+                        button.addEventListener('click', handleChallengeAnswer);
+                        challengeOptions.appendChild(button);
+                    });
+                }
+
+                infoPanel.classList.add('show');
+                // Adiciona o peixe à lista de descobertas se ainda não estiver lá
+                if (!discoveryData[fishId]) {
+                    discoveryData[fishId] = true;
+                    discoveredCount++;
+                    updateProgressDisplay();
+                    console.log('Discovered count updated:', discoveredCount);
+                }
+            } else {
+                console.error('Error: One or more info panel elements not found or fish info missing for ID:', fishId);
+            }
+        }
+
+        // Função para lidar com a resposta do desafio
+        function handleChallengeAnswer(event) {
+            console.log('Challenge answer clicked.');
+            const selectedButton = event.target;
+            const selectedIndex = parseInt(selectedButton.dataset.index);
+
+            if (currentChallenge && challengeOptions && challengeFeedback) {
+                // Desabilita todos os botões após a seleção
+                Array.from(challengeOptions.children).forEach(button => {
+                    button.classList.add('disabled');
+                    button.removeEventListener('click', handleChallengeAnswer);
+                });
+
+                if (currentChallenge.options[selectedIndex].correct) {
+                    selectedButton.classList.add('correct');
+                    challengeFeedback.textContent = 'Correto! ' + currentChallenge.options[selectedIndex].rationale;
+                    challengeFeedback.style.color = '#2ea043'; // Verde
+                } else {
+                    selectedButton.classList.add('incorrect');
+                    challengeFeedback.textContent = 'Incorreto. ' + currentChallenge.options[selectedIndex].rationale;
+                    challengeFeedback.style.color = '#f85149'; // Vermelho
+
+                    // Destaca a resposta correta
+                    Array.from(challengeOptions.children).forEach(button => {
+                        if (currentChallenge.options[parseInt(button.dataset.index)].correct) {
+                            button.classList.add('correct');
+                        }
+                    });
+                }
+                checkCompletion(); // Verifica se todos os peixes foram descobertos após cada resposta
+            } else {
+                console.error('Error: Missing challenge elements or currentChallenge is null.');
+            }
+        }
+
+        // Função para fechar o painel de informações
+        if (closeInfoButton) {
+            closeInfoButton.addEventListener('click', () => {
+                console.log('Close info button clicked.');
+                infoPanel.classList.remove('show');
+                currentChallenge = null;
+            });
+        } else {
+            console.error('Error: closeInfoButton not found!');
+        }
+
+
+        // Função para atualizar o display de progresso
+        function updateProgressDisplay() {
+            if (discoveredCountSpan && totalDiscoveriesSpan && progressDisplay) {
+                discoveredCountSpan.textContent = discoveredCount;
+                totalDiscoveriesSpan.textContent = fishInfo.length;
+                progressDisplay.classList.remove('hidden');
+                console.log('Progress display updated.');
+            } else {
+                console.error('Error: One or more progress display elements not found.');
+            }
+        }
+
+        // Função para verificar a conclusão do jogo
+        function checkCompletion() {
+            console.log('checkCompletion called. Discovered count:', discoveredCount, 'Total fish:', fishInfo.length);
+            if (discoveredCount === fishInfo.length) {
+                console.log('All fish discovered! Showing completion panel.');
+                if (completionPanel) {
+                    completionPanel.classList.add('show');
+                } else {
+                    console.error('Error: completionPanel not found when trying to show it!');
+                }
+            }
+        }
+
+        // Função para reiniciar o jogo
+        function resetGame() {
+            console.log('Resetting game...');
+            discoveredCount = 0;
+            for (const key in discoveryData) {
+                delete discoveryData[key];
+            }
+            updateProgressDisplay();
+            if (infoPanel) infoPanel.classList.remove('show');
+            if (completionPanel) completionPanel.classList.remove('show');
+            if (pointClickGame) pointClickGame.style.display = 'none';
+            if (mainMenu) mainMenu.style.display = 'flex';
+            console.log('Game reset complete. Main menu visible.');
+        }
+
+        // Inicializa os elementos e ouvintes do jogo (chamado quando o jogo começa)
+        function initGameElements() {
+            console.log('Initializing game elements...');
+            // Adiciona ouvintes de clique aos personagens dos peixes
+            if (fishCharacters) {
+                fishCharacters.forEach(fishChar => {
+                    fishChar.addEventListener('click', () => {
+                        showInfoPanel(fishChar.dataset.fishId);
+                    });
+                });
+            } else {
+                console.error('Error: fishCharacters (fish images) not found!');
+            }
+
+
+            // Adiciona ouvintes de clique aos botões de navegação
+            if (navButtons) {
+                navButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetRoom = button.dataset.targetRoom;
+                        showRoom(targetRoom);
+                    });
+                });
+            } else {
+                console.error('Error: navButtons not found!');
+            }
+
+
+            updateProgressDisplay(); // Inicializa o display de progresso
+            showRoom(currentRoomId); // Mostra a sala inicial
+            console.log('Game elements initialized. Current room:', currentRoomId);
+        }
+
+        // --- Listeners de Eventos ---
+
+        // Executa quando o DOM estiver completamente carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded fired. Attaching initial event listeners and setting display.');
+
+            if (mainMenu) {
+                mainMenu.style.display = 'flex';
+                console.log('mainMenu display set to flex.');
+            } else {
+                console.error('Error: mainMenu element not found on DOMContentLoaded!');
+            }
+
+            if (pointClickGame) {
+                pointClickGame.style.display = 'none';
+                console.log('pointClickGame display set to none.');
+            } else {
+                console.error('Error: pointClickGame element not found on DOMContentLoaded!');
+            }
+
+            if (playGameButton) {
+                playGameButton.addEventListener('click', () => {
+                    console.log('Play game button clicked.');
+                    if (mainMenu) mainMenu.style.display = 'none';
+                    if (pointClickGame) pointClickGame.style.display = 'block';
+                    initGameElements();
+                });
+            } else {
+                console.error('Error: playGameButton not found!');
+            }
+
+            // NOVO: Botão BACK no menu principal agora chama resetGame()
+            if (menuBackButton) {
+                menuBackButton.addEventListener('click', () => {
+                    console.log('Menu back button clicked. Calling resetGame().');
+                    resetGame(); // Chama a função para reiniciar o jogo e voltar ao menu
+                });
+            } else {
+                console.error('Error: menuBackButton not found!');
+            }
+
+            if (restartGameButton) {
+                restartGameButton.addEventListener('click', resetGame);
+                console.log('Restart game button event listener attached successfully.');
+            } else {
+                console.error('Error: Restart game button not found!');
+            }
+        });
+
+        console.log('Script finished execution setup.'); // Debug log at the very end of the script setup
+    </script>
+</body>
+</html>
