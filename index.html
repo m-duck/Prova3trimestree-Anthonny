@@ -22,6 +22,7 @@
             --accent-red: #f85149;
             --border-light: rgba(255, 255, 255, 0.4);
             --border-subtle: rgba(255, 255, 255, 0.1);
+            --glow-color: #00f0ff; /* Cor para brilhos e bordas */
         }
 
         /* Estilos base */
@@ -41,13 +42,13 @@
         /* Estilos para transições de tela */
         .screen-transition {
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            pointer-events: none; /* Permite cliques através enquanto invisível */
+            transition: opacity 0.7s ease-in-out; /* Transição mais longa */
+            pointer-events: none;
         }
 
         .screen-transition.active {
             opacity: 1;
-            pointer-events: auto; /* Habilita cliques quando visível */
+            pointer-events: auto;
         }
 
         /* Estilos para a tela de input do nome */
@@ -62,76 +63,79 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-panel);
-            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 30; /* Acima de tudo */
+            background-color: var(--bg-dark); /* Fundo mais escuro */
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Tela+Inicial'); /* Fundo temático */
+            background-size: cover;
+            background-position: center;
+            z-index: 30;
             padding: 2rem;
             text-align: center;
         }
 
         .name-input-container h1 {
-            font-size: 3rem;
+            font-size: 3.5rem; /* Maior */
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(0,240,255,0.5), 0 0 20px rgba(0,240,255,0.3); /* Brilho azulado */
+            margin-bottom: 2.5rem;
         }
 
         .name-input-container p {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
         }
 
         .name-input-container input[type="text"] {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid #ffffff;
+            background-color: rgba(0, 240, 255, 0.1); /* Fundo com brilho */
+            border: 2px solid var(--glow-color); /* Borda brilhante */
             border-radius: 0.75rem;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem; /* Maior padding */
             color: #ffffff;
-            font-size: 1.5rem;
+            font-size: 1.6rem; /* Maior fonte */
             width: 80%;
-            max-width: 400px;
-            margin-bottom: 1.5rem;
+            max-width: 450px;
+            margin-bottom: 2rem;
             outline: none;
-            box-shadow: none;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,240,255,0.3); /* Sombra de brilho */
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .name-input-container input[type="text"]:focus {
-            border-color: #cccccc;
-            background-color: rgba(255, 255, 255, 0.15);
+            border-color: #ffffff;
+            background-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 25px rgba(0,240,255,0.5);
         }
 
         .start-button-name-input {
-            background-color: transparent;
-            border: 2px solid #ffffff;
+            background: linear-gradient(145deg, #00b0ff, #007bff); /* Gradiente azul */
+            border: 2px solid var(--glow-color);
             border-radius: 0.75rem;
-            padding: 1rem 3rem;
+            padding: 1.2rem 4rem; /* Maior padding */
             color: #ffffff;
-            font-size: 2rem;
+            font-size: 2.2rem; /* Maior fonte */
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            text-shadow: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), 0 0 20px rgba(0,240,255,0.5); /* Sombra e brilho */
         }
 
         .start-button-name-input:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
-            color: #cccccc;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, #007bff, #00b0ff);
+            border-color: #ffffff;
+            color: #e0e0e0;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5), 0 0 30px rgba(0,240,255,0.7);
         }
 
         .name-input-feedback {
             color: var(--accent-red);
             font-weight: bold;
-            margin-top: 1rem;
-            min-height: 1.5rem; /* Para evitar CLS */
+            margin-top: 1.5rem;
+            min-height: 1.5rem;
+            font-size: 1.1rem;
         }
 
         /* Estilos do Menu Principal */
@@ -146,12 +150,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-panel);
-            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: var(--bg-dark);
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Menu+Principal'); /* Fundo temático */
+            background-size: cover;
+            background-position: center;
             z-index: 20;
-            display: none; /* Escondido inicialmente */
+            display: none;
         }
 
         .menu-header {
@@ -164,37 +168,39 @@
             z-index: 1;
         }
 
-        /* Estilo do botão "BACK" para o menu */
         .menu-back-button {
-            background-color: transparent;
-            border: none;
+            background-color: rgba(248, 81, 73, 0.2); /* Vermelho translúcido */
+            border: 2px solid var(--accent-red);
             color: #ffffff;
             font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: color 0.3s ease, transform 0.2s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .menu-back-button:hover {
-            color: #aaaaaa;
-            transform: scale(1.05);
+            background-color: var(--accent-red);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         .main-title-area {
             flex-grow: 0;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem; /* Mais espaço */
             z-index: 1;
         }
 
         .main-title {
-            font-size: 3rem;
+            font-size: 4rem; /* Maior */
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            letter-spacing: 0.05em;
+            text-shadow: 0 0 15px var(--glow-color), 0 0 30px rgba(0,240,255,0.7); /* Brilho mais intenso */
+            letter-spacing: 0.1em; /* Mais espaçamento */
             margin-bottom: 0;
             text-align: center;
         }
@@ -202,33 +208,32 @@
         .main-buttons {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem; /* Mais espaçamento */
             margin-bottom: 0;
             z-index: 1;
         }
 
-        /* Estilo do botão de menu para o novo menu */
         .menu-button {
-            background-color: transparent;
-            border: 2px solid #ffffff;
-            border-radius: 0.75rem;
-            padding: 1rem 3rem;
+            background: linear-gradient(145deg, #00b0ff, #007bff);
+            border: 2px solid var(--glow-color);
+            border-radius: 1rem; /* Mais arredondado */
+            padding: 1.5rem 5rem; /* Maior padding */
             color: #ffffff;
-            font-size: 2rem;
+            font-size: 2.5rem; /* Maior fonte */
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            text-shadow: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), 0 0 25px rgba(0,240,255,0.6);
         }
 
         .menu-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
-            color: #cccccc;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, #007bff, #00b0ff);
+            border-color: #ffffff;
+            color: #e0e0e0;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 40px rgba(0,240,255,0.8);
         }
 
         /* Estilos do Jogo Point-and-Click (container principal das salas) */
@@ -253,12 +258,8 @@
             background-size: cover;
             background-position: center;
             display: none;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.7s ease-in-out; /* Transição mais longa */
             opacity: 0;
-            background-color: var(--bg-panel);
-            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
         }
 
         .game-room.active {
@@ -271,48 +272,48 @@
             position: absolute;
             cursor: pointer;
             transition: transform 0.3s ease-out, filter 0.3s ease-out;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 0 8px rgba(0,0,0,0.6));
             z-index: 5;
             pointer-events: auto;
             animation: float 5s ease-in-out infinite;
-            position: relative; /* Para posicionar o ícone de descoberto */
+            position: relative;
         }
 
         .fish-character:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 15px rgba(255,255,0,0.7));
+            transform: scale(1.15); /* Maior escala no hover */
+            filter: drop-shadow(0 0 20px rgba(255,255,0,0.8)) saturate(1.2); /* Brilho mais intenso */
         }
 
         /* Animação de "pop" ao ser clicado */
         .fish-character.clicked {
-            animation: pop 0.3s ease-out;
+            animation: pop 0.4s ease-out; /* Animação mais longa */
         }
         @keyframes pop {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.3); } /* Maior "pop" */
             100% { transform: scale(1); }
         }
 
         /* Ícone de descoberto */
         .fish-character .discovered-icon {
             position: absolute;
-            top: -10px; /* Ajuste a posição conforme necessário */
-            right: -10px; /* Ajuste a posição conforme necessário */
-            font-size: 2rem;
-            color: var(--accent-green); /* Cor verde para indicar sucesso */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            display: none; /* Escondido por padrão */
+            top: -15px; /* Ajuste a posição */
+            right: -15px; /* Ajuste a posição */
+            font-size: 2.5rem; /* Maior */
+            color: var(--accent-green);
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            display: none;
+            filter: drop-shadow(0 0 5px var(--accent-green)); /* Brilho no ícone */
         }
 
         .fish-character.discovered .discovered-icon {
-            display: block; /* Mostra o ícone quando descoberto */
+            display: block;
         }
-
 
         /* Animação de flutuação */
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-20px); } /* Maior flutuação */
             100% { transform: translateY(0px); }
         }
 
@@ -322,24 +323,24 @@
             left: 50%;
             transform: translateX(-50%) translateY(0px);
             animation-delay: 0s;
-            width: 200px;
+            width: 220px; /* Ajuste o tamanho */
             height: auto;
         }
 
         #ray-room #ray-char {
-            top: 65%;
+            top: 60%; /* Posição ajustada */
             left: 50%;
             transform: translateX(-50%) translateY(0px);
-            width: 250px;
+            width: 280px; /* Ajuste o tamanho */
             height: auto;
             animation-delay: 1s;
         }
 
         #chimera-room #chimera-char {
-            top: 20%;
+            top: 30%; /* Posição ajustada */
             left: 50%;
             transform: translateX(-50%) translateY(0px);
-            width: 200px;
+            width: 220px; /* Ajuste o tamanho */
             height: auto;
             animation-delay: 2s;
         }
@@ -347,49 +348,37 @@
         /* Botões de navegação entre salas */
         .nav-button {
             position: absolute;
-            background-color: rgba(26, 26, 26, 0.6);
-            border: 2px solid var(--border-light);
-            border-radius: 0.5rem;
-            padding: 0.75rem 1.5rem;
+            background-color: rgba(0, 240, 255, 0.15); /* Fundo translúcido com brilho */
+            border: 2px solid var(--glow-color); /* Borda brilhante */
+            border-radius: 0.75rem; /* Mais arredondado */
+            padding: 1rem 2rem; /* Maior padding */
             color: #ffffff;
-            font-size: 1.2rem;
+            font-size: 1.3rem; /* Maior fonte */
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             z-index: 15;
             pointer-events: auto;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,240,255,0.5); /* Sombra e brilho */
         }
 
         .nav-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            background-color: rgba(0, 240, 255, 0.3);
+            border-color: #ffffff;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5), 0 0 25px rgba(0,240,255,0.8);
         }
 
         .nav-left {
-            left: 20px;
+            left: 30px; /* Mais afastado da borda */
             top: 50%;
             transform: translateY(-50%);
         }
 
         .nav-right {
-            right: 20px;
+            right: 30px; /* Mais afastado da borda */
             top: 50%;
             transform: translateY(-50%);
-        }
-
-        .nav-up {
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-down {
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         /* Overlays e painéis */
@@ -404,192 +393,204 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: 1rem;
+            padding: 1.5rem; /* Maior padding geral */
             pointer-events: none;
         }
 
-        .info-panel {
-            background-color: rgba(26, 26, 26, 0.95);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            max-width: 700px;
+        .info-panel, .codex-panel, .confirmation-modal-content {
+            background-color: rgba(26, 26, 26, 0.98); /* Mais opaco */
+            border-radius: 2rem; /* Mais arredondado */
+            padding: 2.5rem; /* Maior padding */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0,240,255,0.5); /* Sombra e brilho */
+            max-width: 750px; /* Maior largura */
             width: 100%;
             text-align: left;
             display: none;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem; /* Maior espaçamento */
             pointer-events: auto;
-            margin-top: 2rem;
-            max-height: 80vh;
+            margin-top: 2.5rem; /* Mais afastado do topo */
+            max-height: 85vh; /* Maior altura */
             overflow-y: auto;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 3px solid var(--glow-color); /* Borda brilhante */
             color: var(--text-light);
         }
 
-        .info-panel.show {
+        .info-panel.show, .codex-panel.show, .confirmation-modal-backdrop.show .confirmation-modal-content {
             display: flex;
         }
 
         .challenge-section {
-            background-color: rgba(26, 26, 26, 0.8);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 1px solid var(--border-subtle);
+            background-color: rgba(0, 240, 255, 0.1); /* Fundo com brilho */
+            border-radius: 1rem;
+            padding: 2rem; /* Maior padding */
+            margin-top: 2rem;
+            border: 1px solid rgba(0,240,255,0.3); /* Borda sutil */
+            box-shadow: inset 0 0 10px rgba(0,240,255,0.2); /* Sombra interna */
         }
 
         .challenge-question {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--text-light);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .challenge-options button {
-            background-color: transparent;
+            background-color: rgba(255, 255, 255, 0.08); /* Fundo mais sutil */
             color: var(--text-light);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.2rem;
-            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 1.5rem; /* Maior padding */
+            border-radius: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: 1.1rem;
             width: 100%;
             text-align: left;
-            margin-bottom: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        .challenge-options button:hover:not(.disabled) {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
-            transform: translateX(5px);
+            margin-bottom: 0.75rem; /* Mais espaçamento */
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
+        .challenge-options button:hover:not(.disabled) {
+            background-color: rgba(0, 240, 255, 0.15); /* Fundo com brilho */
+            border-color: var(--glow-color);
+            transform: translateX(8px); /* Maior deslocamento */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,240,255,0.4);
+        }
+
         .challenge-options button.correct {
-            background-color: rgba(46, 160, 67, 0.3);
+            background-color: rgba(46, 160, 67, 0.4); /* Verde mais forte */
             border-color: var(--accent-green);
             color: white;
+            box-shadow: 0 0 15px var(--accent-green); /* Brilho verde */
         }
 
         .challenge-options button.incorrect {
-            background-color: rgba(218, 54, 51, 0.3);
+            background-color: rgba(218, 54, 51, 0.4); /* Vermelho mais forte */
             border-color: var(--accent-red);
             color: white;
+            box-shadow: 0 0 15px var(--accent-red); /* Brilho vermelho */
         }
 
         .challenge-options button.disabled {
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.6; /* Menor opacidade */
         }
 
         .challenge-feedback {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-weight: bold;
-            font-size: 1rem;
-            min-height: 1.5rem; /* Para evitar CLS */
+            font-size: 1.1rem;
+            min-height: 1.5rem;
+            color: var(--text-light);
         }
 
         .close-button {
-            background-color: transparent;
-            color: var(--accent-red);
-            padding: 0.8rem 1.5rem;
+            background: linear-gradient(145deg, #f85149, #cc0000); /* Gradiente vermelho */
+            color: #ffffff;
+            padding: 1rem 2rem; /* Maior padding */
             border-radius: 0.75rem;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
             align-self: flex-end;
             border: 2px solid var(--accent-red);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3), 0 0 15px rgba(248,81,73,0.5);
         }
 
         .close-button:hover {
-            background-color: rgba(248, 81, 73, 0.1);
+            background: linear-gradient(145deg, #cc0000, #f85149);
             border-color: #ff0000;
-            color: #ff0000;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            color: #e0e0e0;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), 0 0 25px rgba(248,81,73,0.7);
         }
 
         /* Estilos para o display de nome, pontuação e tempo */
         .game-hud {
             position: absolute;
-            top: 1rem;
+            top: 1.5rem; /* Mais afastado do topo */
             left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 1.5rem;
-            z-index: 20; /* Acima dos elementos do jogo, mas abaixo de painéis modais */
-            pointer-events: none; /* Permite cliques através dele */
+            padding: 0 2rem; /* Maior padding lateral */
+            z-index: 20;
+            pointer-events: none;
         }
 
         .player-info, .game-stats, .hud-button-container {
-            background-color: rgba(26, 26, 26, 0.8);
-            border-radius: 0.75rem;
-            padding: 0.5rem 1rem; /* Padding menor */
-            font-size: 0.9rem; /* Fonte menor */
+            background-color: rgba(26, 26, 26, 0.9); /* Mais opaco */
+            border-radius: 1rem; /* Mais arredondado */
+            padding: 0.75rem 1.25rem; /* Maior padding */
+            font-size: 1rem; /* Maior fonte */
             color: var(--text-light);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-subtle);
-            display: flex; /* Para alinhar os elementos dentro */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,240,255,0.3); /* Sombra e brilho */
+            border: 2px solid var(--glow-color); /* Borda brilhante */
+            display: flex;
             align-items: center;
-            gap: 0.75rem; /* Espaçamento entre pontuação e tempo */
-            pointer-events: auto; /* Habilita cliques nos botões do HUD */
+            gap: 1rem; /* Maior espaçamento */
+            pointer-events: auto;
         }
         
         .game-stats {
-            gap: 0.75rem; /* Espaçamento entre os elementos de stats */
+            gap: 1rem;
+        }
+
+        .hud-button-container {
+            gap: 1.5rem; /* Espaçamento entre botões e volume */
         }
 
         .hud-button {
-            background-color: transparent;
-            border: 1px solid var(--border-light);
-            border-radius: 0.5rem;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
+            background: linear-gradient(145deg, #00b0ff, #007bff);
+            border: 1px solid var(--glow-color);
+            border-radius: 0.75rem;
+            padding: 0.6rem 1.2rem; /* Maior padding */
+            font-size: 0.9rem; /* Maior fonte */
             font-weight: bold;
-            color: var(--text-light);
+            color: #ffffff;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .hud-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
+            background: linear-gradient(145deg, #007bff, #00b0ff);
+            border-color: #ffffff;
             transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
 
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem; /* Mais espaçamento */
         }
 
         .volume-control input[type="range"] {
-            width: 80px;
+            width: 100px; /* Maior largura */
             -webkit-appearance: none;
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,240,255,0.3); /* Fundo com brilho */
             border-radius: 5px;
-            height: 5px;
+            height: 8px; /* Maior altura */
             outline: none;
             cursor: pointer;
+            border: 1px solid var(--glow-color);
+            box-shadow: inset 0 0 5px rgba(0,240,255,0.2);
         }
 
         .volume-control input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 15px;
-            height: 15px;
+            width: 20px; /* Maior thumb */
+            height: 20px; /* Maior thumb */
             border-radius: 50%;
             background: #ffffff;
             cursor: pointer;
-            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+            box-shadow: 0 0 5px rgba(0,240,255,0.8), 0 0 10px rgba(0,240,255,0.5); /* Brilho no thumb */
+            border: 2px solid var(--glow-color);
         }
 
         /* Estilos do painel de conclusão */
@@ -603,66 +604,63 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-panel);
-            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 25; /* Acima do menu principal */
+            background-color: var(--bg-dark);
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Conclusão'); /* Fundo temático */
+            background-size: cover;
+            background-position: center;
+            z-index: 25;
             overflow: hidden;
             padding-bottom: 0;
-            gap: 1.5rem;
+            gap: 2rem; /* Maior espaçamento */
         }
 
         .completion-panel.show {
             display: flex;
         }
 
-        .completion-panel .completion-image {
-            display: none;
-        }
-
-        /* Estilos para o texto de conclusão */
         .completion-panel h2 {
-            display: block;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: bold;
             color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px var(--glow-color), 0 0 30px rgba(0,240,255,0.7);
         }
 
         .completion-panel p {
-            display: block;
-            font-size: 1.2rem;
+            font-size: 1.4rem; /* Maior fonte */
             line-height: 1.8;
             color: var(--text-light);
             text-align: center;
-            max-width: 80%;
+            max-width: 85%; /* Maior largura */
+            margin-bottom: 0.75rem;
         }
 
-        /* Estilo do botão de reiniciar para o painel de conclusão */
+        .completion-panel p:last-of-type {
+            margin-bottom: 2rem;
+        }
+
         .restart-button {
-            background-color: transparent;
+            background: linear-gradient(145deg, #00b0ff, #007bff);
             color: #ffffff;
-            padding: 1.2rem 3rem;
-            border-radius: 0.75rem;
+            padding: 1.5rem 5rem;
+            border-radius: 1rem;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 2rem; /* Maior fonte */
             font-weight: bold;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            border: 2px solid #ffffff;
+            transition: all 0.3s ease;
+            border: 2px solid var(--glow-color);
             z-index: 2;
             position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            margin-top: 2rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), 0 0 25px rgba(0,240,255,0.6);
+            margin-top: 3rem;
         }
 
         .restart-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
-            color: #cccccc;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, #007bff, #00b0ff);
+            border-color: #ffffff;
+            color: #e0e0e0;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 40px rgba(0,240,255,0.8);
         }
 
         /* Modal de Confirmação */
@@ -672,14 +670,14 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.85); /* Mais escuro */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 40; /* Acima de todas as outras telas */
+            z-index: 40;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.4s ease-in-out;
         }
 
         .confirmation-modal-backdrop.show {
@@ -688,132 +686,111 @@
         }
 
         .confirmation-modal-content {
-            background-color: var(--bg-panel);
-            border: 2px solid var(--border-light);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            padding: 3rem; /* Maior padding */
+            gap: 2rem; /* Maior espaçamento */
         }
 
         .confirmation-modal-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem; /* Maior fonte */
             font-weight: bold;
             color: var(--text-light);
+        }
+
+        .confirmation-modal-content p {
+            font-size: 1.1rem;
         }
 
         .confirmation-modal-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.5rem; /* Maior espaçamento */
         }
 
         .confirmation-modal-buttons button {
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem; /* Maior padding */
             border-radius: 0.75rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .confirmation-modal-buttons .confirm-yes {
-            background-color: var(--accent-red);
+            background: linear-gradient(145deg, #f85149, #cc0000);
             color: white;
             border: 2px solid var(--accent-red);
         }
 
         .confirmation-modal-buttons .confirm-yes:hover {
-            background-color: #cc0000;
-            border-color: #cc0000;
+            background: linear-gradient(145deg, #cc0000, #f85149);
+            border-color: #ff0000;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         .confirmation-modal-buttons .confirm-no {
-            background-color: transparent;
+            background: linear-gradient(145deg, #00b0ff, #007bff);
             color: var(--text-light);
-            border: 2px solid var(--border-light);
+            border: 2px solid var(--glow-color);
         }
 
         .confirmation-modal-buttons .confirm-no:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: #cccccc;
+            background: linear-gradient(145deg, #007bff, #00b0ff);
+            border-color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         /* Codex Panel */
         .codex-panel {
-            background-color: rgba(26, 26, 26, 0.95);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            width: 90%;
-            height: 80vh;
-            text-align: left;
-            display: none; /* Escondido por padrão */
-            flex-direction: column;
-            gap: 1rem;
-            pointer-events: auto;
-            margin-top: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-light);
-            position: absolute; /* Posiciona sobre o jogo */
-            z-index: 35; /* Acima do jogo, abaixo do modal de confirmação */
-            overflow-y: auto;
-        }
-
-        .codex-panel.show {
-            display: flex;
+            z-index: 35;
         }
 
         .codex-panel h2 {
-            font-size: 2rem;
+            font-size: 2.2rem; /* Maior */
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            text-shadow: 0 0 10px rgba(0,240,255,0.5);
         }
 
         .codex-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            flex-grow: 1; /* Permite que a grade ocupe o espaço disponível */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Maior tamanho mínimo */
+            gap: 1.5rem; /* Maior espaçamento */
+            flex-grow: 1;
         }
 
         .codex-item {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.75rem;
-            padding: 1rem;
+            background-color: rgba(0, 240, 255, 0.05); /* Fundo com brilho sutil */
+            border: 1px solid rgba(0,240,255,0.2); /* Borda sutil */
+            border-radius: 1rem; /* Mais arredondado */
+            padding: 1.5rem; /* Maior padding */
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative; /* Para o ícone de check */
         }
 
         .codex-item:hover:not(.undiscovered) {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            background-color: rgba(0, 240, 255, 0.15);
+            transform: translateY(-5px); /* Maior deslocamento */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), 0 0 20px rgba(0,240,255,0.4);
         }
 
         .codex-item img {
-            width: 100px;
-            height: 75px;
+            width: 120px; /* Maior imagem */
+            height: 90px; /* Maior imagem */
             object-fit: contain;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            filter: grayscale(100%); /* Peixes não descobertos começam em grayscale */
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            filter: grayscale(100%) brightness(70%); /* Mais escuro e acinzentado */
+            transition: filter 0.5s ease;
         }
 
         .codex-item.discovered img {
@@ -821,69 +798,102 @@
         }
 
         .codex-item.undiscovered {
-            opacity: 0.7;
+            opacity: 0.8; /* Mais visível que antes */
             cursor: default;
         }
 
         .codex-item h3 {
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* Maior fonte */
             font-weight: bold;
             color: var(--text-light);
         }
 
+        .codex-item .codex-check-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .codex-item.discovered .codex-check-icon {
+            display: block;
+        }
+
+
         /* Responsividade para telas menores */
         @media (max-width: 768px) {
             .name-input-container h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             .name-input-container p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             .name-input-container input[type="text"] {
-                font-size: 1.2rem;
-                padding: 0.6rem 1rem;
+                font-size: 1.3rem;
+                padding: 0.8rem 1.2rem;
             }
             .start-button-name-input {
-                font-size: 1.5rem;
-                padding: 0.8rem 2rem;
+                font-size: 1.8rem;
+                padding: 1rem 3rem;
             }
 
             .main-title {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
             }
             .menu-button {
-                font-size: 1.5rem;
-                padding: 1rem 2.5rem;
+                font-size: 1.8rem;
+                padding: 1.2rem 3.5rem;
             }
             .menu-back-button {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                padding: 0.6rem 1.2rem;
             }
             .fish-character {
-                width: 150px;
+                width: 120px;
                 height: auto;
             }
             #ray-char {
-                width: 200px;
+                width: 160px;
                 height: auto;
             }
             #chimera-char {
-                width: 150px;
+                width: 120px;
                 height: auto;
             }
+            .fish-character .discovered-icon {
+                font-size: 2rem;
+                top: -5px;
+                right: -5px;
+            }
             .restart-button {
-                font-size: 1.2rem;
-                padding: 1rem 2rem;
+                font-size: 1.5rem;
+                padding: 1rem 3rem;
             }
             .completion-panel h2 {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
             }
             .completion-panel p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             .player-info, .game-stats, .hud-button-container {
                 padding: 0.4rem 0.75rem;
                 font-size: 0.8rem;
                 gap: 0.5rem;
+            }
+            .hud-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .volume-control input[type="range"] {
+                width: 70px;
+                height: 6px;
+            }
+            .volume-control input[type="range"]::-webkit-slider-thumb {
+                width: 16px;
+                height: 16px;
             }
             .name-input-feedback {
                 font-size: 0.9rem;
@@ -900,14 +910,15 @@
                 font-size: 0.9rem;
             }
             .codex-panel {
-                padding: 1rem;
-                margin-top: 1rem;
+                padding: 1.5rem;
+                margin-top: 1.5rem;
             }
             .codex-panel h2 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             .codex-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 1rem;
             }
             .codex-item img {
                 width: 80px;
@@ -915,6 +926,9 @@
             }
             .codex-item h3 {
                 font-size: 0.9rem;
+            }
+            .codex-item .codex-check-icon {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -943,17 +957,18 @@
 
         <!-- Botões Principais do Menu -->
         <div class="main-buttons">
-            <button id="play-game-button" class="menu-button">JOGAR</button>
+            <button id="new-game-button" class="menu-button">NOVO JOGO</button>
+            <button id="continue-game-button" class="menu-button hidden">CONTINUAR</button>
         </div>
     </div>
 
     <!-- Jogo Point-and-Click (container principal das salas) -->
     <div id="point-click-game" class="point-click-game screen-transition">
         <!-- Sala do Tubarão -->
-        <div id="shark-room" class="game-room">
+        <div id="shark-room" class="game-room" style="background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Recife+de+Tubarões');">
             <img id="shark-char" class="fish-character"
                  src="https://images.cults3d.com/VSyY3jKKi3zAG_246OpS54J3_8s=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/26588735/illustration-file/49a806c1-a349-4051-90db-a2e1a6e80bf9/Tralalero-Tralala.png"
-                 alt="Tubarão" data-fish-id="shark" onerror="this.onerror=null;this.src='https://placehold.co/200x150/555/FFF?text=Tubarão'">
+                 alt="Tubarão" data-fish-id="shark" onerror="this.onerror=null;this.src='https://placehold.co/220x160/555/FFF?text=Tubarão'">
                  <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala do tubarão -->
             <button class="nav-button nav-right" data-target-room="ray-room">
@@ -965,10 +980,10 @@
         </div>
 
         <!-- Sala da Raia -->
-        <div id="ray-room" class="game-room">
+        <div id="ray-room" class="game-room" style="background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Arenoso+com+Raias');">
             <img id="ray-char" class="fish-character"
                  src="https://static.vecteezy.com/system/resources/previews/023/839/433/non_2x/mobula-rays-fish-isolated-on-a-transparent-background-free-png.png"
-                 alt="Raia" data-fish-id="ray" onerror="this.onerror=null;this.src='https://placehold.co/250x150/555/FFF?text=Raia'">
+                 alt="Raia" data-fish-id="ray" onerror="this.onerror=null;this.src='https://placehold.co/280x180/555/FFF?text=Raia'">
                  <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala da raia -->
             <button class="nav-button nav-right" data-target-room="chimera-room">
@@ -980,10 +995,10 @@
         </div>
 
         <!-- Sala da Quimera -->
-        <div id="chimera-room" class="game-room">
+        <div id="chimera-room" class="game-room" style="background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Oceano+Profundo');">
             <img id="chimera-char" class="fish-character"
                  src="https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-vintage-engraving-of-a-chimaera-monstrosa-also-known-as-a-rabbit-fish-or-rat-fish-vector-png-image_4159944.png"
-                 alt="Quimera" data-fish-id="chimera" onerror="this.onerror=null;this.src='https://placehold.co/200x150/555/FFF?text=Quimera'">
+                 alt="Quimera" data-fish-id="chimera" onerror="this.onerror=null;this.src='https://placehold.co/220x160/555/FFF?text=Quimera'">
                  <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala da quimera -->
             <button class="nav-button nav-right" data-target-room="shark-room">
@@ -1061,7 +1076,7 @@
         let playerName = '';
         let discoveredCount = 0;
         // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
-        const discoveryData = {};
+        let discoveryData = {};
         let currentRoomId = 'shark-room'; // Sala inicial padrão
         let gameTimer = 0; // Segundos
         let timerInterval = null; // Para controlar o setInterval do timer
@@ -1082,7 +1097,8 @@
         const nameInputFeedback = document.getElementById('name-input-feedback');
 
         // Elementos do menu principal
-        const playGameButton = document.getElementById('play-game-button');
+        const newGameButton = document.getElementById('new-game-button'); // Novo botão
+        const continueGameButton = document.getElementById('continue-game-button'); // Novo botão
         const menuBackButton = document.getElementById('menu-back-button');
 
         // Elementos do jogo
@@ -1129,7 +1145,7 @@
                 id: 'shark',
                 name: 'Tubarão',
                 imageSrc: 'https://images.cults3d.com/VSyY3jKKi3zAG_246OpS54J3_8s=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/26588735/illustration-file/49a806c1-a349-4051-90db-a2e1a6e80bf9/Tralalero-Tralala.png',
-                imageFallback: 'https://placehold.co/200x150/555/FFF?text=Tubarão',
+                imageFallback: 'https://placehold.co/220x160/555/FFF?text=Tubarão',
                 info: `
                     <p>Os tubarões são peixes cartilaginosos predadores, conhecidos pela sua forma hidrodinâmica e dentes afiados. Pertencem à subclasse Elasmobranchii.</p>
                     <p><strong>Características Definitórias:</strong> Esqueleto feito de cartilagem, não de osso. Não possuem bexiga natatória, dependendo de um fígado grande e oleoso para flutuabilidade e de natação constante para respirar (respiração ram-ventilada em muitas espécies).</p>
@@ -1150,7 +1166,7 @@
                 id: 'ray',
                 name: 'Raia',
                 imageSrc: 'https://static.vecteezy.com/system/resources/previews/023/839/433/non_2x/mobula-rays-fish-isolated-on-a-transparent-background-free-png.png',
-                imageFallback: 'https://placehold.co/250x150/555/FFF?text=Raia',
+                imageFallback: 'https://placehold.co/280x180/555/FFF?text=Raia',
                 info: `
                     <p>As raias são peixes cartilaginosos achatados, também pertencentes aos Elasmobranchii. Adaptaram-se a viver no fundo do oceano, com barbatanas peitorais alargadas que se assemelham a asas.</p>
                     <p><strong>Respiração:</strong> Ao contrário de muitos tubarões, as raias respiram principalmente puxando água através de espiráculos localizados na parte superior da cabeça, o que evita a entrada de areia nas guelras enquanto estão no fundo.</p>
@@ -1171,7 +1187,7 @@
                 id: 'chimera',
                 name: 'Quimera',
                 imageSrc: 'https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-vintage-engraving-of-a-chimaera-monstrosa-also-known-as-a-rabbit-fish-or-rat-fish-vector-png-image_4159944.png',
-                imageFallback: 'https://placehold.co/200x150/555/FFF?text=Quimera',
+                imageFallback: 'https://placehold.co/220x160/555/FFF?text=Quimera',
                 info: `
                     <p>As quimeras, também conhecidas como peixes-rato ou tubarões-fantasma, formam a subclasse Holocephali. São peixes cartilaginosos de águas profundas, com uma aparência distinta e uma única abertura branquial coberta por um opérculo de pele.</p>
                     <p><strong>Classificação:</strong> As quimeras são o grupo mais antigo e divergente de peixes cartilaginosos vivos, tendo evoluído separadamente dos tubarões e raias por milhões de anos.</p>
@@ -1193,7 +1209,6 @@
         let currentChallenge = null; // Armazena o ID do peixe cujo desafio está ativo
 
         // --- Configuração de Sons (Tone.js) ---
-        const synth = new Tone.Synth().toDestination();
         const clickSound = new Tone.MembraneSynth().toDestination();
         const correctSound = new Tone.PolySynth(Tone.Synth, {
             oscillator: { type: "sine" }
@@ -1201,6 +1216,12 @@
         const incorrectSound = new Tone.NoiseSynth({
             noise: { type: "pink" },
             envelope: { attack: 0.005, decay: 0.1, sustain: 0.05, release: 0.2 }
+        }).toDestination();
+        const ambientSound = new Tone.Player({
+            url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Exemplo de som ambiente (substituir por som de água)
+            loop: true,
+            autostart: false, // Inicia apenas quando o jogo começa
+            volume: -20 // Volume mais baixo para ambiente
         }).toDestination();
 
         // Define o volume inicial para todos os sons
@@ -1225,6 +1246,23 @@
          */
         function playIncorrectSound() {
             incorrectSound.triggerAttackRelease("16n");
+        }
+
+        /**
+         * Inicia a reprodução do som ambiente.
+         */
+        function startAmbientSound() {
+            if (Tone.context.state !== 'running') {
+                Tone.start(); // Garante que o contexto de áudio está ativo
+            }
+            ambientSound.start();
+        }
+
+        /**
+         * Para a reprodução do som ambiente.
+         */
+        function stopAmbientSound() {
+            ambientSound.stop();
         }
 
         // --- Funções de Controle de Tela e Transições ---
@@ -1271,24 +1309,49 @@
             playerNameInput.focus();
             nameInputFeedback.textContent = '';
             gameHud.classList.add('hidden');
+            stopAmbientSound(); // Para o som ambiente na tela de nome
         }
 
         /**
-         * Exibe o menu principal do jogo.
+         * Exibe o menu principal do jogo. Verifica se há um jogo salvo.
          */
         function showMainMenu() {
             showScreen(mainMenu);
+            // Verifica se há um jogo salvo para mostrar o botão "CONTINUAR"
+            const savedGame = localStorage.getItem('fishDiscoveryProgress');
+            if (savedGame) {
+                continueGameButton.classList.remove('hidden');
+            } else {
+                continueGameButton.classList.add('hidden');
+            }
         }
 
         /**
-         * Inicia o jogo, exibindo a primeira sala e o HUD.
+         * Inicia um novo jogo.
          */
-        function startGame() {
+        function startNewGame() {
+            resetGameData(); // Reseta apenas os dados do jogo, não o nome
+            startGameSession();
+        }
+
+        /**
+         * Continua um jogo salvo.
+         */
+        function continueGame() {
+            loadGameProgress(); // Carrega o progresso salvo
+            startGameSession();
+        }
+
+        /**
+         * Lógica comum para iniciar/continuar uma sessão de jogo.
+         */
+        function startGameSession() {
             showScreen(pointClickGame);
             gameHud.classList.remove('hidden');
-            showRoom('shark-room');
+            showRoom(currentRoomId); // Vai para a sala salva ou padrão
             startTimer();
             updateDiscoveryCount();
+            startAmbientSound(); // Inicia o som ambiente
         }
 
         /**
@@ -1296,10 +1359,11 @@
          */
         function showCompletionPanel() {
             stopTimer();
+            stopAmbientSound(); // Para o som ambiente ao concluir
             hideScreen(pointClickGame, () => {
                 gameHud.classList.add('hidden');
                 infoPanel.classList.remove('show');
-                codexPanel.classList.remove('show'); // Garante que o codex está fechado
+                codexPanel.classList.remove('show');
                 showScreen(completionPanel);
                 finalPlayerNameSpan.textContent = playerName;
                 finalGameTimeSpan.textContent = gameTimerDisplay.textContent;
@@ -1340,14 +1404,16 @@
         }
 
         /**
-         * Reinicia o jogo para o estado inicial completo.
+         * Reseta todos os dados do jogo para um novo início.
          */
-        function resetGame() {
-            playerName = '';
+        function resetGameData() {
             discoveredCount = 0;
-            for (const key in discoveryData) {
-                delete discoveryData[key];
-            }
+            discoveryData = {}; // Reseta o objeto de descobertas
+            currentRoomId = 'shark-room'; // Volta para a sala inicial
+            gameTimer = 0; // Reseta o timer
+            stopTimer(); // Garante que o timer está parado
+            updateTimerDisplay(); // Reseta o display do timer
+
             fishCharacters.forEach(fish => {
                 fish.style.pointerEvents = 'auto';
                 fish.style.filter = 'none';
@@ -1356,14 +1422,18 @@
                 fish.classList.remove('discovered');
                 fish.classList.remove('clicked');
             });
-            stopTimer();
-            gameTimer = 0;
-            updateDiscoveryCount();
-            updateTimerDisplay();
+            localStorage.removeItem('fishDiscoveryProgress'); // Limpa o progresso salvo
+        }
 
+        /**
+         * Reinicia o jogo completamente, incluindo o nome do jogador.
+         */
+        function resetGameFull() {
+            playerName = ''; // Limpa o nome do jogador
+            resetGameData(); // Reseta todos os outros dados do jogo
             hideScreen(completionPanel, showNameInputScreen);
             hideConfirmationModal();
-            hideCodexPanel(); // Garante que o codex também é fechado
+            hideCodexPanel();
         }
 
         // --- Funções de Lógica do Jogo ---
@@ -1373,11 +1443,12 @@
          */
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
-            gameTimer = 0;
+            gameTimer = 0; // Reinicia o timer
             updateTimerDisplay();
             timerInterval = setInterval(() => {
                 gameTimer++;
                 updateTimerDisplay();
+                saveGameProgress(); // Salva o progresso a cada segundo
             }, 1000);
         }
 
@@ -1425,7 +1496,7 @@
                 targetRoomElement.classList.add('active');
                 currentRoomId = roomId;
                 infoPanel.classList.remove('show');
-                hideCodexPanel(); // Garante que o codex também é fechado ao mudar de sala
+                hideCodexPanel();
             } else {
                 console.error('Erro: Elemento da sala alvo não encontrado para o ID:', roomId);
             }
@@ -1437,7 +1508,7 @@
          * @param {boolean} fromCodex - Indica se a chamada veio do Codex (sem desafio).
          */
         function showInfoPanel(fishId, fromCodex = false) {
-            playClickSound(); // Toca som de clique ao abrir painel
+            playClickSound();
             const info = fishInfo.find(f => f.id === fishId);
 
             if (info) {
@@ -1459,7 +1530,6 @@
                         challengeOptions.appendChild(button);
                     });
                 } else {
-                    // Se veio do Codex ou já respondeu, oculta o desafio
                     challengeSection.classList.add('hidden');
                 }
                 infoPanel.classList.add('show');
@@ -1518,7 +1588,49 @@
             }
         }
 
-        // --- Funções de Local Storage (Melhor Tempo) ---
+        // --- Funções de Local Storage (Progresso e Melhor Tempo) ---
+
+        /**
+         * Salva o progresso atual do jogo no Local Storage.
+         */
+        function saveGameProgress() {
+            const progress = {
+                playerName: playerName,
+                discoveryData: discoveryData,
+                currentRoomId: currentRoomId,
+                gameTimer: gameTimer
+            };
+            localStorage.setItem('fishDiscoveryProgress', JSON.stringify(progress));
+        }
+
+        /**
+         * Carrega o progresso salvo do Local Storage.
+         */
+        function loadGameProgress() {
+            const savedProgress = localStorage.getItem('fishDiscoveryProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                playerName = progress.playerName;
+                discoveryData = progress.discoveryData;
+                currentRoomId = progress.currentRoomId;
+                gameTimer = progress.gameTimer;
+
+                // Atualiza o display do nome do jogador
+                playerNameDisplay.textContent = playerName;
+
+                // Aplica os estados de "descoberto" aos peixes visuais
+                fishCharacters.forEach(fishChar => {
+                    const fishId = fishChar.dataset.fishId;
+                    if (discoveryData[fishId] && discoveryData[fishId].answeredCorrectly) {
+                        fishChar.style.pointerEvents = 'none';
+                        fishChar.style.filter = 'grayscale(100%) brightness(50%)';
+                        fishChar.style.animation = 'none';
+                        fishChar.style.transform = 'translateX(-50%) translateY(0px)';
+                        fishChar.classList.add('discovered');
+                    }
+                });
+            }
+        }
 
         /**
          * Salva o melhor tempo de conclusão no Local Storage.
@@ -1563,6 +1675,7 @@
                     codexItem.innerHTML = `
                         <img src="${fish.imageSrc}" alt="${fish.name}" onerror="this.onerror=null;this.src='${fish.imageFallback}'">
                         <h3>${fish.name}</h3>
+                        <i class="fas fa-check-circle codex-check-icon"></i>
                     `;
                     codexItem.addEventListener('click', () => showInfoPanel(fish.id, true)); // Abre info sem desafio
                 } else {
@@ -1602,10 +1715,16 @@
             }
         });
 
-        // Evento para o botão "JOGAR" no menu principal
-        playGameButton.addEventListener('click', () => {
+        // Evento para o botão "NOVO JOGO" no menu principal
+        newGameButton.addEventListener('click', () => {
             playClickSound();
-            hideScreen(mainMenu, startGame);
+            hideScreen(mainMenu, startNewGame);
+        });
+
+        // Evento para o botão "CONTINUAR" no menu principal
+        continueGameButton.addEventListener('click', () => {
+            playClickSound();
+            hideScreen(mainMenu, continueGame);
         });
 
         // Evento para o botão "SAIR DO JOGO" no menu principal (abre modal de confirmação)
@@ -1617,7 +1736,7 @@
         // Eventos para botões do modal de confirmação
         confirmExitYesButton.addEventListener('click', () => {
             playClickSound();
-            resetGame();
+            resetGameFull(); // Reinicia tudo
         });
         confirmExitNoButton.addEventListener('click', () => {
             playClickSound();
@@ -1656,7 +1775,7 @@
         // Evento para o botão "Reiniciar Exploração" no painel de conclusão
         restartGameButton.addEventListener('click', () => {
             playClickSound();
-            resetGame();
+            resetGameFull();
         });
 
         // Evento para o botão "CODEX" no HUD
