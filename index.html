@@ -10,7 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Tone.js para efeitos sonoros -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
+        /* Variáveis CSS para cores e tamanhos */
+        :root {
+            --bg-dark: #0d1117;
+            --bg-panel: #1a1a1a;
+            --text-light: #e6edf3;
+            --accent-green: #2ea043;
+            --accent-red: #f85149;
+            --border-light: rgba(255, 255, 255, 0.4);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
         /* Estilos base */
         body {
             font-family: 'Inter', sans-serif;
@@ -20,8 +33,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #0d1117;
-            color: #e6edf3;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             position: relative;
         }
 
@@ -49,7 +62,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1a1a1a;
+            background-color: var(--bg-panel);
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
@@ -101,19 +114,21 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             text-shadow: none;
-            box-shadow: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .start-button-name-input:hover {
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #cccccc;
             color: #cccccc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         .name-input-feedback {
-            color: #f85149;
+            color: var(--accent-red);
             font-weight: bold;
             margin-top: 1rem;
             min-height: 1.5rem; /* Para evitar CLS */
@@ -131,7 +146,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1a1a1a;
+            background-color: var(--bg-panel);
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
@@ -158,13 +173,14 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
         }
 
         .menu-back-button:hover {
             color: #aaaaaa;
+            transform: scale(1.05);
         }
 
         .main-title-area {
@@ -202,15 +218,17 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             text-shadow: none;
-            box-shadow: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .menu-button:hover {
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #cccccc;
             color: #cccccc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         /* Estilos do Jogo Point-and-Click (container principal das salas) */
@@ -237,7 +255,7 @@
             display: none;
             transition: opacity 0.5s ease-in-out;
             opacity: 0;
-            background-color: #1a1a1a;
+            background-color: var(--bg-panel);
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
@@ -265,13 +283,23 @@
             filter: drop-shadow(0 0 15px rgba(255,255,0,0.7));
         }
 
+        /* Animação de "pop" ao ser clicado */
+        .fish-character.clicked {
+            animation: pop 0.3s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
         /* Ícone de descoberto */
         .fish-character .discovered-icon {
             position: absolute;
             top: -10px; /* Ajuste a posição conforme necessário */
             right: -10px; /* Ajuste a posição conforme necessário */
             font-size: 2rem;
-            color: #2ea043; /* Cor verde para indicar sucesso */
+            color: var(--accent-green); /* Cor verde para indicar sucesso */
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             display: none; /* Escondido por padrão */
         }
@@ -320,22 +348,24 @@
         .nav-button {
             position: absolute;
             background-color: rgba(26, 26, 26, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid var(--border-light);
             border-radius: 0.5rem;
             padding: 0.75rem 1.5rem;
             color: #ffffff;
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             z-index: 15;
             pointer-events: auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .nav-button:hover {
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #cccccc;
             transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
 
         .nav-left {
@@ -394,7 +424,7 @@
             max-height: 80vh;
             overflow-y: auto;
             border: 2px solid rgba(255, 255, 255, 0.2);
-            color: #e6edf3;
+            color: var(--text-light);
         }
 
         .info-panel.show {
@@ -406,19 +436,19 @@
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-top: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-subtle);
         }
 
         .challenge-question {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #e6edf3;
+            color: var(--text-light);
             margin-bottom: 1rem;
         }
 
         .challenge-options button {
             background-color: transparent;
-            color: #e6edf3;
+            color: var(--text-light);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.8rem 1.2rem;
             border-radius: 0.5rem;
@@ -428,22 +458,25 @@
             width: 100%;
             text-align: left;
             margin-bottom: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .challenge-options button:hover:not(.disabled) {
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #cccccc;
+            transform: translateX(5px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .challenge-options button.correct {
             background-color: rgba(46, 160, 67, 0.3);
-            border-color: #2ea043;
+            border-color: var(--accent-green);
             color: white;
         }
 
         .challenge-options button.incorrect {
             background-color: rgba(218, 54, 51, 0.3);
-            border-color: #f85149;
+            border-color: var(--accent-red);
             color: white;
         }
 
@@ -461,22 +494,25 @@
 
         .close-button {
             background-color: transparent;
-            color: #f85149;
+            color: var(--accent-red);
             padding: 0.8rem 1.5rem;
             border-radius: 0.75rem;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             margin-top: 1.5rem;
             align-self: flex-end;
-            border: 2px solid #f85149;
+            border: 2px solid var(--accent-red);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .close-button:hover {
             background-color: rgba(248, 81, 73, 0.1);
             border-color: #ff0000;
             color: #ff0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
 
         /* Estilos para o display de nome, pontuação e tempo */
@@ -492,21 +528,68 @@
             pointer-events: none; /* Permite cliques através dele */
         }
 
-        .player-info, .game-stats {
+        .player-info, .game-stats, .hud-button-container {
             background-color: rgba(26, 26, 26, 0.8);
             border-radius: 0.75rem;
             padding: 0.5rem 1rem; /* Padding menor */
             font-size: 0.9rem; /* Fonte menor */
-            color: #e6edf3;
+            color: var(--text-light);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-subtle);
             display: flex; /* Para alinhar os elementos dentro */
             align-items: center;
             gap: 0.75rem; /* Espaçamento entre pontuação e tempo */
+            pointer-events: auto; /* Habilita cliques nos botões do HUD */
         }
         
         .game-stats {
             gap: 0.75rem; /* Espaçamento entre os elementos de stats */
+        }
+
+        .hud-button {
+            background-color: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .hud-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
+            transform: translateY(-1px);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .volume-control input[type="range"] {
+            width: 80px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            height: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
         }
 
         /* Estilos do painel de conclusão */
@@ -520,7 +603,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1a1a1a;
+            background-color: var(--bg-panel);
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
@@ -552,7 +635,7 @@
             display: block;
             font-size: 1.2rem;
             line-height: 1.8;
-            color: #e6edf3;
+            color: var(--text-light);
             text-align: center;
             max-width: 80%;
         }
@@ -566,11 +649,11 @@
             cursor: pointer;
             font-size: 1.5rem;
             font-weight: bold;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             border: 2px solid #ffffff;
             z-index: 2;
             position: relative;
-            box-shadow: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             margin-top: 2rem;
         }
 
@@ -578,6 +661,174 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #cccccc;
             color: #cccccc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        /* Modal de Confirmação */
+        .confirmation-modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 40; /* Acima de todas as outras telas */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .confirmation-modal-backdrop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .confirmation-modal-content {
+            background-color: var(--bg-panel);
+            border: 2px solid var(--border-light);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .confirmation-modal-content h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .confirmation-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .confirmation-modal-buttons button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirmation-modal-buttons .confirm-yes {
+            background-color: var(--accent-red);
+            color: white;
+            border: 2px solid var(--accent-red);
+        }
+
+        .confirmation-modal-buttons .confirm-yes:hover {
+            background-color: #cc0000;
+            border-color: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .confirmation-modal-buttons .confirm-no {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--border-light);
+        }
+
+        .confirmation-modal-buttons .confirm-no:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Codex Panel */
+        .codex-panel {
+            background-color: rgba(26, 26, 26, 0.95);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            width: 90%;
+            height: 80vh;
+            text-align: left;
+            display: none; /* Escondido por padrão */
+            flex-direction: column;
+            gap: 1rem;
+            pointer-events: auto;
+            margin-top: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+            position: absolute; /* Posiciona sobre o jogo */
+            z-index: 35; /* Acima do jogo, abaixo do modal de confirmação */
+            overflow-y: auto;
+        }
+
+        .codex-panel.show {
+            display: flex;
+        }
+
+        .codex-panel h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .codex-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            flex-grow: 1; /* Permite que a grade ocupe o espaço disponível */
+        }
+
+        .codex-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .codex-item:hover:not(.undiscovered) {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .codex-item img {
+            width: 100px;
+            height: 75px;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            filter: grayscale(100%); /* Peixes não descobertos começam em grayscale */
+        }
+
+        .codex-item.discovered img {
+            filter: none; /* Remove grayscale para peixes descobertos */
+        }
+
+        .codex-item.undiscovered {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .codex-item h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-light);
         }
 
         /* Responsividade para telas menores */
@@ -629,12 +880,40 @@
             .completion-panel p {
                 font-size: 1rem;
             }
-            .player-info, .game-stats {
+            .player-info, .game-stats, .hud-button-container {
                 padding: 0.4rem 0.75rem;
                 font-size: 0.8rem;
                 gap: 0.5rem;
             }
             .name-input-feedback {
+                font-size: 0.9rem;
+            }
+            .confirmation-modal-content {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+            .confirmation-modal-content h3 {
+                font-size: 1.2rem;
+            }
+            .confirmation-modal-buttons button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .codex-panel {
+                padding: 1rem;
+                margin-top: 1rem;
+            }
+            .codex-panel h2 {
+                font-size: 1.5rem;
+            }
+            .codex-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            .codex-item img {
+                width: 80px;
+                height: 60px;
+            }
+            .codex-item h3 {
                 font-size: 0.9rem;
             }
         }
@@ -644,8 +923,8 @@
     <!-- Tela de Inserção de Nome -->
     <div id="name-input-screen" class="name-input-container screen-transition">
         <h1>Bem-vindo ao Mergulho Profundo!</h1>
-        <p>Por favor, insira seu nome para começar sua aventura:</p>
-        <input type="text" id="player-name-input" placeholder="Seu nome de explorador">
+        <p>Por favor, insira o seu nome para começar a sua aventura:</p>
+        <input type="text" id="player-name-input" placeholder="O seu nome de explorador">
         <div id="name-input-feedback" class="name-input-feedback"></div>
         <button id="start-name-button" class="start-button-name-input">Começar</button>
     </div>
@@ -664,7 +943,7 @@
 
         <!-- Botões Principais do Menu -->
         <div class="main-buttons">
-            <button id="play-game-button" class="menu-button">PLAY</button>
+            <button id="play-game-button" class="menu-button">JOGAR</button>
         </div>
     </div>
 
@@ -718,7 +997,7 @@
 
     <!-- Overlays e Painéis (info, progresso, conclusão) -->
     <div class="game-overlay">
-        <!-- HUD do Jogo: Nome, Pontuação, Tempo -->
+        <!-- HUD do Jogo: Nome, Pontuação, Tempo, Codex, Volume -->
         <div id="game-hud" class="game-hud hidden">
             <div class="player-info">
                 Explorador: <span id="player-name-display"></span>
@@ -726,6 +1005,13 @@
             <div class="game-stats">
                 Descobertas: <span id="discovered-count">0</span> / <span id="total-discoveries">0</span>
                 | Tempo: <span id="game-timer">00:00</span>
+            </div>
+            <div class="hud-button-container">
+                <button id="codex-button" class="hud-button">CODEX</button>
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+                </div>
             </div>
         </div>
 
@@ -743,41 +1029,77 @@
         <div id="completion-panel" class="completion-panel screen-transition">
             <h2 class="completion-title">Missão Concluída!</h2>
             <p class="completion-message">Parabéns, explorador <span id="final-player-name"></span>! Concluiu a sua missão e documentou com sucesso todos os peixes cartilaginosos em <span id="final-game-time"></span>.</p>
+            <p class="completion-message">Seu melhor tempo anterior: <span id="best-time-display">--:--</span></p>
             <p class="completion-message">Obrigado por aprender sobre estas criaturas incríveis!</p>
             <button id="restart-game-button" class="restart-button">Reiniciar Exploração</button>
         </div>
+    </div>
+
+    <!-- Modal de Confirmação de Saída -->
+    <div id="confirmation-modal" class="confirmation-modal-backdrop">
+        <div class="confirmation-modal-content">
+            <h3>Tem a certeza que quer sair do jogo?</h3>
+            <p>Todo o progresso atual será perdido.</p>
+            <div class="confirmation-modal-buttons">
+                <button id="confirm-exit-yes" class="confirm-yes">Sim, Sair</button>
+                <button id="confirm-exit-no" class="confirm-no">Não, Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel do Codex -->
+    <div id="codex-panel" class="codex-panel">
+        <h2>Codex de Peixes Cartilaginosos</h2>
+        <div id="codex-grid" class="codex-grid">
+            <!-- Itens do codex serão gerados aqui -->
+        </div>
+        <button id="close-codex-button" class="close-button">Fechar Codex</button>
     </div>
 
     <script>
         // --- Variáveis Globais do Jogo ---
         let playerName = '';
         let discoveredCount = 0;
-        const discoveryData = {}; // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
+        // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
+        const discoveryData = {};
         let currentRoomId = 'shark-room'; // Sala inicial padrão
         let gameTimer = 0; // Segundos
         let timerInterval = null; // Para controlar o setInterval do timer
+        let currentVolume = 0.5; // Volume inicial para os sons
 
         // --- Referências de Elementos HTML ---
+        // Telas principais
         const nameInputScreen = document.getElementById('name-input-screen');
+        const mainMenu = document.getElementById('main-menu');
+        const pointClickGame = document.getElementById('point-click-game');
+        const completionPanel = document.getElementById('completion-panel');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const codexPanel = document.getElementById('codex-panel');
+
+        // Elementos da tela de input de nome
         const playerNameInput = document.getElementById('player-name-input');
         const startNameButton = document.getElementById('start-name-button');
-        const nameInputFeedback = document.getElementById('name-input-feedback'); // Novo elemento para feedback
+        const nameInputFeedback = document.getElementById('name-input-feedback');
 
-        const mainMenu = document.getElementById('main-menu');
+        // Elementos do menu principal
         const playGameButton = document.getElementById('play-game-button');
         const menuBackButton = document.getElementById('menu-back-button');
 
-        const pointClickGame = document.getElementById('point-click-game');
+        // Elementos do jogo
         const gameRooms = document.querySelectorAll('.game-room');
         const navButtons = document.querySelectorAll('.nav-button');
         const fishCharacters = document.querySelectorAll('.fish-character');
 
+        // Elementos do HUD
         const gameHud = document.getElementById('game-hud');
         const playerNameDisplay = document.getElementById('player-name-display');
         const discoveredCountSpan = document.getElementById('discovered-count');
         const totalDiscoveriesSpan = document.getElementById('total-discoveries');
         const gameTimerDisplay = document.getElementById('game-timer');
+        const codexButton = document.getElementById('codex-button');
+        const volumeSlider = document.getElementById('volume-slider');
 
+        // Elementos do painel de informações
         const infoPanel = document.getElementById('info-panel');
         const infoTitle = document.getElementById('info-title');
         const infoContent = document.getElementById('info-content');
@@ -787,16 +1109,27 @@
         const challengeFeedback = document.getElementById('challenge-feedback');
         const closeInfoButton = document.getElementById('close-info-button');
 
-        const completionPanel = document.getElementById('completion-panel');
+        // Elementos do painel de conclusão
         const finalPlayerNameSpan = document.getElementById('final-player-name');
         const finalGameTimeSpan = document.getElementById('final-game-time');
+        const bestTimeDisplay = document.getElementById('best-time-display');
         const restartGameButton = document.getElementById('restart-game-button');
+
+        // Elementos do modal de confirmação
+        const confirmExitYesButton = document.getElementById('confirm-exit-yes');
+        const confirmExitNoButton = document.getElementById('confirm-exit-no');
+
+        // Elementos do Codex
+        const codexGrid = document.getElementById('codex-grid');
+        const closeCodexButton = document.getElementById('close-codex-button');
 
         // --- Dados dos Peixes e Conteúdo Educacional ---
         const fishInfo = [
             {
                 id: 'shark',
                 name: 'Tubarão',
+                imageSrc: 'https://images.cults3d.com/VSyY3jKKi3zAG_246OpS54J3_8s=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/26588735/illustration-file/49a806c1-a349-4051-90db-a2e1a6e80bf9/Tralalero-Tralala.png',
+                imageFallback: 'https://placehold.co/200x150/555/FFF?text=Tubarão',
                 info: `
                     <p>Os tubarões são peixes cartilaginosos predadores, conhecidos pela sua forma hidrodinâmica e dentes afiados. Pertencem à subclasse Elasmobranchii.</p>
                     <p><strong>Características Definitórias:</strong> Esqueleto feito de cartilagem, não de osso. Não possuem bexiga natatória, dependendo de um fígado grande e oleoso para flutuabilidade e de natação constante para respirar (respiração ram-ventilada em muitas espécies).</p>
@@ -816,6 +1149,8 @@
             {
                 id: 'ray',
                 name: 'Raia',
+                imageSrc: 'https://static.vecteezy.com/system/resources/previews/023/839/433/non_2x/mobula-rays-fish-isolated-on-a-transparent-background-free-png.png',
+                imageFallback: 'https://placehold.co/250x150/555/FFF?text=Raia',
                 info: `
                     <p>As raias são peixes cartilaginosos achatados, também pertencentes aos Elasmobranchii. Adaptaram-se a viver no fundo do oceano, com barbatanas peitorais alargadas que se assemelham a asas.</p>
                     <p><strong>Respiração:</strong> Ao contrário de muitos tubarões, as raias respiram principalmente puxando água através de espiráculos localizados na parte superior da cabeça, o que evita a entrada de areia nas guelras enquanto estão no fundo.</p>
@@ -835,6 +1170,8 @@
             {
                 id: 'chimera',
                 name: 'Quimera',
+                imageSrc: 'https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-vintage-engraving-of-a-chimaera-monstrosa-also-known-as-a-rabbit-fish-or-rat-fish-vector-png-image_4159944.png',
+                imageFallback: 'https://placehold.co/200x150/555/FFF?text=Quimera',
                 info: `
                     <p>As quimeras, também conhecidas como peixes-rato ou tubarões-fantasma, formam a subclasse Holocephali. São peixes cartilaginosos de águas profundas, com uma aparência distinta e uma única abertura branquial coberta por um opérculo de pele.</p>
                     <p><strong>Classificação:</strong> As quimeras são o grupo mais antigo e divergente de peixes cartilaginosos vivos, tendo evoluído separadamente dos tubarões e raias por milhões de anos.</p>
@@ -855,54 +1192,89 @@
 
         let currentChallenge = null; // Armazena o ID do peixe cujo desafio está ativo
 
+        // --- Configuração de Sons (Tone.js) ---
+        const synth = new Tone.Synth().toDestination();
+        const clickSound = new Tone.MembraneSynth().toDestination();
+        const correctSound = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: "sine" }
+        }).toDestination();
+        const incorrectSound = new Tone.NoiseSynth({
+            noise: { type: "pink" },
+            envelope: { attack: 0.005, decay: 0.1, sustain: 0.05, release: 0.2 }
+        }).toDestination();
+
+        // Define o volume inicial para todos os sons
+        Tone.Destination.volume.value = Tone.gainToDb(currentVolume);
+
+        /**
+         * Toca um som de clique geral.
+         */
+        function playClickSound() {
+            clickSound.triggerAttackRelease("C4", "8n");
+        }
+
+        /**
+         * Toca um som para resposta correta.
+         */
+        function playCorrectSound() {
+            correctSound.triggerAttackRelease(["C5", "E5", "G5"], "8n");
+        }
+
+        /**
+         * Toca um som para resposta incorreta.
+         */
+        function playIncorrectSound() {
+            incorrectSound.triggerAttackRelease("16n");
+        }
+
         // --- Funções de Controle de Tela e Transições ---
 
         /**
          * Exibe uma tela específica com uma transição de fade.
+         * Garante que apenas a tela desejada esteja ativa e visível.
          * @param {HTMLElement} screenElement - O elemento da tela a ser exibido.
          */
         function showScreen(screenElement) {
-            // Oculta todas as telas para garantir que apenas uma esteja ativa
-            const allScreens = [nameInputScreen, mainMenu, pointClickGame, completionPanel];
+            const allScreens = [nameInputScreen, mainMenu, pointClickGame, completionPanel, codexPanel, confirmationModal];
             allScreens.forEach(screen => {
                 screen.classList.remove('active');
-                screen.style.display = 'none'; // Garante que o display é none quando não ativo
+                screen.style.display = 'none'; // Esconde fisicamente
             });
 
-            // Exibe a tela desejada com fade
             screenElement.style.display = 'flex'; // Ou 'block' dependendo do layout
             setTimeout(() => {
                 screenElement.classList.add('active');
-            }, 10); // Pequeno atraso para permitir que o display seja aplicado antes da transição
+            }, 10);
         }
 
         /**
          * Oculta uma tela específica com uma transição de fade.
+         * Garante que o display seja 'none' após a transição.
          * @param {HTMLElement} screenElement - O elemento da tela a ser ocultado.
-         * @param {Function} [callback] - Função a ser chamada após a transição.
+         * @param {Function} [callback] - Função a ser chamada após a transição completa.
          */
         function hideScreen(screenElement, callback) {
             screenElement.classList.remove('active');
             screenElement.addEventListener('transitionend', function handler() {
-                screenElement.style.display = 'none';
+                screenElement.style.display = 'none'; // Esconde fisicamente após a transição
                 screenElement.removeEventListener('transitionend', handler);
                 if (callback) callback();
-            }, { once: true }); // Executa o callback apenas uma vez
+            }, { once: true });
         }
 
         /**
-         * Exibe a tela de input do nome.
+         * Exibe a tela de input do nome do jogador.
          */
         function showNameInputScreen() {
             showScreen(nameInputScreen);
-            playerNameInput.value = ''; // Limpa o campo do nome
-            playerNameInput.focus(); // Coloca o foco no campo de input
-            nameInputFeedback.textContent = ''; // Limpa qualquer feedback anterior
-            gameHud.classList.add('hidden'); // Garante que o HUD está escondido
+            playerNameInput.value = '';
+            playerNameInput.focus();
+            nameInputFeedback.textContent = '';
+            gameHud.classList.add('hidden');
         }
 
         /**
-         * Exibe o menu principal.
+         * Exibe o menu principal do jogo.
          */
         function showMainMenu() {
             showScreen(mainMenu);
@@ -913,28 +1285,62 @@
          */
         function startGame() {
             showScreen(pointClickGame);
-            gameHud.classList.remove('hidden'); // Mostra o HUD
-            showRoom('shark-room'); // Inicia na sala do tubarão
-            startTimer(); // Inicia o timer
-            updateDiscoveryCount(); // Inicializa o contador de descobertas
+            gameHud.classList.remove('hidden');
+            showRoom('shark-room');
+            startTimer();
+            updateDiscoveryCount();
         }
 
         /**
-         * Exibe o painel de conclusão.
+         * Exibe o painel de conclusão do jogo.
          */
         function showCompletionPanel() {
-            stopTimer(); // Para o timer ao concluir
+            stopTimer();
             hideScreen(pointClickGame, () => {
-                gameHud.classList.add('hidden'); // Esconde o HUD após o jogo sumir
-                infoPanel.classList.remove('show'); // Garante que o painel de info está fechado
+                gameHud.classList.add('hidden');
+                infoPanel.classList.remove('show');
+                codexPanel.classList.remove('show'); // Garante que o codex está fechado
                 showScreen(completionPanel);
                 finalPlayerNameSpan.textContent = playerName;
-                finalGameTimeSpan.textContent = gameTimerDisplay.textContent; // Usa o tempo formatado
+                finalGameTimeSpan.textContent = gameTimerDisplay.textContent;
+                displayBestTime(); // Exibe o melhor tempo
             });
         }
 
         /**
-         * Reinicia o jogo para o estado inicial.
+         * Exibe o modal de confirmação de saída.
+         */
+        function showConfirmationModal() {
+            confirmationModal.classList.add('show');
+        }
+
+        /**
+         * Oculta o modal de confirmação de saída.
+         */
+        function hideConfirmationModal() {
+            confirmationModal.classList.remove('show');
+        }
+
+        /**
+         * Exibe o painel do Codex.
+         */
+        function showCodexPanel() {
+            playClickSound();
+            hideScreen(infoPanel); // Esconde o painel de info se estiver aberto
+            codexPanel.classList.add('show');
+            populateCodex(); // Preenche o codex com os dados atuais
+        }
+
+        /**
+         * Oculta o painel do Codex.
+         */
+        function hideCodexPanel() {
+            playClickSound();
+            codexPanel.classList.remove('show');
+        }
+
+        /**
+         * Reinicia o jogo para o estado inicial completo.
          */
         function resetGame() {
             playerName = '';
@@ -942,20 +1348,22 @@
             for (const key in discoveryData) {
                 delete discoveryData[key];
             }
-            // Reabilita todos os peixes e remove o estado de "descoberto"
             fishCharacters.forEach(fish => {
-                fish.style.pointerEvents = 'auto'; // Reabilita cliques
-                fish.style.filter = 'none'; // Remove filtro
-                fish.style.animation = ''; // Reativa a animação
-                fish.style.transform = ''; // Reseta transform para a animação padrão
-                fish.classList.remove('discovered'); // Remove a classe 'discovered'
+                fish.style.pointerEvents = 'auto';
+                fish.style.filter = 'none';
+                fish.style.animation = '';
+                fish.style.transform = '';
+                fish.classList.remove('discovered');
+                fish.classList.remove('clicked');
             });
             stopTimer();
             gameTimer = 0;
             updateDiscoveryCount();
-            updateTimerDisplay(); // Reseta o display do timer
+            updateTimerDisplay();
 
-            hideScreen(completionPanel, showNameInputScreen); // Oculta o painel de conclusão e mostra a tela de nome
+            hideScreen(completionPanel, showNameInputScreen);
+            hideConfirmationModal();
+            hideCodexPanel(); // Garante que o codex também é fechado
         }
 
         // --- Funções de Lógica do Jogo ---
@@ -964,7 +1372,7 @@
          * Inicia o timer do jogo.
          */
         function startTimer() {
-            if (timerInterval) clearInterval(timerInterval); // Garante que não há múltiplos timers
+            if (timerInterval) clearInterval(timerInterval);
             gameTimer = 0;
             updateTimerDisplay();
             timerInterval = setInterval(() => {
@@ -982,7 +1390,7 @@
         }
 
         /**
-         * Formata e atualiza o display do timer.
+         * Formata e atualiza o display do timer no formato MM:SS.
          */
         function updateTimerDisplay() {
             const minutes = Math.floor(gameTimer / 60);
@@ -991,7 +1399,7 @@
         }
 
         /**
-         * Atualiza o contador de descobertas e verifica a conclusão do jogo.
+         * Atualiza o contador de descobertas no HUD e verifica a conclusão do jogo.
          */
         function updateDiscoveryCount() {
             discoveredCount = Object.values(discoveryData).filter(item => item.answeredCorrectly).length;
@@ -999,7 +1407,8 @@
             totalDiscoveriesSpan.textContent = fishInfo.length;
 
             if (discoveredCount === fishInfo.length) {
-                setTimeout(showCompletionPanel, 1000); // Mostra o painel de conclusão após um pequeno atraso
+                saveBestTime(); // Salva o tempo ao concluir
+                setTimeout(showCompletionPanel, 1000);
             }
         }
 
@@ -1015,7 +1424,8 @@
             if (targetRoomElement) {
                 targetRoomElement.classList.add('active');
                 currentRoomId = roomId;
-                infoPanel.classList.remove('show'); // Fechar painel de info ao mudar de sala
+                infoPanel.classList.remove('show');
+                hideCodexPanel(); // Garante que o codex também é fechado ao mudar de sala
             } else {
                 console.error('Erro: Elemento da sala alvo não encontrado para o ID:', roomId);
             }
@@ -1024,21 +1434,22 @@
         /**
          * Mostra o painel de informações de um peixe e seu desafio.
          * @param {string} fishId - O ID do peixe.
+         * @param {boolean} fromCodex - Indica se a chamada veio do Codex (sem desafio).
          */
-        function showInfoPanel(fishId) {
+        function showInfoPanel(fishId, fromCodex = false) {
+            playClickSound(); // Toca som de clique ao abrir painel
             const info = fishInfo.find(f => f.id === fishId);
 
             if (info) {
                 infoTitle.textContent = info.name;
                 infoContent.innerHTML = info.info;
 
-                // Exibir o desafio apenas se ainda não foi respondido corretamente
-                if (!discoveryData[fishId] || !discoveryData[fishId].answeredCorrectly) {
+                if (!fromCodex && (!discoveryData[fishId] || !discoveryData[fishId].answeredCorrectly)) {
                     challengeSection.classList.remove('hidden');
                     challengeQuestion.textContent = info.challenge.question;
-                    challengeOptions.innerHTML = ''; // Limpar opções anteriores
-                    challengeFeedback.textContent = ''; // Limpar feedback anterior
-                    currentChallenge = info.id; // Define o desafio atual
+                    challengeOptions.innerHTML = '';
+                    challengeFeedback.textContent = '';
+                    currentChallenge = info.id;
 
                     info.challenge.options.forEach((option, index) => {
                         const button = document.createElement('button');
@@ -1048,7 +1459,7 @@
                         challengeOptions.appendChild(button);
                     });
                 } else {
-                    // Se já respondeu, ocultar o desafio
+                    // Se veio do Codex ou já respondeu, oculta o desafio
                     challengeSection.classList.add('hidden');
                 }
                 infoPanel.classList.add('show');
@@ -1067,10 +1478,11 @@
         function checkAnswer(fishId, optionIndex, isCorrect, rationale) {
             const buttons = challengeOptions.querySelectorAll('button');
             buttons.forEach(button => {
-                button.classList.add('disabled'); // Desabilita todos os botões após a primeira seleção
+                button.classList.add('disabled');
             });
 
             if (isCorrect) {
+                playCorrectSound();
                 buttons[optionIndex].classList.add('correct');
                 challengeFeedback.textContent = 'Correto! ' + rationale;
                 if (!discoveryData[fishId]) {
@@ -1080,20 +1492,23 @@
                     discoveryData[fishId].answeredCorrectly = true;
                     updateDiscoveryCount();
                 }
-                // Adiciona a classe 'discovered' ao peixe para mostrar o ícone
                 const fishChar = document.querySelector(`.fish-character[data-fish-id="${fishId}"]`);
                 if (fishChar) {
-                    fishChar.style.pointerEvents = 'none'; // Impede novos cliques
-                    fishChar.style.filter = 'grayscale(100%) brightness(50%)'; // Indica que foi "descoberto"
-                    fishChar.style.animation = 'none'; // Para a animação de flutuação
-                    fishChar.style.transform = 'translateX(-50%) translateY(0px)'; // Remove o efeito de escala do hover
-                    fishChar.classList.add('discovered'); // Adiciona classe para mostrar o ícone
+                    fishChar.style.pointerEvents = 'none';
+                    fishChar.style.filter = 'grayscale(100%) brightness(50%)';
+                    fishChar.style.animation = 'none';
+                    fishChar.style.transform = 'translateX(-50%) translateY(0px)';
+                    fishChar.classList.add('discovered');
+                    fishChar.classList.add('clicked');
+                    fishChar.addEventListener('animationend', () => {
+                        fishChar.classList.remove('clicked');
+                    }, { once: true });
                 }
 
             } else {
+                playIncorrectSound();
                 buttons[optionIndex].classList.add('incorrect');
                 challengeFeedback.textContent = 'Incorreto. ' + rationale;
-                // Permite nova tentativa após 2 segundos
                 setTimeout(() => {
                     buttons.forEach(button => {
                         button.classList.remove('disabled', 'incorrect');
@@ -1103,42 +1518,116 @@
             }
         }
 
+        // --- Funções de Local Storage (Melhor Tempo) ---
+
+        /**
+         * Salva o melhor tempo de conclusão no Local Storage.
+         */
+        function saveBestTime() {
+            const storedBestTime = localStorage.getItem('bestFishDiscoveryTime');
+            if (storedBestTime === null || gameTimer < parseInt(storedBestTime)) {
+                localStorage.setItem('bestFishDiscoveryTime', gameTimer.toString());
+            }
+        }
+
+        /**
+         * Exibe o melhor tempo salvo no Local Storage.
+         */
+        function displayBestTime() {
+            const storedBestTime = localStorage.getItem('bestFishDiscoveryTime');
+            if (storedBestTime !== null) {
+                const minutes = Math.floor(parseInt(storedBestTime) / 60);
+                const seconds = parseInt(storedBestTime) % 60;
+                bestTimeDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                bestTimeDisplay.textContent = '--:--';
+            }
+        }
+
+        // --- Funções do Codex ---
+
+        /**
+         * Preenche o painel do Codex com a lista de peixes.
+         */
+        function populateCodex() {
+            codexGrid.innerHTML = ''; // Limpa a grade antes de preencher
+            fishInfo.forEach(fish => {
+                const codexItem = document.createElement('div');
+                codexItem.classList.add('codex-item');
+                codexItem.dataset.fishId = fish.id;
+
+                const isDiscovered = discoveryData[fish.id] && discoveryData[fish.id].answeredCorrectly;
+
+                if (isDiscovered) {
+                    codexItem.classList.add('discovered');
+                    codexItem.innerHTML = `
+                        <img src="${fish.imageSrc}" alt="${fish.name}" onerror="this.onerror=null;this.src='${fish.imageFallback}'">
+                        <h3>${fish.name}</h3>
+                    `;
+                    codexItem.addEventListener('click', () => showInfoPanel(fish.id, true)); // Abre info sem desafio
+                } else {
+                    codexItem.classList.add('undiscovered');
+                    codexItem.innerHTML = `
+                        <img src="${fish.imageFallback}" alt="Desconhecido">
+                        <h3>??? Desconhecido</h3>
+                    `;
+                    // Não adiciona listener de clique para itens não descobertos
+                }
+                codexGrid.appendChild(codexItem);
+            });
+        }
+
         // --- Gerenciamento de Eventos ---
 
         // Ao carregar a página, mostra a tela de input do nome
         document.addEventListener('DOMContentLoaded', () => {
             showNameInputScreen();
+            volumeSlider.value = currentVolume; // Define o valor inicial do slider
         });
 
         // Evento para o botão "Começar" na tela de input do nome
         startNameButton.addEventListener('click', () => {
+            playClickSound();
             const inputName = playerNameInput.value.trim();
             if (inputName) {
                 playerName = inputName;
                 playerNameDisplay.textContent = playerName;
-                hideScreen(nameInputScreen, showMainMenu); // Oculta tela de nome e mostra menu
+                hideScreen(nameInputScreen, showMainMenu);
             } else {
-                nameInputFeedback.textContent = 'Por favor, insira seu nome para começar!';
+                nameInputFeedback.textContent = 'Por favor, insira o seu nome para começar!';
                 playerNameInput.focus();
                 setTimeout(() => {
                     nameInputFeedback.textContent = '';
-                }, 3000); // Limpa a mensagem após 3 segundos
+                }, 3000);
             }
         });
 
-        // Evento para o botão "PLAY" no menu principal
+        // Evento para o botão "JOGAR" no menu principal
         playGameButton.addEventListener('click', () => {
-            hideScreen(mainMenu, startGame); // Oculta menu e inicia o jogo
+            playClickSound();
+            hideScreen(mainMenu, startGame);
         });
 
-        // Evento para o botão "SAIR DO JOGO" no menu principal
+        // Evento para o botão "SAIR DO JOGO" no menu principal (abre modal de confirmação)
         menuBackButton.addEventListener('click', () => {
-            resetGame(); // Reinicia o jogo e volta para a tela de input do nome
+            playClickSound();
+            showConfirmationModal();
         });
 
-        // Eventos para navegação entre salas
+        // Eventos para botões do modal de confirmação
+        confirmExitYesButton.addEventListener('click', () => {
+            playClickSound();
+            resetGame();
+        });
+        confirmExitNoButton.addEventListener('click', () => {
+            playClickSound();
+            hideConfirmationModal();
+        });
+
+        // Eventos para navegação entre salas (botões de seta)
         navButtons.forEach(button => {
             button.addEventListener('click', (event) => {
+                playClickSound();
                 const targetRoom = event.currentTarget.dataset.targetRoom;
                 showRoom(targetRoom);
             });
@@ -1154,10 +1643,10 @@
 
         // Evento para o botão "Fechar" do painel de informações
         closeInfoButton.addEventListener('click', () => {
+            playClickSound();
             infoPanel.classList.remove('show');
-            currentChallenge = null; // Limpa o desafio atual
-            challengeFeedback.textContent = ''; // Limpa feedback
-            // Reabilita todos os botões do desafio ao fechar (se não tiverem sido respondidos corretamente)
+            currentChallenge = null;
+            challengeFeedback.textContent = '';
             const buttons = challengeOptions.querySelectorAll('button');
             buttons.forEach(button => {
                 button.classList.remove('disabled', 'correct', 'incorrect');
@@ -1166,7 +1655,50 @@
 
         // Evento para o botão "Reiniciar Exploração" no painel de conclusão
         restartGameButton.addEventListener('click', () => {
+            playClickSound();
             resetGame();
+        });
+
+        // Evento para o botão "CODEX" no HUD
+        codexButton.addEventListener('click', showCodexPanel);
+
+        // Evento para o botão "Fechar Codex"
+        closeCodexButton.addEventListener('click', hideCodexPanel);
+
+        // Evento para o slider de volume
+        volumeSlider.addEventListener('input', (event) => {
+            currentVolume = parseFloat(event.target.value);
+            Tone.Destination.volume.value = Tone.gainToDb(currentVolume);
+        });
+
+        // --- Navegação por Teclado (Setas) ---
+        document.addEventListener('keydown', (event) => {
+            // Apenas permite navegação por teclado se o jogo estiver ativo e nenhum modal/painel estiver aberto
+            const isGameActive = pointClickGame.classList.contains('active');
+            const isPanelOpen = infoPanel.classList.contains('show') || codexPanel.classList.contains('show') || confirmationModal.classList.contains('show');
+
+            if (isGameActive && !isPanelOpen) {
+                let targetRoom = '';
+                switch (currentRoomId) {
+                    case 'shark-room':
+                        if (event.key === 'ArrowRight') targetRoom = 'ray-room';
+                        else if (event.key === 'ArrowLeft') targetRoom = 'chimera-room';
+                        break;
+                    case 'ray-room':
+                        if (event.key === 'ArrowRight') targetRoom = 'chimera-room';
+                        else if (event.key === 'ArrowLeft') targetRoom = 'shark-room';
+                        break;
+                    case 'chimera-room':
+                        if (event.key === 'ArrowRight') targetRoom = 'shark-room';
+                        else if (event.key === 'ArrowLeft') targetRoom = 'ray-room';
+                        break;
+                }
+                if (targetRoom) {
+                    playClickSound(); // Toca som ao navegar com teclado
+                    showRoom(targetRoom);
+                    event.preventDefault(); // Previne o scroll da página
+                }
+            }
         });
 
     </script>
