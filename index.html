@@ -1,374 +1,108 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo dos Peixes Cartilaginosos</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom styles for better aesthetics and responsiveness */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* Dark background for ocean feel */
-            color: #e6edf3; /* Light text color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
+Não foi possível criar o jogo diretamente usando as ferramentas disponíveis, mas posso fornecer o código JavaScript com as novas perguntas sobre peixes cartilaginosos que você pode integrar ao seu arquivo HTML. Basta substituir o array `questions` existente no seu código pelo array abaixo.
 
-        .quiz-container {
-            background-color: #161b22; /* Slightly lighter dark background */
-            border-radius: 1.5rem; /* More rounded corners */
-            padding: 2.5rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+Este novo conjunto de perguntas abrange os tópicos de características da classe, classificação, revestimento do corpo e esqueleto, digestão, respiração, circulação, sistema nervoso e reprodução, conforme solicitado.
 
-        .question-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #c9d1d9;
-        }
-
-        .answer-button {
-            background-color: #21262d; /* Darker button background */
-            color: #e6edf3;
-            border: 2px solid #30363d; /* Subtle border */
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem; /* Rounded button corners */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            text-align: left;
-            width: 100%;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .answer-button:hover:not(.correct):not(.incorrect):not(.disabled) {
-            background-color: #30363d; /* Darker hover */
-            border-color: #444c56;
-        }
-
-        .answer-button.correct {
-            background-color: #238636; /* Green for correct */
-            border-color: #2ea043;
-            color: white;
-        }
-
-        .answer-button.incorrect {
-            background-color: #da3633; /* Red for incorrect */
-            border-color: #f85149;
-            color: white;
-        }
-
-        .answer-button.disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .next-button {
-            background-color: #2ea043; /* Green for next button */
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            margin-top: 1.5rem;
-        }
-
-        .next-button:hover {
-            background-color: #238636;
-        }
-
-        .score-display {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #58a6ff; /* Blue for score */
-            margin-top: 1rem;
-        }
-
-        .hint-text {
-            font-size: 0.9rem;
-            color: #8b949e;
-            margin-top: 0.5rem;
-            font-style: italic;
-        }
-
-        .message-box {
-            background-color: #30363d;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            margin-top: 1rem;
-            color: #e6edf3;
-            font-size: 1rem;
-            display: none; /* Hidden by default */
-            text-align: left;
-        }
-
-        .message-box.show {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <div class="quiz-container">
-        <h1 class="text-3xl font-extrabold text-white mb-4">Jogo dos Peixes Cartilaginosos</h1>
-        <div id="question-display" class="question-text"></div>
-        <div id="answer-buttons" class="grid grid-cols-1 gap-3">
-            <!-- Answer buttons will be inserted here by JavaScript -->
-        </div>
-        <div id="message-box" class="message-box"></div>
-        <div id="hint-display" class="hint-text"></div>
-        <button id="next-button" class="next-button hidden">Próxima Pergunta</button>
-        <div id="score-display" class="score-display">Pontuação: 0</div>
-    </div>
-
-    <script>
-        // Array de objetos de perguntas
-        const questions = [
-            {
-                question: 'Qual é a principal característica que distingue os peixes cartilaginosos (Chondrichthyes) de outros grupos de peixes?',
-                options: [
-                    { text: 'Têm esqueleto ósseo e guelras visíveis.', correct: false, rationale: 'Esta opção descreve peixes ósseos, não cartilaginosos, que se distinguem pelo seu esqueleto feito de cartilagem e fendas branquiais expostas.' },
-                    { text: 'Têm esqueleto cartilaginoso e fendas branquiais expostas.', correct: true, rationale: 'Esta é a característica distintiva dos peixes cartilaginosos, como tubarões e raias, que possuem um esqueleto flexível de cartilagem e não têm opérculo cobrindo as guelras.' },
-                    { text: 'Têm esqueleto ósseo e respiram por pulmões.', correct: false, rationale: 'Esta opção descreve mamíferos aquáticos ou outros vertebrados, não peixes cartilaginosos.' },
-                    { text: 'Têm esqueleto cartilaginoso e escamas ganoides.', correct: false, rationale: 'Embora tenham esqueleto cartilaginoso, as escamas ganoides são características de alguns peixes ósseos primitivos, não de cartilaginosos, que geralmente possuem escamas placoides.' }
-                ],
-                hint: 'Pense no material principal que compõe o esqueleto desses animais.'
-            },
-            {
-                question: 'Que tipo de escamas é comum em peixes cartilaginosos?',
-                options: [
-                    { text: 'Escamas cicloides', correct: false, rationale: 'Escamas cicloides são características de muitos peixes ósseos, não de peixes cartilaginosos.' },
-                    { text: 'Escamas ctenoides', correct: false, rationale: 'Escamas ctenoides também são encontradas em peixes ósseos, não sendo uma característica dos peixes cartilaginosos.' },
-                    { text: 'Escamas placoides (dentículos dérmicos)', correct: true, rationale: 'As escamas placoides, que são estruturalmente semelhantes a dentes, são a cobertura cutânea típica dos peixes cartilaginosos.' },
-                    { text: 'Não possuem escamas', correct: false, rationale: 'Embora algumas espécies possam parecer lisas, a maioria dos peixes cartilaginosos possui algum tipo de cobertura protetora.' }
-                ],
-                hint: 'Considere a textura da pele dos tubarões e raias.'
-            },
-            {
-                question: 'Como os peixes cartilaginosos, como os tubarões, controlam a sua flutuabilidade na água?',
-                options: [
-                    { text: 'Possuem bexiga natatória para flutuabilidade.', correct: false, rationale: 'A bexiga natatória é uma característica dos peixes ósseos. Peixes cartilaginosos dependem de outros mecanismos para flutuabilidade.' },
-                    { text: 'Possuem cauda heterocercal e um fígado grande e oleoso.', correct: true, rationale: 'A cauda heterocercal, que proporciona sustentação, e um fígado rico em óleo, que reduz a densidade, são adaptações chave para a flutuabilidade em peixes cartilaginosos.' },
-                    { text: 'Movimentam-se apenas no fundo do oceano.', correct: false, rationale: 'Embora algumas espécies vivam no fundo, muitas, como os tubarões, são nadadores pelágicos e precisam de controle de flutuabilidade.' },
-                    { text: 'Absorvem oxigénio através da pele.', correct: false, rationale: 'A respiração cutânea não é o principal método de obtenção de oxigénio para a flutuabilidade em peixes cartilaginosos; eles usam guelras.' }
-                ],
-                hint: 'Pense em duas adaptações físicas que os ajudam a não afundar.'
-            },
-            {
-                question: 'Qual das seguintes opções descreve a variedade de estratégias reprodutivas encontradas em peixes cartilaginosos?',
-                options: [
-                    { text: 'Somente reprodução ovípara (ovos depositados externamente).', correct: false, rationale: 'Enquanto a reprodução ovípara ocorre, não é o único método. Existem diversas estratégias reprodutivas nesse grupo.' },
-                    { text: 'Somente reprodução vivípara (nascimento de filhotes vivos).', correct: false, rationale: 'Similarmente, a viviparidade ocorre, mas não é a única forma. Peixes cartilaginosos exibem uma variedade de modos reprodutivos.' },
-                    { text: 'Reprodução ovípara, ovovivípara e vivípara.', correct: true, rationale: 'Os peixes cartilaginosos demonstram uma notável diversidade reprodutiva, incluindo a deposição de ovos (ovípara), a incubação interna de ovos com nascimento de filhotes vivos (ovovivípara) e o desenvolvimento completo do embrião dentro da mãe com nutrição direta (vivípara).' },
-                    { text: 'Reprodução assexuada por fissão.', correct: false, rationale: 'A reprodução assexuada por fissão não é um método conhecido de reprodução para peixes cartilaginosos.' }
-                ],
-                hint: 'Lembre-se de que este grupo exibe uma grande flexibilidade em como seus filhotes se desenvolvem.'
-            },
-            {
-                question: 'Qual estrutura respiratória é característica dos peixes cartilaginosos?',
-                options: [
-                    { text: 'Opérculo', correct: false, rationale: 'O opérculo é uma característica dos peixes ósseos; peixes cartilaginosos não o possuem.' },
-                    { text: 'Fendas branquiais expostas', correct: true, rationale: 'As fendas branquiais expostas, sem cobertura óssea, são uma característica definidora dos peixes cartilaginosos.' },
-                    { text: 'Pulmões', correct: false, rationale: 'Peixes, incluindo os cartilaginosos, respiram por guelras, não por pulmões.' },
-                    { text: 'Pele com muco', correct: false, rationale: 'Embora a pele com muco seja comum em peixes, não é uma estrutura distintiva da respiração em peixes cartilaginosos.' }
-                ],
-                hint: 'Pense em como as guelras dos tubarões e raias são visíveis.'
-            },
-            {
-                question: 'O tubarão-baleia é o maior peixe cartilaginoso do mundo. Qual é a sua principal característica alimentar?',
-                options: [
-                    { text: 'Massa corporal maior que 500 kg.', correct: false, rationale: 'Embora o tubarão-baleia seja grande, não é o único critério para ser considerado o maior. A alimentação é o fator chave.' },
-                    { text: 'Alimentação por filtração.', correct: true, rationale: 'O tubarão-baleia, sendo um filtrador que se alimenta de plâncton e pequenos peixes, é o maior peixe cartilaginoso e o maior peixe do mundo.' },
-                    { text: 'Viver em águas profundas.', correct: false, rationale: 'O tubarão-baleia vive em águas tropicais e quentes, muitas vezes perto da superfície.' },
-                    { text: 'Ser um predador de topo.', correct: false, rationale: 'O tubarão-baleia não é um predador de topo; sua dieta é composta principalmente por plâncton.' }
-                ],
-                hint: 'Pense no tipo de alimento que um animal tão grande pode consumir eficientemente na coluna d\'água.'
-            },
-            {
-                question: 'Quais são os três principais grupos de peixes cartilaginosos (Chondrichthyes)?',
-                options: [
-                    { text: 'Tubarões, arraias e quimeras.', correct: true, rationale: 'Esses três grupos formam as principais subclasses dentro dos Chondrichthyes, representando a diversidade dos peixes cartilaginosos.' },
-                    { text: 'Salmões, atuns e bacalhaus.', correct: false, rationale: 'Esses são exemplos de peixes ósseos, não cartilaginosos.' },
-                    { text: 'Golfinhos, baleias e focas.', correct: false, rationale: 'Esses são mamíferos marinhos, não peixes.' },
-                    { text: 'Lampreias e mixinas.', correct: false, rationale: 'Estes são peixes sem mandíbulas (Agnatha), um grupo distinto dos peixes cartilaginosos.' }
-                ],
-                hint: 'Um grupo é bem conhecido por sua forma alongada e predatória, outro por sua forma achatada, e o terceiro por sua aparência mais enigmática e profunda.'
-            },
-            {
-                question: 'Em relação ao sistema respiratório, o que diferencia os peixes cartilaginosos dos peixes ósseos?',
-                options: [
-                    { text: 'Possuem opérculo para proteção das guelras.', correct: false, rationale: 'O opérculo é uma estrutura óssea presente em peixes ósseos, ausente em peixes cartilaginosos.' },
-                    { text: 'Apresentam uma única abertura branquial.', correct: false, rationale: 'Peixes cartilaginosos têm múltiplas fendas branquiais expostas, não uma única abertura.' },
-                    { text: 'Suas guelras estão cobertas por uma bolsa.', correct: false, rationale: 'Esta descrição não corresponde à estrutura branquial dos peixes cartilaginosos.' },
-                    { text: 'Não possuem opérculo e as fendas branquiais são visíveis externamente.', correct: true, rationale: 'A ausência de opérculo e a visibilidade das fendas branquiais são características distintivas dos peixes cartilaginosos.' }
-                ],
-                hint: 'Considere a cobertura das guelras e a forma como o oxigénio é obtido.'
-            },
-            {
-                question: 'Qual é a estrutura comum para eliminação de resíduos e reprodução na maioria dos peixes cartilaginosos?',
-                options: [
-                    { text: 'Apresentam uma cloaca para a eliminação de resíduos.', correct: true, rationale: 'A cloaca, uma única abertura para sistemas digestório, urinário e reprodutor, é uma característica comum nos peixes cartilaginosos.' },
-                    { text: 'Possuem ânus e aberturas urogenitais separadas.', correct: false, rationale: 'Essa característica é mais típica de peixes ósseos e mamíferos.' },
-                    { text: 'Eliminam resíduos apenas através das guelras.', correct: false, rationale: 'As guelras são primariamente para respiração, não para eliminação de todos os tipos de resíduos.' },
-                    { text: 'Não possuem sistema excretor desenvolvido.', correct: false, rationale: 'Todos os vertebrados possuem sistemas excretores, e o dos peixes cartilaginosos é bem desenvolvido e funcional.' }
-                ],
-                hint: 'Pense na abertura combinada para diversas funções fisiológicas.'
-            },
-            {
-                question: 'Em que tipo de ambiente aquático os peixes cartilaginosos são encontrados?',
-                options: [
-                    { text: 'Apenas vivem em águas salgadas.', correct: false, rationale: 'Embora a maioria seja marinha, algumas espécies, como o tubarão-touro, são conhecidas por entrar em água doce.' },
-                    { text: 'Apenas vivem em águas doces.', correct: false, rationale: 'A grande maioria dos peixes cartilaginosos habita ambientes marinhos.' },
-                    { text: 'Podem ser encontrados tanto em águas salgadas quanto em águas doces, embora a maioria seja marinha.', correct: true, rationale: 'A maioria das espécies é marinha, mas há exemplos notáveis de adaptação a rios e estuários, como o tubarão-touro.' },
-                    { text: 'Vivem exclusivamente em fontes termais submarinas.', correct: false, rationale: 'Este habitat é muito específico e não representa a distribuição geral dos peixes cartilaginosos.' }
-                ],
-                hint: 'Pense nos habitats mais comuns dos tubarões, mas lembre-se de que há exceções.'
-            }
-        ];
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let quizCompleted = false; // Flag to indicate if the quiz is completed
-
-        const questionDisplay = document.getElementById('question-display');
-        const answerButtonsContainer = document.getElementById('answer-buttons');
-        const nextButton = document.getElementById('next-button');
-        const scoreDisplay = document.getElementById('score-display');
-        const hintDisplay = document.getElementById('hint-display');
-        const messageBox = document.getElementById('message-box');
-
-        // Function to load a question
-        function loadQuestion() {
-            // Reset UI for new question
-            answerButtonsContainer.innerHTML = '';
-            nextButton.classList.add('hidden');
-            messageBox.classList.remove('show');
-            hintDisplay.textContent = '';
-            quizCompleted = false;
-
-            if (currentQuestionIndex < questions.length) {
-                const currentQuestion = questions[currentQuestionIndex];
-                questionDisplay.textContent = currentQuestion.question;
-                hintDisplay.textContent = `Dica: ${currentQuestion.hint}`;
-
-                currentQuestion.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option.text;
-                    button.classList.add('answer-button');
-                    button.dataset.correct = option.correct;
-                    button.dataset.rationale = option.rationale;
-                    button.addEventListener('click', selectAnswer);
-                    answerButtonsContainer.appendChild(button);
-                });
-            } else {
-                // Quiz completed
-                endQuiz();
-            }
-        }
-
-        // Function to handle answer selection
-        function selectAnswer(e) {
-            if (quizCompleted) return; // Prevent multiple clicks after quiz is done
-
-            const selectedButton = e.target;
-            const isCorrect = selectedButton.dataset.correct === 'true';
-            const rationale = selectedButton.dataset.rationale;
-
-            // Disable all answer buttons after selection
-            Array.from(answerButtonsContainer.children).forEach(button => {
-                button.classList.add('disabled');
-                button.removeEventListener('click', selectAnswer);
-            });
-
-            if (isCorrect) {
-                selectedButton.classList.add('correct');
-                score++;
-                scoreDisplay.textContent = `Pontuação: ${score}`;
-                showMessage('Correto! ' + rationale, 'success');
-            } else {
-                selectedButton.classList.add('incorrect');
-                showMessage('Incorreto. ' + rationale, 'error');
-                // Highlight the correct answer
-                Array.from(answerButtonsContainer.children).forEach(button => {
-                    if (button.dataset.correct === 'true') {
-                        button.classList.add('correct');
-                    }
-                });
-            }
-            nextButton.classList.remove('hidden'); // Show next button
-        }
-
-        // Function to show messages
-        function showMessage(msg, type) {
-            messageBox.textContent = msg;
-            messageBox.classList.add('show');
-            // You can add different classes for 'success' or 'error' if you want different styles
-            if (type === 'success') {
-                messageBox.style.backgroundColor = '#238636';
-            } else if (type === 'error') {
-                messageBox.style.backgroundColor = '#da3633';
-            } else {
-                messageBox.style.backgroundColor = '#30363d';
-            }
-        }
-
-        // Function to move to the next question
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                endQuiz();
-            }
-        }
-
-        // Function to end the quiz
-        function endQuiz() {
-            quizCompleted = true;
-            questionDisplay.textContent = 'Quiz Concluído!';
-            answerButtonsContainer.innerHTML = '';
-            hintDisplay.textContent = '';
-            messageBox.classList.remove('show');
-            scoreDisplay.textContent = `A sua pontuação final é: ${score} de ${questions.length}`;
-            nextButton.textContent = 'Jogar Novamente';
-            nextButton.classList.remove('hidden');
-            nextButton.removeEventListener('click', nextQuestion);
-            nextButton.addEventListener('click', resetQuiz);
-        }
-
-        // Function to reset the quiz
-        function resetQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            scoreDisplay.textContent = `Pontuação: 0`;
-            nextButton.textContent = 'Próxima Pergunta';
-            nextButton.removeEventListener('click', resetQuiz);
-            nextButton.addEventListener('click', nextQuestion);
-            loadQuestion();
-        }
-
-        // Event listener for the next button
-        nextButton.addEventListener('click', nextQuestion);
-
-        // Initial load of the first question when the window loads
-        window.onload = loadQuestion;
-    </script>
-</body>
-</html>
+```javascript
+const questions = [
+    {
+        question: 'Qual é a principal característica que distingue os peixes cartilaginosos (Chondrichthyes) de outros grupos de peixes?',
+        options: [
+            { text: 'Têm esqueleto ósseo e guelras visíveis.', correct: false, rationale: 'Esta opção descreve peixes ósseos, não cartilaginosos, que se distinguem pelo seu esqueleto feito de cartilagem e fendas branquiais expostas.' },
+            { text: 'Têm esqueleto cartilaginoso e fendas branquiais expostas.', correct: true, rationale: 'Esta é a característica distintiva dos peixes cartilaginosos, como tubarões e raias, que possuem um esqueleto flexível de cartilagem e não têm opérculo cobrindo as guelras.' },
+            { text: 'Têm esqueleto ósseo e respiram por pulmões.', correct: false, rationale: 'Esta opção descreve mamíferos aquáticos ou outros vertebrados, não peixes cartilaginosos.' },
+            { text: 'Têm esqueleto cartilaginoso e escamas ganoides.', correct: false, rationale: 'Embora tenham esqueleto cartilaginoso, as escamas ganoides são características de alguns peixes ósseos primitivos, não de cartilaginosos, que geralmente possuem escamas placoides.' }
+        ],
+        hint: 'Pense no material principal que compõe o esqueleto desses animais.'
+    },
+    {
+        question: 'Que tipo de escamas é comum em peixes cartilaginosos?',
+        options: [
+            { text: 'Escamas cicloides', correct: false, rationale: 'Escamas cicloides são características de muitos peixes ósseos, não de peixes cartilaginosos.' },
+            { text: 'Escamas ctenoides', correct: false, rationale: 'Escamas ctenoides também são encontradas em peixes ósseos, não sendo uma característica dos peixes cartilaginosos.' },
+            { text: 'Escamas placoides (dentículos dérmicos)', correct: true, rationale: 'As escamas placoides, que são estruturalmente semelhantes a dentes, são a cobertura cutânea típica dos peixes cartilaginosos.' },
+            { text: 'Não possuem escamas', correct: false, rationale: 'Embora algumas espécies possam parecer lisas, a maioria dos peixes cartilaginosos possui algum tipo de cobertura protetora.' }
+        ],
+        hint: 'Considere a textura da pele dos tubarões e raias.'
+    },
+    {
+        question: 'Como é o sistema circulatório dos peixes cartilaginosos?',
+        options: [
+            { text: 'Dupla circulação completa com coração de quatro câmaras.', correct: false, rationale: 'Este tipo de circulação é encontrado em aves e mamíferos, não em peixes cartilaginosos.' },
+            { text: 'Simples circulação com coração de duas câmaras.', correct: true, rationale: 'Os peixes cartilaginosos possuem um sistema de circulação simples, onde o sangue passa pelo coração apenas uma vez por ciclo completo, e o coração tem duas câmaras: um átrio e um ventrículo.' },
+            { text: 'Circulação dupla incompleta com coração de três câmaras.', correct: false, rationale: 'Esta é a descrição do sistema circulatório de anfíbios e a maioria dos répteis, não de peixes.' },
+            { text: 'Não possuem sistema circulatório fechado.', correct: false, rationale: 'Peixes cartilaginosos, como todos os vertebrados, possuem um sistema circulatório fechado e bem desenvolvido.' }
+        ],
+        hint: 'Pense em quantas vezes o sangue passa pelo coração em um ciclo completo e quantas câmaras o coração possui.'
+    },
+    {
+        question: 'Qual das seguintes opções descreve a variedade de estratégias reprodutivas encontradas em peixes cartilaginosos?',
+        options: [
+            { text: 'Somente reprodução ovípara (ovos depositados externamente).', correct: false, rationale: 'Enquanto a reprodução ovípara ocorre, não é o único método. Existem diversas estratégias reprodutivas nesse grupo.' },
+            { text: 'Somente reprodução vivípara (nascimento de filhotes vivos).', correct: false, rationale: 'Similarmente, a viviparidade ocorre, mas não é a única forma. Peixes cartilaginosos exibem uma variedade de modos reprodutivos.' },
+            { text: 'Reprodução ovípara, ovovivípara e vivípara.', correct: true, rationale: 'Os peixes cartilaginosos demonstram uma notável diversidade reprodutiva, incluindo a deposição de ovos (ovípara), a incubação interna de ovos com nascimento de filhotes vivos (ovovivípara) e o desenvolvimento completo do embrião dentro da mãe com nutrição direta (vivípara).' },
+            { text: 'Reprodução assexuada por fissão.', correct: false, rationale: 'A reprodução assexuada por fissão não é um método conhecido de reprodução para peixes cartilaginosos.' }
+        ],
+        hint: 'Lembre-se de que este grupo exibe uma grande flexibilidade em como seus filhotes se desenvolvem.'
+    },
+    {
+        question: 'Qual estrutura respiratória é característica dos peixes cartilaginosos?',
+        options: [
+            { text: 'Opérculo', correct: false, rationale: 'O opérculo é uma característica dos peixes ósseos; peixes cartilaginosos não o possuem.' },
+            { text: 'Fendas branquiais expostas', correct: true, rationale: 'As fendas branquiais expostas, sem cobertura óssea, são uma característica definidora dos peixes cartilaginosos.' },
+            { text: 'Pulmões', correct: false, rationale: 'Peixes, incluindo os cartilaginosos, respiram por guelras, não por pulmões.' },
+            { text: 'Pele com muco', correct: false, rationale: 'Embora a pele com muco seja comum em peixes, não é uma estrutura distintiva da respiração em peixes cartilaginosos.' }
+        ],
+        hint: 'Pense em como as guelras dos tubarões e raias são visíveis.'
+    },
+    {
+        question: 'Qual órgão sensorial altamente desenvolvido permite que tubarões detectem campos elétricos, como os gerados por presas em potencial?',
+        options: [
+            { text: 'Linha lateral', correct: false, rationale: 'A linha lateral detecta vibrações e mudanças de pressão na água, mas não campos elétricos.' },
+            { text: 'Olhos com visão noturna aguçada', correct: false, rationale: 'Embora a visão seja importante, não é o órgão primário para a detecção de campos elétricos.' },
+            { text: 'Ampolas de Lorenzini', correct: true, rationale: 'As ampolas de Lorenzini são receptores eletrossensoriais que permitem aos tubarões detectar os fracos campos elétricos gerados pelas contrações musculares de suas presas.' },
+            { text: 'Narinas com olfato extremamente apurado', correct: false, rationale: 'O olfato é muito importante para tubarões na detecção de odores na água, mas não para campos elétricos.' }
+        ],
+        hint: 'Este órgão é composto por pequenos poros na pele, especialmente na cabeça, que se conectam a eletrorreceptores.'
+    },
+    {
+        question: 'Quais são os três principais grupos de peixes cartilaginosos (Chondrichthyes)?',
+        options: [
+            { text: 'Tubarões, arraias e quimeras.', correct: true, rationale: 'Esses três grupos formam as principais subclasses dentro dos Chondrichthyes, representando a diversidade dos peixes cartilaginosos.' },
+            { text: 'Salmões, atuns e bacalhaus.', correct: false, rationale: 'Esses são exemplos de peixes ósseos, não cartilaginosos.' },
+            { text: 'Golfinhos, baleias e focas.', correct: false, rationale: 'Esses são mamíferos marinhos, não peixes.' },
+            { text: 'Lampreias e mixinas.', correct: false, rationale: 'Estes são peixes sem mandíbulas (Agnatha), um grupo distinto dos peixes cartilaginosos.' }
+        ],
+        hint: 'Um grupo é bem conhecido por sua forma alongada e predatória, outro por sua forma achatada, e o terceiro por sua aparência mais enigmática e profunda.'
+    },
+    {
+        question: 'Em relação ao sistema respiratório, o que diferencia os peixes cartilaginosos dos peixes ósseos?',
+        options: [
+            { text: 'Possuem opérculo para proteção das guelras.', correct: false, rationale: 'O opérculo é uma estrutura óssea presente em peixes ósseos, ausente em peixes cartilaginosos.' },
+            { text: 'Apresentam uma única abertura branquial.', correct: false, rationale: 'Peixes cartilaginosos têm múltiplas fendas branquiais expostas, não uma única abertura.' },
+            { text: 'Suas guelras estão cobertas por uma bolsa.', correct: false, rationale: 'Esta descrição não corresponde à estrutura branquial dos peixes cartilaginosos.' },
+            { text: 'Não possuem opérculo e as fendas branquiais são visíveis externamente.', correct: true, rationale: 'A ausência de opérculo e a visibilidade das fendas branquiais são características distintivas dos peixes cartilaginosos.' }
+        ],
+        hint: 'Considere a cobertura das guelras e a forma como o oxigénio é obtido.'
+    },
+    {
+        question: 'Qual é a estrutura comum para eliminação de resíduos e reprodução na maioria dos peixes cartilaginosos?',
+        options: [
+            { text: 'Apresentam uma cloaca para a eliminação de resíduos.', correct: true, rationale: 'A cloaca, uma única abertura para sistemas digestório, urinário e reprodutor, é uma característica comum nos peixes cartilaginosos.' },
+            { text: 'Possuem ânus e aberturas urogenitais separadas.', correct: false, rationale: 'Essa característica é mais típica de peixes ósseos e mamíferos.' },
+            { text: 'Eliminam resíduos apenas através das guelras.', correct: false, rationale: 'As guelras são primariamente para respiração, não para eliminação de todos os tipos de resíduos.' },
+            { text: 'Não possuem sistema excretor desenvolvido.', correct: false, rationale: 'Todos os vertebrados possuem sistemas excretores, e o dos peixes cartilaginosos é bem desenvolvido e funcional.' }
+        ],
+        hint: 'Pense na abertura combinada para diversas funções fisiológicas.'
+    },
+    {
+        question: 'Em que tipo de ambiente aquático os peixes cartilaginosos são encontrados?',
+        options: [
+            { text: 'Apenas vivem em águas salgadas.', correct: false, rationale: 'Embora a maioria seja marinha, algumas espécies, como o tubarão-touro, são conhecidas por entrar em água doce.' },
+            { text: 'Apenas vivem em águas doces.', correct: false, rationale: 'A grande maioria dos peixes cartilaginosos habita ambientes marinhos.' },
+            { text: 'Podem ser encontrados tanto em águas salgadas quanto em águas doces, embora a maioria seja marinha.', correct: true, rationale: 'A maioria das espécies é marinha, mas há exemplos notáveis de adaptação a rios e estuários, como o tubarão-touro.' },
+            { text: 'Vivem exclusivamente em fontes termais submarinas.', correct: false, rationale: 'Este habitat é muito específico e não representa a distribuição geral dos peixes cartilaginosos.' }
+        ],
+        hint: 'Pense nos habitats mais comuns dos tubarões, mas lembre-se de que há exceções.'
+    }
+];
+```
