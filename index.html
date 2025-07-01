@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         /* Estilos base */
         body {
@@ -23,6 +25,100 @@
             position: relative;
         }
 
+        /* Estilos para transições de tela */
+        .screen-transition {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Permite cliques através enquanto invisível */
+        }
+
+        .screen-transition.active {
+            opacity: 1;
+            pointer-events: auto; /* Habilita cliques quando visível */
+        }
+
+        /* Estilos para a tela de input do nome */
+        .name-input-container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 30; /* Acima de tudo */
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .name-input-container h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        .name-input-container p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .name-input-container input[type="text"] {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid #ffffff;
+            border-radius: 0.75rem;
+            padding: 0.8rem 1.5rem;
+            color: #ffffff;
+            font-size: 1.5rem;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 1.5rem;
+            outline: none;
+            box-shadow: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .name-input-container input[type="text"]:focus {
+            border-color: #cccccc;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .start-button-name-input {
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 0.75rem;
+            padding: 1rem 3rem;
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            text-shadow: none;
+            box-shadow: none;
+        }
+
+        .start-button-name-input:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
+            color: #cccccc;
+        }
+
+        .name-input-feedback {
+            color: #f85149;
+            font-weight: bold;
+            margin-top: 1rem;
+            min-height: 1.5rem; /* Para evitar CLS */
+        }
+
         /* Estilos do Menu Principal */
         .menu-container {
             width: 100vw;
@@ -33,14 +129,14 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            justify-content: center;
             align-items: center;
-            /* Fundo do menu inspirado na imagem fornecida */
-            background-color: #1a1a1a; /* Cor base escura */
+            background-color: #1a1a1a;
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px; /* Padrão de grade sutil */
+            background-size: 20px 20px;
             z-index: 20;
+            display: none; /* Escondido inicialmente */
         }
 
         .menu-header {
@@ -57,7 +153,7 @@
         .menu-back-button {
             background-color: transparent;
             border: none;
-            color: #ffffff; /* Texto branco */
+            color: #ffffff;
             font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
@@ -68,22 +164,21 @@
         }
 
         .menu-back-button:hover {
-            color: #aaaaaa; /* Mais claro no hover */
+            color: #aaaaaa;
         }
 
         .main-title-area {
-            flex-grow: 0; /* Não ocupa mais todo o espaço vertical */
-            margin-bottom: 2rem; /* Espaço abaixo do título */
+            flex-grow: 0;
+            margin-bottom: 2rem;
             z-index: 1;
         }
 
         .main-title {
-            font-size: 3rem; /* Tamanho ajustado para o novo estilo de menu */
+            font-size: 3rem;
             font-weight: 900;
-            color: #ffffff; /* Cor branca */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Sombra simples */
-            transform: none; /* Sem rotação */
-            letter-spacing: 0.05em; /* Espaçamento entre letras reduzido */
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 0.05em;
             margin-bottom: 0;
             text-align: center;
         }
@@ -92,32 +187,30 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            margin-bottom: 0; /* Sem margem na parte inferior */
+            margin-bottom: 0;
             z-index: 1;
         }
 
         /* Estilo do botão de menu para o novo menu */
         .menu-button {
             background-color: transparent;
-            border: 2px solid #ffffff; /* Borda branca */
+            border: 2px solid #ffffff;
             border-radius: 0.75rem;
-            padding: 1rem 3rem; /* Padding ajustado */
-            color: #ffffff; /* Texto branco */
-            font-size: 2rem; /* Tamanho da fonte ajustado */
+            padding: 1rem 3rem;
+            color: #ffffff;
+            font-size: 2rem;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-            text-shadow: none; /* Sem sombra de texto */
-            box-shadow: none; /* Sem sombra de caixa */
+            text-shadow: none;
+            box-shadow: none;
         }
 
         .menu-button:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
-            border-color: #cccccc; /* Borda mais clara no hover */
-            color: #cccccc; /* Texto mais claro no hover */
-            transform: none; /* Sem transformação */
-            box-shadow: none; /* Sem sombra de caixa */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
+            color: #cccccc;
         }
 
         /* Estilos do Jogo Point-and-Click (container principal das salas) */
@@ -128,8 +221,8 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            display: none; /* Escondido por padrão */
-            z-index: 10; /* Abaixo do menu */
+            display: none;
+            z-index: 10;
         }
 
         /* Estilos para as "salas" individuais */
@@ -141,10 +234,9 @@
             left: 0;
             background-size: cover;
             background-position: center;
-            display: none; /* Escondido por padrão */
+            display: none;
             transition: opacity 0.5s ease-in-out;
             opacity: 0;
-            /* Fundo igual ao do menu */
             background-color: #1a1a1a;
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
@@ -165,12 +257,29 @@
             z-index: 5;
             pointer-events: auto;
             animation: float 5s ease-in-out infinite;
+            position: relative; /* Para posicionar o ícone de descoberto */
         }
 
         .fish-character:hover {
             transform: scale(1.1);
             filter: drop-shadow(0 0 15px rgba(255,255,0,0.7));
         }
+
+        /* Ícone de descoberto */
+        .fish-character .discovered-icon {
+            position: absolute;
+            top: -10px; /* Ajuste a posição conforme necessário */
+            right: -10px; /* Ajuste a posição conforme necessário */
+            font-size: 2rem;
+            color: #2ea043; /* Cor verde para indicar sucesso */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            display: none; /* Escondido por padrão */
+        }
+
+        .fish-character.discovered .discovered-icon {
+            display: block; /* Mostra o ícone quando descoberto */
+        }
+
 
         /* Animação de flutuação */
         @keyframes float {
@@ -185,7 +294,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(0px);
             animation-delay: 0s;
-            width: 200px; /* Ajuste o tamanho conforme necessário */
+            width: 200px;
             height: auto;
         }
 
@@ -193,7 +302,7 @@
             top: 65%;
             left: 50%;
             transform: translateX(-50%) translateY(0px);
-            width: 250px; /* Ajuste o tamanho da imagem da raia */
+            width: 250px;
             height: auto;
             animation-delay: 1s;
         }
@@ -202,7 +311,7 @@
             top: 20%;
             left: 50%;
             transform: translateX(-50%) translateY(0px);
-            width: 200px; /* Ajuste o tamanho da imagem da quimera */
+            width: 200px;
             height: auto;
             animation-delay: 2s;
         }
@@ -210,11 +319,11 @@
         /* Botões de navegação entre salas */
         .nav-button {
             position: absolute;
-            background-color: rgba(26, 26, 26, 0.6); /* Cor de fundo do menu */
-            border: 2px solid rgba(255, 255, 255, 0.4); /* Borda branca sutil */
+            background-color: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 0.5rem;
             padding: 0.75rem 1.5rem;
-            color: #ffffff; /* Texto branco */
+            color: #ffffff;
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
@@ -224,8 +333,8 @@
         }
 
         .nav-button:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
-            border-color: #cccccc; /* Borda mais clara no hover */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
             transform: scale(1.05);
         }
 
@@ -270,10 +379,10 @@
         }
 
         .info-panel {
-            background-color: rgba(26, 26, 26, 0.95); /* Cor de fundo do menu, mais opaca */
+            background-color: rgba(26, 26, 26, 0.95);
             border-radius: 1.5rem;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra mais suave */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             max-width: 700px;
             width: 100%;
             text-align: left;
@@ -284,8 +393,8 @@
             margin-top: 2rem;
             max-height: 80vh;
             overflow-y: auto;
-            border: 2px solid rgba(255, 255, 255, 0.2); /* Borda branca sutil */
-            color: #e6edf3; /* Cor do texto */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #e6edf3;
         }
 
         .info-panel.show {
@@ -293,11 +402,11 @@
         }
 
         .challenge-section {
-            background-color: rgba(26, 26, 26, 0.8); /* Cor de fundo do menu, mais transparente */
+            background-color: rgba(26, 26, 26, 0.8);
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-top: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda ainda mais sutil */
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .challenge-question {
@@ -308,9 +417,9 @@
         }
 
         .challenge-options button {
-            background-color: transparent; /* Fundo transparente */
-            color: #e6edf3; /* Texto claro */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
+            background-color: transparent;
+            color: #e6edf3;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.8rem 1.2rem;
             border-radius: 0.5rem;
             cursor: pointer;
@@ -322,18 +431,18 @@
         }
 
         .challenge-options button:hover:not(.disabled) {
-            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
-            border-color: #cccccc; /* Borda mais clara no hover */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
         }
 
         .challenge-options button.correct {
-            background-color: rgba(46, 160, 67, 0.3); /* Verde sutil */
+            background-color: rgba(46, 160, 67, 0.3);
             border-color: #2ea043;
             color: white;
         }
 
         .challenge-options button.incorrect {
-            background-color: rgba(218, 54, 51, 0.3); /* Vermelho sutil */
+            background-color: rgba(218, 54, 51, 0.3);
             border-color: #f85149;
             color: white;
         }
@@ -347,11 +456,12 @@
             margin-top: 1rem;
             font-weight: bold;
             font-size: 1rem;
+            min-height: 1.5rem; /* Para evitar CLS */
         }
 
         .close-button {
-            background-color: transparent; /* Fundo transparente */
-            color: #f85149; /* Texto vermelho */
+            background-color: transparent;
+            color: #f85149;
             padding: 0.8rem 1.5rem;
             border-radius: 0.75rem;
             cursor: pointer;
@@ -360,104 +470,133 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
             margin-top: 1.5rem;
             align-self: flex-end;
-            border: 2px solid #f85149; /* Borda vermelha */
+            border: 2px solid #f85149;
         }
 
         .close-button:hover {
-            background-color: rgba(248, 81, 73, 0.1); /* Fundo sutil no hover */
+            background-color: rgba(248, 81, 73, 0.1);
             border-color: #ff0000;
             color: #ff0000;
         }
 
-        .progress-display {
-            background-color: rgba(26, 26, 26, 0.8); /* Cor de fundo do menu, mais transparente */
+        /* Estilos para o display de nome, pontuação e tempo */
+        .game-hud {
+            position: absolute;
+            top: 1rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 20; /* Acima dos elementos do jogo, mas abaixo de painéis modais */
+            pointer-events: none; /* Permite cliques através dele */
+        }
+
+        .player-info, .game-stats {
+            background-color: rgba(26, 26, 26, 0.8);
             border-radius: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            color: #e6edf3; /* Texto claro */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave */
-            pointer-events: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+            padding: 0.5rem 1rem; /* Padding menor */
+            font-size: 0.9rem; /* Fonte menor */
+            color: #e6edf3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; /* Para alinhar os elementos dentro */
+            align-items: center;
+            gap: 0.75rem; /* Espaçamento entre pontuação e tempo */
+        }
+        
+        .game-stats {
+            gap: 0.75rem; /* Espaçamento entre os elementos de stats */
         }
 
         /* Estilos do painel de conclusão */
         .completion-panel {
+            width: 100vw;
+            height: 100vh;
             position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
             display: none;
             flex-direction: column;
-            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            justify-content: center;
             align-items: center;
-            /* Fundo igual ao do menu */
             background-color: #1a1a1a;
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
-            z-index: 20;
+            z-index: 25; /* Acima do menu principal */
             overflow: hidden;
-            padding-bottom: 0; /* Remove padding bottom, pois o botão será centralizado */
-            gap: 1.5rem; /* Espaçamento entre os elementos */
+            padding-bottom: 0;
+            gap: 1.5rem;
         }
 
         .completion-panel.show {
             display: flex;
         }
 
-        /* Oculta a imagem de conclusão */
         .completion-panel .completion-image {
             display: none;
         }
 
         /* Estilos para o texto de conclusão */
         .completion-panel h2 {
-            display: block; /* Mostra o título */
+            display: block;
             font-size: 2.5rem;
             font-weight: bold;
-            color: #ffffff; /* Texto branco */
+            color: #ffffff;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .completion-panel p {
-            display: block; /* Mostra o parágrafo */
+            display: block;
             font-size: 1.2rem;
             line-height: 1.8;
-            color: #e6edf3; /* Texto claro */
+            color: #e6edf3;
             text-align: center;
-            max-width: 80%; /* Limita a largura do texto */
+            max-width: 80%;
         }
 
         /* Estilo do botão de reiniciar para o painel de conclusão */
         .restart-button {
-            background-color: transparent; /* Fundo transparente */
-            color: #ffffff; /* Texto branco */
-            padding: 1.2rem 3rem; /* Padding maior */
+            background-color: transparent;
+            color: #ffffff;
+            padding: 1.2rem 3rem;
             border-radius: 0.75rem;
             cursor: pointer;
-            font-size: 1.5rem; /* Tamanho da fonte maior */
+            font-size: 1.5rem;
             font-weight: bold;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-            border: 2px solid #ffffff; /* Borda branca */
+            border: 2px solid #ffffff;
             z-index: 2;
             position: relative;
-            box-shadow: none; /* Sem sombra */
-            margin-top: 2rem; /* Espaço acima do botão */
+            box-shadow: none;
+            margin-top: 2rem;
         }
 
         .restart-button:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil no hover */
-            border-color: #cccccc; /* Borda mais clara no hover */
-            color: #cccccc; /* Texto mais claro no hover */
-            transform: none; /* Sem efeito de levantamento */
-            box-shadow: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #cccccc;
+            color: #cccccc;
         }
 
         /* Responsividade para telas menores */
         @media (max-width: 768px) {
+            .name-input-container h1 {
+                font-size: 2rem;
+            }
+            .name-input-container p {
+                font-size: 1rem;
+            }
+            .name-input-container input[type="text"] {
+                font-size: 1.2rem;
+                padding: 0.6rem 1rem;
+            }
+            .start-button-name-input {
+                font-size: 1.5rem;
+                padding: 0.8rem 2rem;
+            }
+
             .main-title {
                 font-size: 1.8rem;
             }
@@ -490,15 +629,32 @@
             .completion-panel p {
                 font-size: 1rem;
             }
+            .player-info, .game-stats {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.8rem;
+                gap: 0.5rem;
+            }
+            .name-input-feedback {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Tela de Inserção de Nome -->
+    <div id="name-input-screen" class="name-input-container screen-transition">
+        <h1>Bem-vindo ao Mergulho Profundo!</h1>
+        <p>Por favor, insira seu nome para começar sua aventura:</p>
+        <input type="text" id="player-name-input" placeholder="Seu nome de explorador">
+        <div id="name-input-feedback" class="name-input-feedback"></div>
+        <button id="start-name-button" class="start-button-name-input">Começar</button>
+    </div>
+
     <!-- Main Menu -->
-    <div id="main-menu" class="menu-container">
+    <div id="main-menu" class="menu-container screen-transition">
         <!-- Cabeçalho do Menu com botão "BACK" -->
         <div class="menu-header">
-            <button class="menu-back-button" id="menu-back-button">BACK</button>
+            <button class="menu-back-button" id="menu-back-button">SAIR DO JOGO</button>
         </div>
 
         <!-- Área do Título Principal -->
@@ -513,13 +669,13 @@
     </div>
 
     <!-- Jogo Point-and-Click (container principal das salas) -->
-    <div id="point-click-game" class="point-click-game">
+    <div id="point-click-game" class="point-click-game screen-transition">
         <!-- Sala do Tubarão -->
         <div id="shark-room" class="game-room">
-            <!-- Usando o link direto da imagem para o tubarão -->
             <img id="shark-char" class="fish-character"
                  src="https://images.cults3d.com/VSyY3jKKi3zAG_246OpS54J3_8s=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/26588735/illustration-file/49a806c1-a349-4051-90db-a2e1a6e80bf9/Tralalero-Tralala.png"
-                 alt="Tubarão" data-fish-id="shark">
+                 alt="Tubarão" data-fish-id="shark" onerror="this.onerror=null;this.src='https://placehold.co/200x150/555/FFF?text=Tubarão'">
+                 <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala do tubarão -->
             <button class="nav-button nav-right" data-target-room="ray-room">
                 <i class="fas fa-arrow-right"></i>
@@ -531,10 +687,10 @@
 
         <!-- Sala da Raia -->
         <div id="ray-room" class="game-room">
-            <!-- Usando a imagem anterior para a raia -->
             <img id="ray-char" class="fish-character"
                  src="https://static.vecteezy.com/system/resources/previews/023/839/433/non_2x/mobula-rays-fish-isolated-on-a-transparent-background-free-png.png"
-                 alt="Raia" data-fish-id="ray">
+                 alt="Raia" data-fish-id="ray" onerror="this.onerror=null;this.src='https://placehold.co/250x150/555/FFF?text=Raia'">
+                 <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala da raia -->
             <button class="nav-button nav-right" data-target-room="chimera-room">
                 <i class="fas fa-arrow-right"></i>
@@ -546,10 +702,10 @@
 
         <!-- Sala da Quimera -->
         <div id="chimera-room" class="game-room">
-            <!-- Usando a imagem para a quimera -->
             <img id="chimera-char" class="fish-character"
                  src="https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-vintage-engraving-of-a-chimaera-monstrosa-also-known-as-a-rabbit-fish-or-rat-fish-vector-png-image_4159944.png"
-                 alt="Quimera" data-fish-id="chimera">
+                 alt="Quimera" data-fish-id="chimera" onerror="this.onerror=null;this.src='https://placehold.co/200x150/555/FFF?text=Quimera'">
+                 <i class="fas fa-check-circle discovered-icon"></i>
             <!-- Navegação da sala da quimera -->
             <button class="nav-button nav-right" data-target-room="shark-room">
                 <i class="fas fa-arrow-right"></i>
@@ -562,13 +718,15 @@
 
     <!-- Overlays e Painéis (info, progresso, conclusão) -->
     <div class="game-overlay">
-        <!-- O painel de instruções foi removido e não será exibido -->
-        <div id="instructions-panel" class="instructions-panel" style="display: none;">
-            <h2>Bem-vindo ao Mergulho Profundo!</h2>
-            <p>Embarque numa expedição virtual para explorar o fascinante mundo dos peixes cartilaginosos.</p>
-            <p><strong>Instruções:</strong></p>
-            <p>Clique nas setas para navegar entre as diferentes áreas do oceano. Em cada área, clique no peixe para aprender sobre ele e responder a pequenos desafios de conhecimento.</p>
-            <button id="start-game-button" class="start-button">Começar a Explorar</button>
+        <!-- HUD do Jogo: Nome, Pontuação, Tempo -->
+        <div id="game-hud" class="game-hud hidden">
+            <div class="player-info">
+                Explorador: <span id="player-name-display"></span>
+            </div>
+            <div class="game-stats">
+                Descobertas: <span id="discovered-count">0</span> / <span id="total-discoveries">0</span>
+                | Tempo: <span id="game-timer">00:00</span>
+            </div>
         </div>
 
         <div id="info-panel" class="info-panel">
@@ -582,89 +740,57 @@
             <button id="close-info-button" class="close-button">Fechar</button>
         </div>
 
-        <div id="progress-display" class="progress-display hidden">
-            Descobertas: <span id="discovered-count">0</span> / <span id="total-discoveries">0</span>
-        </div>
-
-        <div id="completion-panel" class="completion-panel">
+        <div id="completion-panel" class="completion-panel screen-transition">
             <h2 class="completion-title">Missão Concluída!</h2>
-            <p class="completion-message">Parabéns, explorador! Concluiu a sua missão e documentou com sucesso todos os peixes cartilaginosos.</p>
+            <p class="completion-message">Parabéns, explorador <span id="final-player-name"></span>! Concluiu a sua missão e documentou com sucesso todos os peixes cartilaginosos em <span id="final-game-time"></span>.</p>
             <p class="completion-message">Obrigado por aprender sobre estas criaturas incríveis!</p>
             <button id="restart-game-button" class="restart-button">Reiniciar Exploração</button>
         </div>
     </div>
 
     <script>
-        console.log('Script started.'); // Debug log at the very beginning
-
-        // --- Variáveis do Jogo ---
+        // --- Variáveis Globais do Jogo ---
+        let playerName = '';
         let discoveredCount = 0;
-        const discoveryData = {}; // Para rastrear o que foi descoberto
+        const discoveryData = {}; // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
         let currentRoomId = 'shark-room'; // Sala inicial padrão
+        let gameTimer = 0; // Segundos
+        let timerInterval = null; // Para controlar o setInterval do timer
 
         // --- Referências de Elementos HTML ---
+        const nameInputScreen = document.getElementById('name-input-screen');
+        const playerNameInput = document.getElementById('player-name-input');
+        const startNameButton = document.getElementById('start-name-button');
+        const nameInputFeedback = document.getElementById('name-input-feedback'); // Novo elemento para feedback
+
         const mainMenu = document.getElementById('main-menu');
-        console.log('mainMenu element:', mainMenu); // Debug log
+        const playGameButton = document.getElementById('play-game-button');
+        const menuBackButton = document.getElementById('menu-back-button');
 
         const pointClickGame = document.getElementById('point-click-game');
-        console.log('pointClickGame element:', pointClickGame); // Debug log
-
-        const playGameButton = document.getElementById('play-game-button');
-        console.log('playGameButton element:', playGameButton); // Debug log
-
-        const menuBackButton = document.getElementById('menu-back-button');
-        console.log('menuBackButton element:', menuBackButton); // Debug log
-
         const gameRooms = document.querySelectorAll('.game-room');
-        console.log('gameRooms elements (NodeList):', gameRooms); // Debug log
-
         const navButtons = document.querySelectorAll('.nav-button');
-        console.log('navButtons elements (NodeList):', navButtons); // Debug log
+        const fishCharacters = document.querySelectorAll('.fish-character');
 
-        const instructionsPanel = document.getElementById('instructions-panel');
-        console.log('instructionsPanel element:', instructionsPanel); // Debug log
+        const gameHud = document.getElementById('game-hud');
+        const playerNameDisplay = document.getElementById('player-name-display');
+        const discoveredCountSpan = document.getElementById('discovered-count');
+        const totalDiscoveriesSpan = document.getElementById('total-discoveries');
+        const gameTimerDisplay = document.getElementById('game-timer');
 
         const infoPanel = document.getElementById('info-panel');
-        console.log('infoPanel element:', infoPanel); // Debug log
-
         const infoTitle = document.getElementById('info-title');
-        console.log('infoTitle element:', infoTitle); // Debug log
-
         const infoContent = document.getElementById('info-content');
-        console.log('infoContent element:', infoContent); // Debug log
-
         const challengeSection = document.getElementById('challenge-section');
-        console.log('challengeSection element:', challengeSection); // Debug log
-
         const challengeQuestion = document.getElementById('challenge-question');
-        console.log('challengeQuestion element:', challengeQuestion); // Debug log
-
         const challengeOptions = document.getElementById('challenge-options');
-        console.log('challengeOptions element:', challengeOptions); // Debug log
-
         const challengeFeedback = document.getElementById('challenge-feedback');
-        console.log('challengeFeedback element:', challengeFeedback); // Debug log
-
         const closeInfoButton = document.getElementById('close-info-button');
-        console.log('closeInfoButton element:', closeInfoButton); // Debug log
-
-        const progressDisplay = document.getElementById('progress-display');
-        console.log('progressDisplay element:', progressDisplay); // Debug log
-
-        const discoveredCountSpan = document.getElementById('discovered-count');
-        console.log('discoveredCountSpan element:', discoveredCountSpan); // Debug log
-
-        const totalDiscoveriesSpan = document.getElementById('total-discoveries');
-        console.log('totalDiscoveriesSpan element:', totalDiscoveriesSpan); // Debug log
-
-        const fishCharacters = document.querySelectorAll('.fish-character');
-        console.log('fishCharacters elements (NodeList):', fishCharacters); // Debug log
 
         const completionPanel = document.getElementById('completion-panel');
-        console.log('completionPanel element:', completionPanel); // Debug log
-
-        const restartGameButton = document.getElementById('restart-game-button'); // Botão RESTART dentro do jogo
-        console.log('restartGameButton element:', restartGameButton); // Debug log
+        const finalPlayerNameSpan = document.getElementById('final-player-name');
+        const finalGameTimeSpan = document.getElementById('final-game-time');
+        const restartGameButton = document.getElementById('restart-game-button');
 
         // --- Dados dos Peixes e Conteúdo Educacional ---
         const fishInfo = [
@@ -727,12 +853,161 @@
             }
         ];
 
-        // --- Lógica do Jogo ---
-        let currentChallenge = null;
+        let currentChallenge = null; // Armazena o ID do peixe cujo desafio está ativo
 
-        // Função para mostrar uma sala específica
+        // --- Funções de Controle de Tela e Transições ---
+
+        /**
+         * Exibe uma tela específica com uma transição de fade.
+         * @param {HTMLElement} screenElement - O elemento da tela a ser exibido.
+         */
+        function showScreen(screenElement) {
+            // Oculta todas as telas para garantir que apenas uma esteja ativa
+            const allScreens = [nameInputScreen, mainMenu, pointClickGame, completionPanel];
+            allScreens.forEach(screen => {
+                screen.classList.remove('active');
+                screen.style.display = 'none'; // Garante que o display é none quando não ativo
+            });
+
+            // Exibe a tela desejada com fade
+            screenElement.style.display = 'flex'; // Ou 'block' dependendo do layout
+            setTimeout(() => {
+                screenElement.classList.add('active');
+            }, 10); // Pequeno atraso para permitir que o display seja aplicado antes da transição
+        }
+
+        /**
+         * Oculta uma tela específica com uma transição de fade.
+         * @param {HTMLElement} screenElement - O elemento da tela a ser ocultado.
+         * @param {Function} [callback] - Função a ser chamada após a transição.
+         */
+        function hideScreen(screenElement, callback) {
+            screenElement.classList.remove('active');
+            screenElement.addEventListener('transitionend', function handler() {
+                screenElement.style.display = 'none';
+                screenElement.removeEventListener('transitionend', handler);
+                if (callback) callback();
+            }, { once: true }); // Executa o callback apenas uma vez
+        }
+
+        /**
+         * Exibe a tela de input do nome.
+         */
+        function showNameInputScreen() {
+            showScreen(nameInputScreen);
+            playerNameInput.value = ''; // Limpa o campo do nome
+            playerNameInput.focus(); // Coloca o foco no campo de input
+            nameInputFeedback.textContent = ''; // Limpa qualquer feedback anterior
+            gameHud.classList.add('hidden'); // Garante que o HUD está escondido
+        }
+
+        /**
+         * Exibe o menu principal.
+         */
+        function showMainMenu() {
+            showScreen(mainMenu);
+        }
+
+        /**
+         * Inicia o jogo, exibindo a primeira sala e o HUD.
+         */
+        function startGame() {
+            showScreen(pointClickGame);
+            gameHud.classList.remove('hidden'); // Mostra o HUD
+            showRoom('shark-room'); // Inicia na sala do tubarão
+            startTimer(); // Inicia o timer
+            updateDiscoveryCount(); // Inicializa o contador de descobertas
+        }
+
+        /**
+         * Exibe o painel de conclusão.
+         */
+        function showCompletionPanel() {
+            stopTimer(); // Para o timer ao concluir
+            hideScreen(pointClickGame, () => {
+                gameHud.classList.add('hidden'); // Esconde o HUD após o jogo sumir
+                infoPanel.classList.remove('show'); // Garante que o painel de info está fechado
+                showScreen(completionPanel);
+                finalPlayerNameSpan.textContent = playerName;
+                finalGameTimeSpan.textContent = gameTimerDisplay.textContent; // Usa o tempo formatado
+            });
+        }
+
+        /**
+         * Reinicia o jogo para o estado inicial.
+         */
+        function resetGame() {
+            playerName = '';
+            discoveredCount = 0;
+            for (const key in discoveryData) {
+                delete discoveryData[key];
+            }
+            // Reabilita todos os peixes e remove o estado de "descoberto"
+            fishCharacters.forEach(fish => {
+                fish.style.pointerEvents = 'auto'; // Reabilita cliques
+                fish.style.filter = 'none'; // Remove filtro
+                fish.style.animation = ''; // Reativa a animação
+                fish.style.transform = ''; // Reseta transform para a animação padrão
+                fish.classList.remove('discovered'); // Remove a classe 'discovered'
+            });
+            stopTimer();
+            gameTimer = 0;
+            updateDiscoveryCount();
+            updateTimerDisplay(); // Reseta o display do timer
+
+            hideScreen(completionPanel, showNameInputScreen); // Oculta o painel de conclusão e mostra a tela de nome
+        }
+
+        // --- Funções de Lógica do Jogo ---
+
+        /**
+         * Inicia o timer do jogo.
+         */
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval); // Garante que não há múltiplos timers
+            gameTimer = 0;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                gameTimer++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        /**
+         * Para o timer do jogo.
+         */
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        /**
+         * Formata e atualiza o display do timer.
+         */
+        function updateTimerDisplay() {
+            const minutes = Math.floor(gameTimer / 60);
+            const seconds = gameTimer % 60;
+            gameTimerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        /**
+         * Atualiza o contador de descobertas e verifica a conclusão do jogo.
+         */
+        function updateDiscoveryCount() {
+            discoveredCount = Object.values(discoveryData).filter(item => item.answeredCorrectly).length;
+            discoveredCountSpan.textContent = discoveredCount;
+            totalDiscoveriesSpan.textContent = fishInfo.length;
+
+            if (discoveredCount === fishInfo.length) {
+                setTimeout(showCompletionPanel, 1000); // Mostra o painel de conclusão após um pequeno atraso
+            }
+        }
+
+        /**
+         * Mostra uma sala específica do jogo.
+         * @param {string} roomId - O ID da sala a ser exibida.
+         */
         function showRoom(roomId) {
-            console.log('Changing room to:', roomId);
             gameRooms.forEach(room => {
                 room.classList.remove('active');
             });
@@ -740,226 +1015,160 @@
             if (targetRoomElement) {
                 targetRoomElement.classList.add('active');
                 currentRoomId = roomId;
-                infoPanel.classList.remove('show');
-                console.log('Info panel closed on room change.');
+                infoPanel.classList.remove('show'); // Fechar painel de info ao mudar de sala
             } else {
-                console.error('Error: Target room element not found for ID:', roomId);
+                console.error('Erro: Elemento da sala alvo não encontrado para o ID:', roomId);
             }
         }
 
-        // Função para mostrar o painel de informações de um peixe
+        /**
+         * Mostra o painel de informações de um peixe e seu desafio.
+         * @param {string} fishId - O ID do peixe.
+         */
         function showInfoPanel(fishId) {
-            console.log('Showing info panel for:', fishId);
             const info = fishInfo.find(f => f.id === fishId);
 
-            if (info && infoPanel && infoTitle && infoContent && challengeSection && challengeQuestion && challengeOptions && challengeFeedback) {
+            if (info) {
                 infoTitle.textContent = info.name;
                 infoContent.innerHTML = info.info;
 
-                // Reinicia e esconde a seção de desafio inicialmente
-                challengeSection.classList.add('hidden');
-                challengeFeedback.textContent = '';
-                challengeOptions.innerHTML = '';
-                currentChallenge = null;
-
-                // Se houver um desafio para este peixe, exibe-o
-                if (info.challenge) {
+                // Exibir o desafio apenas se ainda não foi respondido corretamente
+                if (!discoveryData[fishId] || !discoveryData[fishId].answeredCorrectly) {
                     challengeSection.classList.remove('hidden');
                     challengeQuestion.textContent = info.challenge.question;
-                    currentChallenge = info.challenge;
+                    challengeOptions.innerHTML = ''; // Limpar opções anteriores
+                    challengeFeedback.textContent = ''; // Limpar feedback anterior
+                    currentChallenge = info.id; // Define o desafio atual
 
                     info.challenge.options.forEach((option, index) => {
                         const button = document.createElement('button');
                         button.textContent = option.text;
-                        button.dataset.index = index;
-                        button.addEventListener('click', handleChallengeAnswer);
+                        button.classList.add('w-full', 'p-2', 'rounded', 'mb-2', 'text-left', 'transition-colors', 'duration-300', 'ease-in-out');
+                        button.onclick = () => checkAnswer(fishId, index, option.correct, option.rationale);
                         challengeOptions.appendChild(button);
                     });
+                } else {
+                    // Se já respondeu, ocultar o desafio
+                    challengeSection.classList.add('hidden');
                 }
-
                 infoPanel.classList.add('show');
-                // Adiciona o peixe à lista de descobertas se ainda não estiver lá
-                if (!discoveryData[fishId]) {
-                    discoveryData[fishId] = true;
-                    discoveredCount++;
-                    updateProgressDisplay();
-                    console.log('Discovered count updated:', discoveredCount);
-                }
             } else {
-                console.error('Error: One or more info panel elements not found or fish info missing for ID:', fishId);
+                console.error('Erro: Informações do peixe ou elementos do painel não encontrados para o ID:', fishId);
             }
         }
 
-        // Função para lidar com a resposta do desafio
-        function handleChallengeAnswer(event) {
-            console.log('Challenge answer clicked.');
-            const selectedButton = event.target;
-            const selectedIndex = parseInt(selectedButton.dataset.index);
-
-            if (currentChallenge && challengeOptions && challengeFeedback) {
-                // Desabilita todos os botões após a seleção
-                Array.from(challengeOptions.children).forEach(button => {
-                    button.classList.add('disabled');
-                    button.removeEventListener('click', handleChallengeAnswer);
-                });
-
-                if (currentChallenge.options[selectedIndex].correct) {
-                    selectedButton.classList.add('correct');
-                    challengeFeedback.textContent = 'Correto! ' + currentChallenge.options[selectedIndex].rationale;
-                    challengeFeedback.style.color = '#2ea043'; // Verde
-                } else {
-                    selectedButton.classList.add('incorrect');
-                    challengeFeedback.textContent = 'Incorreto. ' + currentChallenge.options[selectedIndex].rationale;
-                    challengeFeedback.style.color = '#f85149'; // Vermelho
-
-                    // Destaca a resposta correta
-                    Array.from(challengeOptions.children).forEach(button => {
-                        if (currentChallenge.options[parseInt(button.dataset.index)].correct) {
-                            button.classList.add('correct');
-                        }
-                    });
-                }
-                checkCompletion(); // Verifica se todos os peixes foram descobertos após cada resposta
-            } else {
-                console.error('Error: Missing challenge elements or currentChallenge is null.');
-            }
-        }
-
-        // Função para fechar o painel de informações
-        if (closeInfoButton) {
-            closeInfoButton.addEventListener('click', () => {
-                console.log('Close info button clicked.');
-                infoPanel.classList.remove('show');
-                currentChallenge = null;
+        /**
+         * Verifica a resposta do desafio.
+         * @param {string} fishId - O ID do peixe associado ao desafio.
+         * @param {number} optionIndex - O índice da opção selecionada.
+         * @param {boolean} isCorrect - Indica se a opção é a correta.
+         * @param {string} rationale - A explicação para a resposta.
+         */
+        function checkAnswer(fishId, optionIndex, isCorrect, rationale) {
+            const buttons = challengeOptions.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.classList.add('disabled'); // Desabilita todos os botões após a primeira seleção
             });
-        } else {
-            console.error('Error: closeInfoButton not found!');
-        }
 
-
-        // Função para atualizar o display de progresso
-        function updateProgressDisplay() {
-            if (discoveredCountSpan && totalDiscoveriesSpan && progressDisplay) {
-                discoveredCountSpan.textContent = discoveredCount;
-                totalDiscoveriesSpan.textContent = fishInfo.length;
-                progressDisplay.classList.remove('hidden');
-                console.log('Progress display updated.');
-            } else {
-                console.error('Error: One or more progress display elements not found.');
-            }
-        }
-
-        // Função para verificar a conclusão do jogo
-        function checkCompletion() {
-            console.log('checkCompletion called. Discovered count:', discoveredCount, 'Total fish:', fishInfo.length);
-            if (discoveredCount === fishInfo.length) {
-                console.log('All fish discovered! Showing completion panel.');
-                if (completionPanel) {
-                    completionPanel.classList.add('show');
+            if (isCorrect) {
+                buttons[optionIndex].classList.add('correct');
+                challengeFeedback.textContent = 'Correto! ' + rationale;
+                if (!discoveryData[fishId]) {
+                    discoveryData[fishId] = { answeredCorrectly: true };
+                    updateDiscoveryCount();
                 } else {
-                    console.error('Error: completionPanel not found when trying to show it!');
+                    discoveryData[fishId].answeredCorrectly = true;
+                    updateDiscoveryCount();
                 }
-            }
-        }
+                // Adiciona a classe 'discovered' ao peixe para mostrar o ícone
+                const fishChar = document.querySelector(`.fish-character[data-fish-id="${fishId}"]`);
+                if (fishChar) {
+                    fishChar.style.pointerEvents = 'none'; // Impede novos cliques
+                    fishChar.style.filter = 'grayscale(100%) brightness(50%)'; // Indica que foi "descoberto"
+                    fishChar.style.animation = 'none'; // Para a animação de flutuação
+                    fishChar.style.transform = 'translateX(-50%) translateY(0px)'; // Remove o efeito de escala do hover
+                    fishChar.classList.add('discovered'); // Adiciona classe para mostrar o ícone
+                }
 
-        // Função para reiniciar o jogo
-        function resetGame() {
-            console.log('Resetting game...');
-            discoveredCount = 0;
-            for (const key in discoveryData) {
-                delete discoveryData[key];
-            }
-            updateProgressDisplay();
-            if (infoPanel) infoPanel.classList.remove('show');
-            if (completionPanel) completionPanel.classList.remove('show');
-            if (pointClickGame) pointClickGame.style.display = 'none';
-            if (mainMenu) mainMenu.style.display = 'flex';
-            console.log('Game reset complete. Main menu visible.');
-        }
-
-        // Inicializa os elementos e ouvintes do jogo (chamado quando o jogo começa)
-        function initGameElements() {
-            console.log('Initializing game elements...');
-            // Adiciona ouvintes de clique aos personagens dos peixes
-            if (fishCharacters) {
-                fishCharacters.forEach(fishChar => {
-                    fishChar.addEventListener('click', () => {
-                        showInfoPanel(fishChar.dataset.fishId);
-                    });
-                });
             } else {
-                console.error('Error: fishCharacters (fish images) not found!');
-            }
-
-
-            // Adiciona ouvintes de clique aos botões de navegação
-            if (navButtons) {
-                navButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const targetRoom = button.dataset.targetRoom;
-                        showRoom(targetRoom);
+                buttons[optionIndex].classList.add('incorrect');
+                challengeFeedback.textContent = 'Incorreto. ' + rationale;
+                // Permite nova tentativa após 2 segundos
+                setTimeout(() => {
+                    buttons.forEach(button => {
+                        button.classList.remove('disabled', 'incorrect');
                     });
-                });
-            } else {
-                console.error('Error: navButtons not found!');
+                    challengeFeedback.textContent = '';
+                }, 2000);
             }
-
-
-            updateProgressDisplay(); // Inicializa o display de progresso
-            showRoom(currentRoomId); // Mostra a sala inicial
-            console.log('Game elements initialized. Current room:', currentRoomId);
         }
 
-        // --- Listeners de Eventos ---
+        // --- Gerenciamento de Eventos ---
 
-        // Executa quando o DOM estiver completamente carregado
+        // Ao carregar a página, mostra a tela de input do nome
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOMContentLoaded fired. Attaching initial event listeners and setting display.');
+            showNameInputScreen();
+        });
 
-            if (mainMenu) {
-                mainMenu.style.display = 'flex';
-                console.log('mainMenu display set to flex.');
+        // Evento para o botão "Começar" na tela de input do nome
+        startNameButton.addEventListener('click', () => {
+            const inputName = playerNameInput.value.trim();
+            if (inputName) {
+                playerName = inputName;
+                playerNameDisplay.textContent = playerName;
+                hideScreen(nameInputScreen, showMainMenu); // Oculta tela de nome e mostra menu
             } else {
-                console.error('Error: mainMenu element not found on DOMContentLoaded!');
-            }
-
-            if (pointClickGame) {
-                pointClickGame.style.display = 'none';
-                console.log('pointClickGame display set to none.');
-            } else {
-                console.error('Error: pointClickGame element not found on DOMContentLoaded!');
-            }
-
-            if (playGameButton) {
-                playGameButton.addEventListener('click', () => {
-                    console.log('Play game button clicked.');
-                    if (mainMenu) mainMenu.style.display = 'none';
-                    if (pointClickGame) pointClickGame.style.display = 'block';
-                    initGameElements();
-                });
-            } else {
-                console.error('Error: playGameButton not found!');
-            }
-
-            // NOVO: Botão BACK no menu principal agora chama resetGame()
-            if (menuBackButton) {
-                menuBackButton.addEventListener('click', () => {
-                    console.log('Menu back button clicked. Calling resetGame().');
-                    resetGame(); // Chama a função para reiniciar o jogo e voltar ao menu
-                });
-            } else {
-                console.error('Error: menuBackButton not found!');
-            }
-
-            if (restartGameButton) {
-                restartGameButton.addEventListener('click', resetGame);
-                console.log('Restart game button event listener attached successfully.');
-            } else {
-                console.error('Error: Restart game button not found!');
+                nameInputFeedback.textContent = 'Por favor, insira seu nome para começar!';
+                playerNameInput.focus();
+                setTimeout(() => {
+                    nameInputFeedback.textContent = '';
+                }, 3000); // Limpa a mensagem após 3 segundos
             }
         });
 
-        console.log('Script finished execution setup.'); // Debug log at the very end of the script setup
+        // Evento para o botão "PLAY" no menu principal
+        playGameButton.addEventListener('click', () => {
+            hideScreen(mainMenu, startGame); // Oculta menu e inicia o jogo
+        });
+
+        // Evento para o botão "SAIR DO JOGO" no menu principal
+        menuBackButton.addEventListener('click', () => {
+            resetGame(); // Reinicia o jogo e volta para a tela de input do nome
+        });
+
+        // Eventos para navegação entre salas
+        navButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetRoom = event.currentTarget.dataset.targetRoom;
+                showRoom(targetRoom);
+            });
+        });
+
+        // Eventos para clicar nos personagens (peixes)
+        fishCharacters.forEach(fish => {
+            fish.addEventListener('click', (event) => {
+                const fishId = event.currentTarget.dataset.fishId;
+                showInfoPanel(fishId);
+            });
+        });
+
+        // Evento para o botão "Fechar" do painel de informações
+        closeInfoButton.addEventListener('click', () => {
+            infoPanel.classList.remove('show');
+            currentChallenge = null; // Limpa o desafio atual
+            challengeFeedback.textContent = ''; // Limpa feedback
+            // Reabilita todos os botões do desafio ao fechar (se não tiverem sido respondidos corretamente)
+            const buttons = challengeOptions.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.classList.remove('disabled', 'correct', 'incorrect');
+            });
+        });
+
+        // Evento para o botão "Reiniciar Exploração" no painel de conclusão
+        restartGameButton.addEventListener('click', () => {
+            resetGame();
+        });
+
     </script>
 </body>
 </html>
