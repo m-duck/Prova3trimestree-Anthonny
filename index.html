@@ -20,9 +20,9 @@
             --text-light: #e6edf3;
             --accent-green: #2ea043;
             --accent-red: #f85149;
-            --border-light: rgba(255, 255, 255, 0.4);
-            --border-subtle: rgba(255, 255, 255, 0.1);
             --glow-color: #00f0ff; /* Cor para brilhos e bordas */
+            --button-gradient-start: #00b0ff;
+            --button-gradient-end: #007bff;
         }
 
         /* Estilos base */
@@ -37,6 +37,58 @@
             background-color: var(--bg-dark);
             color: var(--text-light);
             position: relative;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="%2300f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') 15 15, auto; /* Cursor personalizado */
+        }
+
+        /* Tela de Carregamento */
+        #loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--glow-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            z-index: 100; /* Acima de tudo */
+            transition: opacity 0.5s ease-out;
+            opacity: 1;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #loading-screen .spinner {
+            border: 8px solid rgba(0, 240, 255, 0.2);
+            border-top: 8px solid var(--glow-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Canvas para as bolhas */
+        .bubble-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Fundo */
+            pointer-events: none; /* Não interfere com cliques */
         }
 
         /* Estilos para transições de tela */
@@ -63,8 +115,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-dark); /* Fundo mais escuro */
-            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Tela+Inicial'); /* Fundo temático */
+            background-color: var(--bg-dark);
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Tela+Inicial');
             background-size: cover;
             background-position: center;
             z-index: 30;
@@ -108,7 +160,7 @@
         }
 
         .start-button-name-input {
-            background: linear-gradient(145deg, #00b0ff, #007bff); /* Gradiente azul */
+            background: linear-gradient(145deg, var(--button-gradient-start), var(--button-gradient-end)); /* Gradiente azul */
             border: 2px solid var(--glow-color);
             border-radius: 0.75rem;
             padding: 1.2rem 4rem; /* Maior padding */
@@ -123,7 +175,7 @@
         }
 
         .start-button-name-input:hover {
-            background: linear-gradient(145deg, #007bff, #00b0ff);
+            background: linear-gradient(145deg, var(--button-gradient-end), var(--button-gradient-start));
             border-color: #ffffff;
             color: #e0e0e0;
             transform: translateY(-3px) scale(1.02);
@@ -151,7 +203,7 @@
             justify-content: center;
             align-items: center;
             background-color: var(--bg-dark);
-            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Menu+Principal'); /* Fundo temático */
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Menu+Principal');
             background-size: cover;
             background-position: center;
             z-index: 20;
@@ -214,12 +266,12 @@
         }
 
         .menu-button {
-            background: linear-gradient(145deg, #00b0ff, #007bff);
+            background: linear-gradient(145deg, var(--button-gradient-start), var(--button-gradient-end));
             border: 2px solid var(--glow-color);
             border-radius: 1rem; /* Mais arredondado */
             padding: 1.5rem 5rem; /* Maior padding */
             color: #ffffff;
-            font-size: 2.5rem; /* Maior fonte */
+            font-size: 2.5rem;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
@@ -229,7 +281,7 @@
         }
 
         .menu-button:hover {
-            background: linear-gradient(145deg, #007bff, #00b0ff);
+            background: linear-gradient(145deg, var(--button-gradient-end), var(--button-gradient-start));
             border-color: #ffffff;
             color: #e0e0e0;
             transform: translateY(-4px) scale(1.03);
@@ -337,10 +389,10 @@
         }
 
         #chimera-room #chimera-char {
-            top: 30%; /* Posição ajustada */
+            top: 30%;
             left: 50%;
             transform: translateX(-50%) translateY(0px);
-            width: 220px; /* Ajuste o tamanho */
+            width: 220px;
             height: auto;
             animation-delay: 2s;
         }
@@ -348,18 +400,18 @@
         /* Botões de navegação entre salas */
         .nav-button {
             position: absolute;
-            background-color: rgba(0, 240, 255, 0.15); /* Fundo translúcido com brilho */
-            border: 2px solid var(--glow-color); /* Borda brilhante */
-            border-radius: 0.75rem; /* Mais arredondado */
-            padding: 1rem 2rem; /* Maior padding */
+            background-color: rgba(0, 240, 255, 0.15);
+            border: 2px solid var(--glow-color);
+            border-radius: 0.75rem;
+            padding: 1rem 2rem;
             color: #ffffff;
-            font-size: 1.3rem; /* Maior fonte */
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 15;
             pointer-events: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,240,255,0.5); /* Sombra e brilho */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,240,255,0.5);
         }
 
         .nav-button:hover {
@@ -367,18 +419,6 @@
             border-color: #ffffff;
             transform: scale(1.1);
             box-shadow: 0 6px 15px rgba(0,0,0,0.5), 0 0 25px rgba(0,240,255,0.8);
-        }
-
-        .nav-left {
-            left: 30px; /* Mais afastado da borda */
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .nav-right {
-            right: 30px; /* Mais afastado da borda */
-            top: 50%;
-            transform: translateY(-50%);
         }
 
         /* Overlays e painéis */
@@ -393,26 +433,26 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: 1.5rem; /* Maior padding geral */
+            padding: 1.5rem;
             pointer-events: none;
         }
 
         .info-panel, .codex-panel, .confirmation-modal-content {
-            background-color: rgba(26, 26, 26, 0.98); /* Mais opaco */
-            border-radius: 2rem; /* Mais arredondado */
-            padding: 2.5rem; /* Maior padding */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0,240,255,0.5); /* Sombra e brilho */
-            max-width: 750px; /* Maior largura */
+            background-color: rgba(26, 26, 26, 0.98);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0,240,255,0.5);
+            max-width: 750px;
             width: 100%;
             text-align: left;
             display: none;
             flex-direction: column;
-            gap: 1.5rem; /* Maior espaçamento */
+            gap: 1.5rem;
             pointer-events: auto;
-            margin-top: 2.5rem; /* Mais afastado do topo */
-            max-height: 85vh; /* Maior altura */
+            margin-top: 2.5rem;
+            max-height: 85vh;
             overflow-y: auto;
-            border: 3px solid var(--glow-color); /* Borda brilhante */
+            border: 3px solid var(--glow-color);
             color: var(--text-light);
         }
 
@@ -421,12 +461,12 @@
         }
 
         .challenge-section {
-            background-color: rgba(0, 240, 255, 0.1); /* Fundo com brilho */
+            background-color: rgba(0, 240, 255, 0.1);
             border-radius: 1rem;
-            padding: 2rem; /* Maior padding */
+            padding: 2rem;
             margin-top: 2rem;
-            border: 1px solid rgba(0,240,255,0.3); /* Borda sutil */
-            box-shadow: inset 0 0 10px rgba(0,240,255,0.2); /* Sombra interna */
+            border: 1px solid rgba(0,240,255,0.3);
+            box-shadow: inset 0 0 10px rgba(0,240,255,0.2);
         }
 
         .challenge-question {
@@ -437,44 +477,44 @@
         }
 
         .challenge-options button {
-            background-color: rgba(255, 255, 255, 0.08); /* Fundo mais sutil */
+            background-color: rgba(255, 255, 255, 0.08);
             color: var(--text-light);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 1.5rem; /* Maior padding */
+            padding: 1rem 1.5rem;
             border-radius: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1.1rem;
             width: 100%;
             text-align: left;
-            margin-bottom: 0.75rem; /* Mais espaçamento */
+            margin-bottom: 0.75rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .challenge-options button:hover:not(.disabled) {
-            background-color: rgba(0, 240, 255, 0.15); /* Fundo com brilho */
+            background-color: rgba(0, 240, 255, 0.15);
             border-color: var(--glow-color);
-            transform: translateX(8px); /* Maior deslocamento */
+            transform: translateX(8px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,240,255,0.4);
         }
 
         .challenge-options button.correct {
-            background-color: rgba(46, 160, 67, 0.4); /* Verde mais forte */
+            background-color: rgba(46, 160, 67, 0.4);
             border-color: var(--accent-green);
             color: white;
-            box-shadow: 0 0 15px var(--accent-green); /* Brilho verde */
+            box-shadow: 0 0 15px var(--accent-green);
         }
 
         .challenge-options button.incorrect {
-            background-color: rgba(218, 54, 51, 0.4); /* Vermelho mais forte */
+            background-color: rgba(218, 54, 51, 0.4);
             border-color: var(--accent-red);
             color: white;
-            box-shadow: 0 0 15px var(--accent-red); /* Brilho vermelho */
+            box-shadow: 0 0 15px var(--accent-red);
         }
 
         .challenge-options button.disabled {
             cursor: not-allowed;
-            opacity: 0.6; /* Menor opacidade */
+            opacity: 0.6;
         }
 
         .challenge-feedback {
@@ -485,10 +525,38 @@
             color: var(--text-light);
         }
 
+        .hint-button {
+            background: linear-gradient(145deg, #ffc107, #ff9800); /* Gradiente amarelo/laranja */
+            color: #333;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            align-self: flex-start; /* Alinha à esquerda */
+            border: 2px solid #ffc107;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            opacity: 1; /* Visível por padrão */
+        }
+
+        .hint-button:hover:not(.disabled) {
+            background: linear-gradient(145deg, #ff9800, #ffc107);
+            border-color: #ffa000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        .hint-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .close-button {
-            background: linear-gradient(145deg, #f85149, #cc0000); /* Gradiente vermelho */
+            background: linear-gradient(145deg, #f85149, #cc0000);
             color: #ffffff;
-            padding: 1rem 2rem; /* Maior padding */
+            padding: 1rem 2rem;
             border-radius: 0.75rem;
             cursor: pointer;
             font-size: 1.1rem;
@@ -511,27 +579,27 @@
         /* Estilos para o display de nome, pontuação e tempo */
         .game-hud {
             position: absolute;
-            top: 1.5rem; /* Mais afastado do topo */
+            top: 1.5rem;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 2rem; /* Maior padding lateral */
+            padding: 0 2rem;
             z-index: 20;
             pointer-events: none;
         }
 
         .player-info, .game-stats, .hud-button-container {
-            background-color: rgba(26, 26, 26, 0.9); /* Mais opaco */
-            border-radius: 1rem; /* Mais arredondado */
-            padding: 0.75rem 1.25rem; /* Maior padding */
-            font-size: 1rem; /* Maior fonte */
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 1rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
             color: var(--text-light);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,240,255,0.3); /* Sombra e brilho */
-            border: 2px solid var(--glow-color); /* Borda brilhante */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,240,255,0.3);
+            border: 2px solid var(--glow-color);
             display: flex;
             align-items: center;
-            gap: 1rem; /* Maior espaçamento */
+            gap: 1rem;
             pointer-events: auto;
         }
         
@@ -540,15 +608,15 @@
         }
 
         .hud-button-container {
-            gap: 1.5rem; /* Espaçamento entre botões e volume */
+            gap: 1.5rem;
         }
 
         .hud-button {
-            background: linear-gradient(145deg, #00b0ff, #007bff);
+            background: linear-gradient(145deg, var(--button-gradient-start), var(--button-gradient-end));
             border: 1px solid var(--glow-color);
             border-radius: 0.75rem;
-            padding: 0.6rem 1.2rem; /* Maior padding */
-            font-size: 0.9rem; /* Maior fonte */
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: #ffffff;
             cursor: pointer;
@@ -557,7 +625,7 @@
         }
 
         .hud-button:hover {
-            background: linear-gradient(145deg, #007bff, #00b0ff);
+            background: linear-gradient(145deg, var(--button-gradient-end), var(--button-gradient-start));
             border-color: #ffffff;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.4);
@@ -566,15 +634,15 @@
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 0.75rem; /* Mais espaçamento */
+            gap: 0.75rem;
         }
 
         .volume-control input[type="range"] {
-            width: 100px; /* Maior largura */
+            width: 100px;
             -webkit-appearance: none;
-            background: rgba(0,240,255,0.3); /* Fundo com brilho */
+            background: rgba(0,240,255,0.3);
             border-radius: 5px;
-            height: 8px; /* Maior altura */
+            height: 8px;
             outline: none;
             cursor: pointer;
             border: 1px solid var(--glow-color);
@@ -584,13 +652,27 @@
         .volume-control input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px; /* Maior thumb */
-            height: 20px; /* Maior thumb */
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #ffffff;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(0,240,255,0.8), 0 0 10px rgba(0,240,255,0.5); /* Brilho no thumb */
+            box-shadow: 0 0 5px rgba(0,240,255,0.8), 0 0 10px rgba(0,240,255,0.5);
             border: 2px solid var(--glow-color);
+        }
+
+        .mute-toggle-button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .mute-toggle-button:hover {
+            color: var(--glow-color);
+            transform: scale(1.1);
         }
 
         /* Estilos do painel de conclusão */
@@ -605,13 +687,13 @@
             justify-content: center;
             align-items: center;
             background-color: var(--bg-dark);
-            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Conclusão'); /* Fundo temático */
+            background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Fundo+Conclusão');
             background-size: cover;
             background-position: center;
             z-index: 25;
             overflow: hidden;
             padding-bottom: 0;
-            gap: 2rem; /* Maior espaçamento */
+            gap: 2rem;
         }
 
         .completion-panel.show {
@@ -627,11 +709,11 @@
         }
 
         .completion-panel p {
-            font-size: 1.4rem; /* Maior fonte */
+            font-size: 1.4rem;
             line-height: 1.8;
             color: var(--text-light);
             text-align: center;
-            max-width: 85%; /* Maior largura */
+            max-width: 85%;
             margin-bottom: 0.75rem;
         }
 
@@ -640,12 +722,12 @@
         }
 
         .restart-button {
-            background: linear-gradient(145deg, #00b0ff, #007bff);
+            background: linear-gradient(145deg, var(--button-gradient-start), var(--button-gradient-end));
             color: #ffffff;
             padding: 1.5rem 5rem;
             border-radius: 1rem;
             cursor: pointer;
-            font-size: 2rem; /* Maior fonte */
+            font-size: 2rem;
             font-weight: bold;
             transition: all 0.3s ease;
             border: 2px solid var(--glow-color);
@@ -656,7 +738,7 @@
         }
 
         .restart-button:hover {
-            background: linear-gradient(145deg, #007bff, #00b0ff);
+            background: linear-gradient(145deg, var(--button-gradient-end), var(--button-gradient-start));
             border-color: #ffffff;
             color: #e0e0e0;
             transform: translateY(-4px) scale(1.03);
@@ -670,7 +752,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(0, 0, 0, 0.85); /* Mais escuro */
+            background-color: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -686,12 +768,12 @@
         }
 
         .confirmation-modal-content {
-            padding: 3rem; /* Maior padding */
-            gap: 2rem; /* Maior espaçamento */
+            padding: 3rem;
+            gap: 2rem;
         }
 
         .confirmation-modal-content h3 {
-            font-size: 1.8rem; /* Maior fonte */
+            font-size: 1.8rem;
             font-weight: bold;
             color: var(--text-light);
         }
@@ -703,11 +785,11 @@
         .confirmation-modal-buttons {
             display: flex;
             justify-content: center;
-            gap: 1.5rem; /* Maior espaçamento */
+            gap: 1.5rem;
         }
 
         .confirmation-modal-buttons button {
-            padding: 1rem 2rem; /* Maior padding */
+            padding: 1rem 2rem;
             border-radius: 0.75rem;
             font-weight: bold;
             cursor: pointer;
@@ -730,13 +812,13 @@
         }
 
         .confirmation-modal-buttons .confirm-no {
-            background: linear-gradient(145deg, #00b0ff, #007bff);
+            background: linear-gradient(145deg, var(--button-gradient-start), var(--button-gradient-end));
             color: var(--text-light);
             border: 2px solid var(--glow-color);
         }
 
         .confirmation-modal-buttons .confirm-no:hover {
-            background: linear-gradient(145deg, #007bff, #00b0ff);
+            background: linear-gradient(145deg, var(--button-gradient-end), var(--button-gradient-start));
             border-color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.4);
@@ -748,7 +830,7 @@
         }
 
         .codex-panel h2 {
-            font-size: 2.2rem; /* Maior */
+            font-size: 2.2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
             text-align: center;
@@ -757,16 +839,16 @@
 
         .codex-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Maior tamanho mínimo */
-            gap: 1.5rem; /* Maior espaçamento */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
             flex-grow: 1;
         }
 
         .codex-item {
-            background-color: rgba(0, 240, 255, 0.05); /* Fundo com brilho sutil */
-            border: 1px solid rgba(0,240,255,0.2); /* Borda sutil */
-            border-radius: 1rem; /* Mais arredondado */
-            padding: 1.5rem; /* Maior padding */
+            background-color: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0,240,255,0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -774,36 +856,36 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            position: relative; /* Para o ícone de check */
+            position: relative;
         }
 
         .codex-item:hover:not(.undiscovered) {
             background-color: rgba(0, 240, 255, 0.15);
-            transform: translateY(-5px); /* Maior deslocamento */
+            transform: translateY(-5px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.4), 0 0 20px rgba(0,240,255,0.4);
         }
 
         .codex-item img {
-            width: 120px; /* Maior imagem */
-            height: 90px; /* Maior imagem */
+            width: 120px;
+            height: 90px;
             object-fit: contain;
             border-radius: 0.75rem;
             margin-bottom: 0.75rem;
-            filter: grayscale(100%) brightness(70%); /* Mais escuro e acinzentado */
+            filter: grayscale(100%) brightness(70%);
             transition: filter 0.5s ease;
         }
 
         .codex-item.discovered img {
-            filter: none; /* Remove grayscale para peixes descobertos */
+            filter: none;
         }
 
         .codex-item.undiscovered {
-            opacity: 0.8; /* Mais visível que antes */
+            opacity: 0.8;
             cursor: default;
         }
 
         .codex-item h3 {
-            font-size: 1.2rem; /* Maior fonte */
+            font-size: 1.2rem;
             font-weight: bold;
             color: var(--text-light);
         }
@@ -895,6 +977,9 @@
                 width: 16px;
                 height: 16px;
             }
+            .mute-toggle-button {
+                font-size: 1rem;
+            }
             .name-input-feedback {
                 font-size: 0.9rem;
             }
@@ -930,12 +1015,23 @@
             .codex-item .codex-check-icon {
                 font-size: 1.2rem;
             }
+            .hint-button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Tela de Carregamento -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <span>A Carregar...</span>
+    </div>
+
     <!-- Tela de Inserção de Nome -->
     <div id="name-input-screen" class="name-input-container screen-transition">
+        <canvas id="bubble-canvas-name" class="bubble-canvas"></canvas>
         <h1>Bem-vindo ao Mergulho Profundo!</h1>
         <p>Por favor, insira o seu nome para começar a sua aventura:</p>
         <input type="text" id="player-name-input" placeholder="O seu nome de explorador">
@@ -945,6 +1041,7 @@
 
     <!-- Main Menu -->
     <div id="main-menu" class="menu-container screen-transition">
+        <canvas id="bubble-canvas-menu" class="bubble-canvas"></canvas>
         <!-- Cabeçalho do Menu com botão "BACK" -->
         <div class="menu-header">
             <button class="menu-back-button" id="menu-back-button">SAIR DO JOGO</button>
@@ -964,6 +1061,7 @@
 
     <!-- Jogo Point-and-Click (container principal das salas) -->
     <div id="point-click-game" class="point-click-game screen-transition">
+        <canvas id="bubble-canvas-game" class="bubble-canvas"></canvas>
         <!-- Sala do Tubarão -->
         <div id="shark-room" class="game-room" style="background-image: url('https://placehold.co/1920x1080/0d1117/0d1117?text=Recife+de+Tubarões');">
             <img id="shark-char" class="fish-character"
@@ -1024,7 +1122,9 @@
             <div class="hud-button-container">
                 <button id="codex-button" class="hud-button">CODEX</button>
                 <div class="volume-control">
-                    <i class="fas fa-volume-up"></i>
+                    <button id="mute-toggle-button" class="mute-toggle-button">
+                        <i class="fas fa-volume-up" id="volume-icon"></i>
+                    </button>
                     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
                 </div>
             </div>
@@ -1037,11 +1137,13 @@
                 <div id="challenge-question" class="challenge-question"></div>
                 <div id="challenge-options" class="challenge-options"></div>
                 <div id="challenge-feedback" class="challenge-feedback"></div>
+                <button id="hint-button" class="hint-button">DICA</button>
             </div>
             <button id="close-info-button" class="close-button">Fechar</button>
         </div>
 
         <div id="completion-panel" class="completion-panel screen-transition">
+            <canvas id="bubble-canvas-completion" class="bubble-canvas"></canvas>
             <h2 class="completion-title">Missão Concluída!</h2>
             <p class="completion-message">Parabéns, explorador <span id="final-player-name"></span>! Concluiu a sua missão e documentou com sucesso todos os peixes cartilaginosos em <span id="final-game-time"></span>.</p>
             <p class="completion-message">Seu melhor tempo anterior: <span id="best-time-display">--:--</span></p>
@@ -1075,15 +1177,21 @@
         // --- Variáveis Globais do Jogo ---
         let playerName = '';
         let discoveredCount = 0;
-        // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
-        let discoveryData = {};
+        let discoveryData = {}; // Objeto para rastrear o que foi descoberto e se o desafio foi respondido
         let currentRoomId = 'shark-room'; // Sala inicial padrão
         let gameTimer = 0; // Segundos
         let timerInterval = null; // Para controlar o setInterval do timer
         let currentVolume = 0.5; // Volume inicial para os sons
+        let isMuted = false; // Estado do mute
+        let hintCooldown = 0; // Tempo de espera para a próxima dica
+        const HINT_COOLDOWN_TIME = 10; // Segundos
+
+        // Variável para rastrear se o som ambiente já foi inicializado e carregado
+        let ambientSoundInitialized = false;
 
         // --- Referências de Elementos HTML ---
         // Telas principais
+        const loadingScreen = document.getElementById('loading-screen');
         const nameInputScreen = document.getElementById('name-input-screen');
         const mainMenu = document.getElementById('main-menu');
         const pointClickGame = document.getElementById('point-click-game');
@@ -1097,8 +1205,8 @@
         const nameInputFeedback = document.getElementById('name-input-feedback');
 
         // Elementos do menu principal
-        const newGameButton = document.getElementById('new-game-button'); // Novo botão
-        const continueGameButton = document.getElementById('continue-game-button'); // Novo botão
+        const newGameButton = document.getElementById('new-game-button');
+        const continueGameButton = document.getElementById('continue-game-button');
         const menuBackButton = document.getElementById('menu-back-button');
 
         // Elementos do jogo
@@ -1114,6 +1222,8 @@
         const gameTimerDisplay = document.getElementById('game-timer');
         const codexButton = document.getElementById('codex-button');
         const volumeSlider = document.getElementById('volume-slider');
+        const muteToggleButton = document.getElementById('mute-toggle-button');
+        const volumeIcon = document.getElementById('volume-icon');
 
         // Elementos do painel de informações
         const infoPanel = document.getElementById('info-panel');
@@ -1123,6 +1233,7 @@
         const challengeQuestion = document.getElementById('challenge-question');
         const challengeOptions = document.getElementById('challenge-options');
         const challengeFeedback = document.getElementById('challenge-feedback');
+        const hintButton = document.getElementById('hint-button');
         const closeInfoButton = document.getElementById('close-info-button');
 
         // Elementos do painel de conclusão
@@ -1138,6 +1249,12 @@
         // Elementos do Codex
         const codexGrid = document.getElementById('codex-grid');
         const closeCodexButton = document.getElementById('close-codex-button');
+
+        // Canvas para bolhas
+        const bubbleCanvasName = document.getElementById('bubble-canvas-name');
+        const bubbleCanvasMenu = document.getElementById('bubble-canvas-menu');
+        const bubbleCanvasGame = document.getElementById('bubble-canvas-game');
+        const bubbleCanvasCompletion = document.getElementById('bubble-canvas-completion');
 
         // --- Dados dos Peixes e Conteúdo Educacional ---
         const fishInfo = [
@@ -1220,49 +1337,220 @@
         const ambientSound = new Tone.Player({
             url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Exemplo de som ambiente (substituir por som de água)
             loop: true,
-            autostart: false, // Inicia apenas quando o jogo começa
-            volume: -20 // Volume mais baixo para ambiente
+            autostart: false,
+            volume: -20
         }).toDestination();
 
         // Define o volume inicial para todos os sons
         Tone.Destination.volume.value = Tone.gainToDb(currentVolume);
+        Tone.Destination.mute = isMuted;
 
         /**
          * Toca um som de clique geral.
          */
-        function playClickSound() {
-            clickSound.triggerAttackRelease("C4", "8n");
+        async function playClickSound() {
+            if (!isMuted) {
+                // Garante que o contexto de áudio está rodando
+                if (Tone.context.state !== 'running') {
+                    try {
+                        await Tone.start();
+                    } catch (e) {
+                        console.error("Erro ao iniciar contexto de áudio para playClickSound:", e);
+                        return; // Sai se o contexto não puder ser iniciado
+                    }
+                }
+                // Adiciona um pequeno offset para garantir que o tempo de início seja estritamente maior
+                clickSound.triggerAttackRelease("C4", "8n", Tone.now() + 0.05); // Increased offset for mobile
+            }
         }
 
         /**
          * Toca um som para resposta correta.
          */
-        function playCorrectSound() {
-            correctSound.triggerAttackRelease(["C5", "E5", "G5"], "8n");
+        async function playCorrectSound() {
+            if (!isMuted) {
+                if (Tone.context.state !== 'running') {
+                    try {
+                        await Tone.start();
+                    } catch (e) {
+                        console.error("Erro ao iniciar contexto de áudio para playCorrectSound:", e);
+                        return;
+                    }
+                }
+                correctSound.triggerAttackRelease(["C5", "E5", "G5"], "8n", Tone.now() + 0.05); // Increased offset for mobile
+            }
         }
 
         /**
          * Toca um som para resposta incorreta.
          */
-        function playIncorrectSound() {
-            incorrectSound.triggerAttackRelease("16n");
+        async function playIncorrectSound() {
+            if (!isMuted) {
+                if (Tone.context.state !== 'running') {
+                    try {
+                        await Tone.start();
+                    } catch (e) {
+                        console.error("Erro ao iniciar contexto de áudio para playIncorrectSound:", e);
+                        return;
+                    }
+                }
+                incorrectSound.triggerAttackRelease("16n", Tone.now() + 0.05); // Increased offset for mobile
+            }
         }
 
         /**
          * Inicia a reprodução do som ambiente.
+         * Garante que o contexto de áudio é iniciado e o buffer do som ambiente é carregado.
          */
-        function startAmbientSound() {
+        async function startAmbientSound() {
+            if (isMuted) return; // Não inicia se estiver mutado
+
+            // Garante que o contexto de áudio está rodando
             if (Tone.context.state !== 'running') {
-                Tone.start(); // Garante que o contexto de áudio está ativo
+                try {
+                    await Tone.start();
+                } catch (e) {
+                    console.error("Erro ao iniciar contexto de áudio para startAmbientSound:", e);
+                    return;
+                }
             }
-            ambientSound.start();
+
+            // Apenas tenta carregar e iniciar se ainda não foi inicializado
+            if (!ambientSoundInitialized) {
+                try {
+                    await ambientSound.load(ambientSound.url); // Explicitly load the sound
+                    ambientSoundInitialized = true;
+                } catch (e) {
+                    console.error("Erro ao carregar buffer de áudio ambiente:", e);
+                    return;
+                }
+            }
+
+            // Inicia apenas se não estiver já a tocar
+            if (ambientSound.loaded && ambientSound.state !== 'started') {
+                ambientSound.start(Tone.now()); // Agenda para o tempo atual
+            }
         }
+
 
         /**
          * Para a reprodução do som ambiente.
          */
         function stopAmbientSound() {
             ambientSound.stop();
+        }
+
+        /**
+         * Alterna o estado de mudo e atualiza o ícone e o slider.
+         */
+        async function toggleMute() {
+            isMuted = !isMuted;
+            Tone.Destination.mute = isMuted;
+            volumeIcon.classList.toggle('fa-volume-up', !isMuted);
+            volumeIcon.classList.toggle('fa-volume-mute', isMuted);
+            volumeSlider.disabled = isMuted; // Desabilita o slider quando mutado
+
+            if (isMuted) {
+                stopAmbientSound();
+            } else {
+                // Garante que Tone.start() seja aguardado se ainda não tiver sido
+                if (Tone.context.state !== 'running') {
+                    try {
+                        await Tone.start();
+                    } catch (e) {
+                        console.error("Erro ao iniciar contexto de áudio ao desmutar:", e);
+                        return;
+                    }
+                }
+                startAmbientSound();
+            }
+        }
+
+        // --- Funções de Animação de Bolhas (Canvas) ---
+        class Bubble {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = this.canvas.height + Math.random() * 100; // Começa abaixo da tela
+                this.radius = 5 + Math.random() * 15;
+                this.speed = 0.5 + Math.random() * 2;
+                this.opacity = 0.2 + Math.random() * 0.5;
+            }
+
+            draw() {
+                this.ctx.beginPath();
+                this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                this.ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                this.ctx.fill();
+            }
+
+            update() {
+                this.y -= this.speed;
+                if (this.y < -this.radius) {
+                    this.reset();
+                }
+            }
+        }
+
+        let bubblesInstances = {}; // Armazena instâncias de bolhas por canvas ID
+        let animationFrameIds = {}; // Armazena IDs de requestAnimationFrame por canvas ID
+
+        /**
+         * Inicializa o canvas de bolhas para um elemento específico.
+         * @param {HTMLCanvasElement} canvasElement - O elemento canvas.
+         */
+        function initBubbleCanvas(canvasElement) {
+            if (!canvasElement) return;
+
+            const canvasId = canvasElement.id;
+            // Para qualquer animação existente para este canvas
+            if (animationFrameIds[canvasId]) {
+                cancelAnimationFrame(animationFrameIds[canvasId]);
+            }
+
+            const ctx = canvasElement.getContext('2d');
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+
+            bubblesInstances[canvasId] = [];
+            for (let i = 0; i < 50; i++) { // Número de bolhas
+                bubblesInstances[canvasId].push(new Bubble(canvasElement));
+            }
+
+            function animateBubbles() {
+                ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+                bubblesInstances[canvasId].forEach(bubble => {
+                    bubble.update();
+                    bubble.draw();
+                });
+                animationFrameIds[canvasId] = requestAnimationFrame(animateBubbles);
+            }
+            animateBubbles();
+
+            // Adiciona listener de redimensionamento apenas uma vez por canvas
+            if (!canvasElement.dataset.resizeListenerAdded) {
+                window.addEventListener('resize', () => {
+                    canvasElement.width = window.innerWidth;
+                    canvasElement.height = window.innerHeight;
+                    bubblesInstances[canvasId].forEach(bubble => bubble.reset()); // Redefine posições ao redimensionar
+                });
+                canvasElement.dataset.resizeListenerAdded = 'true';
+            }
+        }
+
+        /**
+         * Para a animação de bolhas para todos os canvas.
+         */
+        function stopAllBubbleAnimations() {
+            for (const id in animationFrameIds) {
+                cancelAnimationFrame(animationFrameIds[id]);
+                delete animationFrameIds[id];
+            }
         }
 
         // --- Funções de Controle de Tela e Transições ---
@@ -1276,12 +1564,19 @@
             const allScreens = [nameInputScreen, mainMenu, pointClickGame, completionPanel, codexPanel, confirmationModal];
             allScreens.forEach(screen => {
                 screen.classList.remove('active');
-                screen.style.display = 'none'; // Esconde fisicamente
+                screen.style.display = 'none';
             });
+
+            stopAllBubbleAnimations(); // Para todas as animações de bolhas antes de iniciar uma nova
 
             screenElement.style.display = 'flex'; // Ou 'block' dependendo do layout
             setTimeout(() => {
                 screenElement.classList.add('active');
+                // Inicia animação de bolhas se a tela tiver um canvas
+                const canvas = screenElement.querySelector('.bubble-canvas');
+                if (canvas) {
+                    initBubbleCanvas(canvas);
+                }
             }, 10);
         }
 
@@ -1294,8 +1589,9 @@
         function hideScreen(screenElement, callback) {
             screenElement.classList.remove('active');
             screenElement.addEventListener('transitionend', function handler() {
-                screenElement.style.display = 'none'; // Esconde fisicamente após a transição
+                screenElement.style.display = 'none';
                 screenElement.removeEventListener('transitionend', handler);
+                // Não para todas as animações aqui, pois showScreen já cuida disso
                 if (callback) callback();
             }, { once: true });
         }
@@ -1309,7 +1605,7 @@
             playerNameInput.focus();
             nameInputFeedback.textContent = '';
             gameHud.classList.add('hidden');
-            stopAmbientSound(); // Para o som ambiente na tela de nome
+            stopAmbientSound();
         }
 
         /**
@@ -1317,7 +1613,6 @@
          */
         function showMainMenu() {
             showScreen(mainMenu);
-            // Verifica se há um jogo salvo para mostrar o botão "CONTINUAR"
             const savedGame = localStorage.getItem('fishDiscoveryProgress');
             if (savedGame) {
                 continueGameButton.classList.remove('hidden');
@@ -1345,13 +1640,13 @@
         /**
          * Lógica comum para iniciar/continuar uma sessão de jogo.
          */
-        function startGameSession() {
+        async function startGameSession() { // Tornada async para await startAmbientSound
             showScreen(pointClickGame);
             gameHud.classList.remove('hidden');
             showRoom(currentRoomId); // Vai para a sala salva ou padrão
             startTimer();
-            updateDiscoveryCount();
-            startAmbientSound(); // Inicia o som ambiente
+            await startAmbientSound(); // Espera o som ambiente estar pronto antes de continuar
+            updateDiscoveryCount(); // Atualiza a contagem inicial
         }
 
         /**
@@ -1359,7 +1654,7 @@
          */
         function showCompletionPanel() {
             stopTimer();
-            stopAmbientSound(); // Para o som ambiente ao concluir
+            stopAmbientSound();
             hideScreen(pointClickGame, () => {
                 gameHud.classList.add('hidden');
                 infoPanel.classList.remove('show');
@@ -1367,7 +1662,7 @@
                 showScreen(completionPanel);
                 finalPlayerNameSpan.textContent = playerName;
                 finalGameTimeSpan.textContent = gameTimerDisplay.textContent;
-                displayBestTime(); // Exibe o melhor tempo
+                displayBestTime();
             });
         }
 
@@ -1390,9 +1685,9 @@
          */
         function showCodexPanel() {
             playClickSound();
-            hideScreen(infoPanel); // Esconde o painel de info se estiver aberto
+            hideScreen(infoPanel);
             codexPanel.classList.add('show');
-            populateCodex(); // Preenche o codex com os dados atuais
+            populateCodex();
         }
 
         /**
@@ -1408,11 +1703,14 @@
          */
         function resetGameData() {
             discoveredCount = 0;
-            discoveryData = {}; // Reseta o objeto de descobertas
-            currentRoomId = 'shark-room'; // Volta para a sala inicial
-            gameTimer = 0; // Reseta o timer
-            stopTimer(); // Garante que o timer está parado
-            updateTimerDisplay(); // Reseta o display do timer
+            discoveryData = {};
+            currentRoomId = 'shark-room';
+            gameTimer = 0;
+            stopTimer();
+            updateTimerDisplay();
+            hintCooldown = 0; // Reseta o cooldown da dica
+            updateHintButtonText(); // Atualiza o texto do botão de dica
+            ambientSoundInitialized = false; // Reset ambient sound state on full game reset
 
             fishCharacters.forEach(fish => {
                 fish.style.pointerEvents = 'auto';
@@ -1422,15 +1720,15 @@
                 fish.classList.remove('discovered');
                 fish.classList.remove('clicked');
             });
-            localStorage.removeItem('fishDiscoveryProgress'); // Limpa o progresso salvo
+            localStorage.removeItem('fishDiscoveryProgress');
         }
 
         /**
          * Reinicia o jogo completamente, incluindo o nome do jogador.
          */
         function resetGameFull() {
-            playerName = ''; // Limpa o nome do jogador
-            resetGameData(); // Reseta todos os outros dados do jogo
+            playerName = '';
+            resetGameData();
             hideScreen(completionPanel, showNameInputScreen);
             hideConfirmationModal();
             hideCodexPanel();
@@ -1443,12 +1741,24 @@
          */
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
-            gameTimer = 0; // Reinicia o timer
+            // Se o jogo está sendo continuado, não zera o timer
+            if (!localStorage.getItem('fishDiscoveryProgress')) {
+                gameTimer = 0;
+            }
             updateTimerDisplay();
             timerInterval = setInterval(() => {
                 gameTimer++;
                 updateTimerDisplay();
                 saveGameProgress(); // Salva o progresso a cada segundo
+
+                // Atualiza o cooldown da dica
+                if (hintCooldown > 0) {
+                    hintCooldown--;
+                    updateHintButtonText();
+                } else if (hintButton.classList.contains('disabled') && currentChallenge) { // Só reabilita se houver um desafio ativo
+                    hintButton.classList.remove('disabled');
+                    hintButton.textContent = 'DICA';
+                }
             }, 1000);
         }
 
@@ -1478,7 +1788,7 @@
             totalDiscoveriesSpan.textContent = fishInfo.length;
 
             if (discoveredCount === fishInfo.length) {
-                saveBestTime(); // Salva o tempo ao concluir
+                saveBestTime();
                 setTimeout(showCompletionPanel, 1000);
             }
         }
@@ -1522,6 +1832,10 @@
                     challengeFeedback.textContent = '';
                     currentChallenge = info.id;
 
+                    // Habilita o botão de dica e atualiza o texto
+                    hintButton.classList.remove('hidden');
+                    updateHintButtonText(); // Garante que o estado do cooldown é refletido
+
                     info.challenge.options.forEach((option, index) => {
                         const button = document.createElement('button');
                         button.textContent = option.text;
@@ -1531,6 +1845,7 @@
                     });
                 } else {
                     challengeSection.classList.add('hidden');
+                    hintButton.classList.add('hidden'); // Esconde o botão de dica se não houver desafio
                 }
                 infoPanel.classList.add('show');
             } else {
@@ -1550,16 +1865,18 @@
             buttons.forEach(button => {
                 button.classList.add('disabled');
             });
+            hintButton.classList.add('disabled'); // Desabilita a dica após a resposta
 
             if (isCorrect) {
                 playCorrectSound();
                 buttons[optionIndex].classList.add('correct');
                 challengeFeedback.textContent = 'Correto! ' + rationale;
                 if (!discoveryData[fishId]) {
-                    discoveryData[fishId] = { answeredCorrectly: true };
+                    discoveryData[fishId] = { answeredCorrectly: true, hintUsed: false }; // Inicializa hintUsed
                     updateDiscoveryCount();
                 } else {
                     discoveryData[fishId].answeredCorrectly = true;
+                    // hintUsed permanece como está
                     updateDiscoveryCount();
                 }
                 const fishChar = document.querySelector(`.fish-character[data-fish-id="${fishId}"]`);
@@ -1584,7 +1901,60 @@
                         button.classList.remove('disabled', 'incorrect');
                     });
                     challengeFeedback.textContent = '';
+                    // Reabilita a dica se errar e não estiver em cooldown
+                    if (hintCooldown === 0) {
+                        hintButton.classList.remove('disabled');
+                        hintButton.textContent = 'DICA';
+                    }
                 }, 2000);
+            }
+        }
+
+        /**
+         * Fornece uma dica para o desafio atual.
+         */
+        function provideHint() {
+            if (hintCooldown > 0 || !currentChallenge) {
+                return; // Não permite dica se estiver em cooldown ou sem desafio
+            }
+
+            playClickSound(); // Som para usar a dica
+            hintCooldown = HINT_COOLDOWN_TIME; // Inicia o cooldown
+            hintButton.classList.add('disabled');
+            updateHintButtonText();
+
+            const challengeInfo = fishInfo.find(f => f.id === currentChallenge).challenge;
+            const correctOptionIndex = challengeInfo.options.findIndex(opt => opt.correct);
+
+            // Exemplo de dica: realça a resposta correta por um tempo
+            const buttons = challengeOptions.querySelectorAll('button');
+            if (correctOptionIndex !== -1 && buttons[correctOptionIndex]) {
+                const correctButton = buttons[correctOptionIndex];
+                correctButton.style.border = `2px solid ${getComputedStyle(document.documentElement).getPropertyValue('--glow-color')}`;
+                correctButton.style.boxShadow = `0 0 15px ${getComputedStyle(document.documentElement).getPropertyValue('--glow-color')}`;
+                setTimeout(() => {
+                    correctButton.style.border = '';
+                    correctButton.style.boxShadow = '';
+                }, 2000); // Remove o destaque após 2 segundos
+            }
+            challengeFeedback.textContent = 'Uma das opções brilhou por um momento...';
+            setTimeout(() => {
+                challengeFeedback.textContent = '';
+            }, 3000);
+        }
+
+        /**
+         * Atualiza o texto do botão de dica com o cooldown.
+         */
+        function updateHintButtonText() {
+            if (hintCooldown > 0) {
+                hintButton.textContent = `DICA (${hintCooldown}s)`;
+                hintButton.classList.add('disabled');
+            } else {
+                hintButton.textContent = 'DICA';
+                if (currentChallenge && (!discoveryData[currentChallenge] || !discoveryData[currentChallenge].answeredCorrectly)) {
+                    hintButton.classList.remove('disabled'); // Reabilita se não estiver em cooldown e houver desafio ativo
+                }
             }
         }
 
@@ -1598,7 +1968,8 @@
                 playerName: playerName,
                 discoveryData: discoveryData,
                 currentRoomId: currentRoomId,
-                gameTimer: gameTimer
+                gameTimer: gameTimer,
+                hintCooldown: hintCooldown
             };
             localStorage.setItem('fishDiscoveryProgress', JSON.stringify(progress));
         }
@@ -1614,11 +1985,11 @@
                 discoveryData = progress.discoveryData;
                 currentRoomId = progress.currentRoomId;
                 gameTimer = progress.gameTimer;
+                hintCooldown = progress.hintCooldown || 0;
 
-                // Atualiza o display do nome do jogador
                 playerNameDisplay.textContent = playerName;
+                updateHintButtonText(); // Atualiza o botão de dica ao carregar
 
-                // Aplica os estados de "descoberto" aos peixes visuais
                 fishCharacters.forEach(fishChar => {
                     const fishId = fishChar.dataset.fishId;
                     if (discoveryData[fishId] && discoveryData[fishId].answeredCorrectly) {
@@ -1662,7 +2033,7 @@
          * Preenche o painel do Codex com a lista de peixes.
          */
         function populateCodex() {
-            codexGrid.innerHTML = ''; // Limpa a grade antes de preencher
+            codexGrid.innerHTML = '';
             fishInfo.forEach(fish => {
                 const codexItem = document.createElement('div');
                 codexItem.classList.add('codex-item');
@@ -1677,14 +2048,13 @@
                         <h3>${fish.name}</h3>
                         <i class="fas fa-check-circle codex-check-icon"></i>
                     `;
-                    codexItem.addEventListener('click', () => showInfoPanel(fish.id, true)); // Abre info sem desafio
+                    codexItem.addEventListener('click', () => showInfoPanel(fish.id, true));
                 } else {
                     codexItem.classList.add('undiscovered');
                     codexItem.innerHTML = `
                         <img src="${fish.imageFallback}" alt="Desconhecido">
                         <h3>??? Desconhecido</h3>
                     `;
-                    // Não adiciona listener de clique para itens não descobertos
                 }
                 codexGrid.appendChild(codexItem);
             });
@@ -1692,15 +2062,28 @@
 
         // --- Gerenciamento de Eventos ---
 
-        // Ao carregar a página, mostra a tela de input do nome
-        document.addEventListener('DOMContentLoaded', () => {
-            showNameInputScreen();
+        // Esconde a tela de carregamento e mostra a tela de input de nome
+        window.addEventListener('load', () => {
+            loadingScreen.classList.add('hidden');
+            loadingScreen.addEventListener('transitionend', () => {
+                loadingScreen.style.display = 'none';
+                showNameInputScreen();
+            }, { once: true });
             volumeSlider.value = currentVolume; // Define o valor inicial do slider
         });
 
         // Evento para o botão "Começar" na tela de input do nome
-        startNameButton.addEventListener('click', () => {
-            playClickSound();
+        startNameButton.addEventListener('click', async () => {
+            // Inicia o contexto de áudio na primeira interação do utilizador
+            if (Tone.context.state !== 'running') {
+                try {
+                    await Tone.start(); // Aguarda Tone.start()
+                } catch (e) {
+                    console.error("Erro ao iniciar contexto de áudio no clique:", e);
+                    // Opcionalmente, mostre uma mensagem ao utilizador de que o áudio não pôde iniciar
+                }
+            }
+            playClickSound(); // Agora é seguro reproduzir o som depois que Tone.start() for resolvido
             const inputName = playerNameInput.value.trim();
             if (inputName) {
                 playerName = inputName;
@@ -1736,7 +2119,7 @@
         // Eventos para botões do modal de confirmação
         confirmExitYesButton.addEventListener('click', () => {
             playClickSound();
-            resetGameFull(); // Reinicia tudo
+            resetGameFull();
         });
         confirmExitNoButton.addEventListener('click', () => {
             playClickSound();
@@ -1760,6 +2143,9 @@
             });
         });
 
+        // Evento para o botão "DICA"
+        hintButton.addEventListener('click', provideHint);
+
         // Evento para o botão "Fechar" do painel de informações
         closeInfoButton.addEventListener('click', () => {
             playClickSound();
@@ -1770,6 +2156,7 @@
             buttons.forEach(button => {
                 button.classList.remove('disabled', 'correct', 'incorrect');
             });
+            hintButton.classList.add('hidden'); // Esconde o botão de dica ao fechar o painel
         });
 
         // Evento para o botão "Reiniciar Exploração" no painel de conclusão
@@ -1788,11 +2175,30 @@
         volumeSlider.addEventListener('input', (event) => {
             currentVolume = parseFloat(event.target.value);
             Tone.Destination.volume.value = Tone.gainToDb(currentVolume);
+            if (isMuted && currentVolume > 0) { // Se estava mutado e o volume é ajustado para > 0, desmuta
+                toggleMute();
+            } else if (!isMuted && currentVolume === 0) { // Se não estava mutado e o volume é 0, muta
+                toggleMute();
+            }
         });
 
-        // --- Navegação por Teclado (Setas) ---
+        // Evento para o botão de ligar/desligar o som
+        muteToggleButton.addEventListener('click', toggleMute);
+
+        // --- Navegação por Teclado (Setas e ESC) ---
         document.addEventListener('keydown', (event) => {
-            // Apenas permite navegação por teclado se o jogo estiver ativo e nenhum modal/painel estiver aberto
+            // Fecha painéis e modais com ESC
+            if (event.key === 'Escape') {
+                if (infoPanel.classList.contains('show')) {
+                    closeInfoButton.click(); // Simula clique no botão fechar
+                } else if (codexPanel.classList.contains('show')) {
+                    closeCodexButton.click();
+                } else if (confirmationModal.classList.contains('show')) {
+                    confirmExitNoButton.click(); // Simula clique no "Não, Continuar"
+                }
+            }
+
+            // Navegação de sala com setas (apenas se o jogo estiver ativo e nenhum painel/modal aberto)
             const isGameActive = pointClickGame.classList.contains('active');
             const isPanelOpen = infoPanel.classList.contains('show') || codexPanel.classList.contains('show') || confirmationModal.classList.contains('show');
 
@@ -1813,9 +2219,9 @@
                         break;
                 }
                 if (targetRoom) {
-                    playClickSound(); // Toca som ao navegar com teclado
+                    playClickSound();
                     showRoom(targetRoom);
-                    event.preventDefault(); // Previne o scroll da página
+                    event.preventDefault();
                 }
             }
         });
